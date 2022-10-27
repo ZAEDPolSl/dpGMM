@@ -55,6 +55,6 @@ Run of GMM for 1D vector.
 
 
 \examples{
-data(mixture3)
+data("GMMexample")
 runGMM(data,KS=10)
 }
