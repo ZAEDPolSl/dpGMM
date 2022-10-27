@@ -3,12 +3,12 @@ R package for Gaussian Mixture Model (GMM) clustering using EM algorithm with in
 
 ## Description
 Package functionality:
-1) Variety of criteria for component selection (AIC, AICc, BIC, ICL-BIC and LR), (DONE)
-2) Merging the components with a small deviation,  (DONE)
-3) Quick stop if LR test does not show improvement. Possibility to control significance level, (DONE)
-4) Analysis of single measurements/vector as well as binned data, (DONE)
-5) Distribution plot with selected components in ggplot, (DONE)
-6) QQ-plot of fitted distribution oand standard normal distribution (DONE), 
+1) Variety of criteria for component selection (AIC, AICc, BIC, ICL-BIC and LR),
+2) Merging the components with a small deviation,
+3) Quick stop if LR test does not show improvement. Possibility to control significance level,
+4) Analysis of single measurements/vector as well as binned data,
+5) Distribution plot with selected components in ggplot,
+6) QQ-plot of fitted distribution oand standard normal distribution,
 7) Gaussian Mixture Modeling for 2D data.
 
 ## Installation
