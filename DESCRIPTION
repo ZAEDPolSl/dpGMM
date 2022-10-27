@@ -1,6 +1,6 @@
 Package: rGMMtest
 Type: Package
-Title: An R package for gaussian mixture decomposition of 1D and 2D data. Cos
+Title: An R package for gaussian mixture decomposition of 1D and 2D data.
 Version: 0.1.0
 Author:  
     person("Kamila", "Szumala", role = c("author")),
