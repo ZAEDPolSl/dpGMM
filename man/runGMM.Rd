@@ -26,7 +26,7 @@ runGMM(
 
 \item{Y}{Optional parameter for binned data. Gives value of data counts.}
 
-\item{chnage}{Nie wiem}
+\item{change}{Nie wiem}
 
 \item{max_iter}{Maximum no. of EM iterations.}
 
@@ -34,7 +34,7 @@ runGMM(
 
 \item{IC}{Information Criterion to select best no. of components. Possible "AIC","AICc", "BIC" (default), "ICL-BIC" or "LR"}
 
-\item{merg}{Merging components distance by set standard deviations(sigmas.dev). Default == TRUE }
+\item{merge}{Merging components distance by set standard deviations(sigmas.dev). Default == TRUE }
 
 \item{sigmas.dev}{Maxiumum standard devations of merging. }
 
