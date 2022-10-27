@@ -2,7 +2,10 @@ Package: rGMMtest
 Type: Package
 Title: An R package for gaussian mixture decomposition of 1D and 2D data.
 Version: 0.1.0
-Author: Kamila Szumala, Joanna Zyla, Michal Marczyk
+Author:  
+    person("Kamila", "Szumala", role = c("author")),
+    person("Joanna", "Zyla",  email = "joanna.zyla@polsl.pl",role = c("author")),
+    person("Michal", "Marczyk",email = "michal.marczyk@polsl.pl", role = c("author","creator"))
 Maintainer: The package maintainer <joanna.zyla@polsl.pl>
 Description: R package for Gaussian Mixture Model (GMM) clustering using EM algorithm with initialization points See Zyla et al (2019)
   <doi:10.1142/S0219876218500123>.
