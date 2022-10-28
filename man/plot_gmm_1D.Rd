@@ -9,7 +9,7 @@ plot_gmm_1D(X, dist, Y = NULL, threshold = NA, pal = NULL)
 \arguments{
 \item{X}{Vector of data}
 
-\item{dist}{list of following elements\describe{
+\item{dist}{Output of generate_dist function. Its list of following elements\describe{
    \item{x}{Vector of generated data}
    \item{dist}{Matrix of pdf of x for generated mixture model. The last column is sum of all previous ones.}
 }}

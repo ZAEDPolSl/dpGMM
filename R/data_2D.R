@@ -1,6 +1,6 @@
 #' Data of 2D mixture
 #'
-#' This data set containes 336 imieges transformed into data list with X and Y coordinates and counts
+#' This data set contain 336 images transformed into data list with X and Y coordinates and counts
 
 #' @docType data
 #' @keywords datasets

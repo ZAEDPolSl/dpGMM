@@ -3,7 +3,7 @@
 #' Function plot the decomposed distribution together with histogram of data. Moreover the cut-off are marked.
 #'
 #' @param X Vector of data
-#' @param dist list of following elements\describe{
+#' @param dist Output of generate_dist function. Its list of following elements\describe{
 #'    \item{x}{Vector of generated data}
 #'    \item{dist}{Matrix of pdf of x for generated mixture model. The last column is sum of all previous ones.}
 #' }
@@ -12,7 +12,7 @@
 #' @param pal RColorBrewer palette name
 #'
 #' @importFrom ggplot2 ggplot aes aes_string geom_smooth geom_point ylab xlab ggtitle theme scale_color_manual geom_histogram geom_bar
-#' @importFrom ggplot2 quides scale_linetype_manual geom_vline geom_line
+#' @importFrom ggplot2 guides scale_linetype_manual geom_vline geom_line
 #' @importFrom stats qqplot
 #' @importFrom reshape2 melt
 #' @importFrom RColorBrewer brewer.pal

@@ -1,6 +1,6 @@
 #' Binned data of mass spectrometry
 #'
-#' This data set is part of mass spectrometry measurements. First column represent X valyes. Second column represent counts of X.
+#' This data set is part of mass spectrometry measurements. First column represent X values. Second column represent counts of X.
 
 #' @docType data
 #' @keywords datasets

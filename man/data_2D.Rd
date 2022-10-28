@@ -11,6 +11,6 @@ Lists of measurements of 2D data
 data(data_2D)
 }
 \description{
-This data set containes 336 imieges transformed into data list with X and Y coordinates and counts
+This data set contain 336 images transformed into data list with X and Y coordinates and counts
 }
 \keyword{datasets}
