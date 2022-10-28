@@ -8,13 +8,12 @@
 #'
 #' @importFrom ggpubr ggarrange
 #' @importFrom ggplot2 ggplot aes aes_string geom_smooth geom_point ylab xlab ggtitle theme
-#' @importFrom ggplot2 stat_qq stat_qq_lin
 #' @importFrom stats qqplot
 #'
 #' @examples
 #' data<-generate_norm1D(1000, alpha=c(0.2,0.4,0.4), mu=c(-15,0,15), sigma=c(1,2,3))
 #' GModel<-list(model=list(alpha=c(0.2,0.4,0.4), mu=c(-15,0,15), sigma=c(1,2,3)))
-#' plot_QQplot(data,GModel)
+#' plot_QQplot(data$Dist,GModel)
 #' @seealso \code{\link{runGMM}} and \code{\link{gaussian_mixture_vector}}
 #'
 #' @export

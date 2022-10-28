@@ -12,7 +12,7 @@ Description: R package for Gaussian Mixture Model (GMM) clustering using EM algo
 Imports:
     matrixStats,pracma,ggplot2,RColorBrewer,ggpubr,reshape2, stats
 Depends:
-    matrixStats,pracma,ggplot2,RColorBrewer,ggpubr,reshape2, stats
+    R (>= 3.5), matrixStats,pracma,ggplot2,RColorBrewer,ggpubr,reshape2, stats
 License: GPL (>= 2.0)
 Encoding: UTF-8
 LazyData: true

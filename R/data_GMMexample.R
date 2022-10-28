@@ -1,9 +1,9 @@
 #' Exemplary normal mixture data
 #'
-#' This data set was randomly drown for 6 components GMM. The parameters of distributions are as follow\n
-#' means = -14.562901, -14.167727, -11.807781, -8.778878, -2.894200, 2.316760\n
-#' sigma = 2.065368, 4.492784, 4.427030, 2.392028, 3.926103, 1.364700\n
-#' alpha = 0.201225382, 0.289848438, 0.033478277, 0.009219137, 0.427818382, 0.038410383
+#' This data set was randomly drown for 6 components GMM. The parameters of distributions are as follow
+#' means = c(-14.562901, -14.167727, -11.807781, -8.778878, -2.894200, 2.316760);
+#' sigma = c(2.065368, 4.492784, 4.427030, 2.392028, 3.926103, 1.364700);
+#' alpha = c(0.201225382, 0.289848438, 0.033478277, 0.009219137, 0.427818382, 0.038410383)
 #'
 #' @docType data
 #' @keywords datasets
