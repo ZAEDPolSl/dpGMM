@@ -1,9 +1,27 @@
+#' Plot of GMM decomposition for data vector
+#'
+#' Function plot the decomposed distribution together with histogram of data. Moreover the cut-off are marked.
+#'
+#' @param X Vector of data
+#' @param dist list of following elements\describe{
+#'    \item{x}{Vector of generated data}
+#'    \item{dist}{Matrix of pdf of x for generated mixture model. The last column is sum of all previous ones.}
+#' }
+#' @param Y Vector of X counts (binned data). Default=NULL
+#' @param threshold Vector with GMM cutoffs
+#' @param pal RColorBrewer palette name
+#'
+#' @importFrom ggplot2 ggplot aes aes_string geom_smooth geom_point ylab xlab ggtitle theme scale_color_manual geom_histogram geom_bar
+#' @importFrom ggplot2 quides scale_linetype_manual geom_vline geom_line
+#' @importFrom stats qqplot
+#' @importFrom reshape2 melt
+#' @importFrom RColorBrewer brewer.pal
+#' @importFrom grDevices colorRampPalette
+#'
+#' @seealso \code{\link{runGMM}} and \code{\link{generate_dist}}
+#'
+#' @export
 plot_gmm_1D <- function(X, dist, Y=NULL, threshold=NA, pal=NULL){
-  #INPUT
-  # X = original data
-  # dist= values of distribution from generate_dist
-  # threshold = gmm thresholds
-
   # estimating of bin width of histogram
   binwidth = (max(X)-min(X))/floor(sqrt(length(X)))
   #binwidth = 2.64*IQR(data$V1)*nrow(data)^(-1/3) # alternative
@@ -27,7 +45,7 @@ plot_gmm_1D <- function(X, dist, Y=NULL, threshold=NA, pal=NULL){
   col <- colorRampPalette(brewer.pal(8,pal))(ncol(dist))
   col <- c(col[2:ncol(dist)], "grey25")}
 
-  # ggploting
+
   p <- ggplot() + theme_bw()
 
   if (!is.null(Y)){
