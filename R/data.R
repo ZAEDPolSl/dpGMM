@@ -6,8 +6,27 @@
 #' alpha = c(0.201225382, 0.289848438, 0.033478277, 0.009219137, 0.427818382, 0.038410383)
 #'
 #' @docType data
-#' @keywords datasets
 #' @name data_GMMexample
 #' @usage data(data_GMMexample)
 #' @format A vector containing 1500 observations
+NULL
+
+#' Binned data of mass spectrometry
+#'
+#' This data set is part of mass spectrometry measurements. First column represent X values. Second column represent counts of X.
+
+#' @docType data
+#' @name data_binned
+#' @usage data(data_binned)
+#' @format A matrix of X and Y
+NULL
+
+#' Data of 2D mixture
+#'
+#' This data set contain 336 images transformed into data list with X and Y coordinates and counts
+
+#' @docType data
+#' @name data_2D
+#' @usage data(data_2D)
+#' @format Lists of measurements of 2D data
 NULL
