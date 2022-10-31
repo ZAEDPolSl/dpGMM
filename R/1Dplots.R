@@ -13,10 +13,9 @@
 #' @param pal RColorBrewer palette name
 #'
 #' @import ggplot2
-#' @import stats
-#' @import reshape2
 #' @import RColorBrewer
-#' @import grDevices
+#' @importFrom grDevices colorRampPalette
+#' @importFrom reshape2 melt
 #'
 #' @seealso \code{\link{runGMM}}
 #'
@@ -44,14 +43,14 @@ plot_gmm_1D <- function(X, dist, Y=NULL, threshold=NA, pal=NULL){
   colnames(dist)[ncol(dist)]<-"Main"
   #dist<-dist#*binwidth*length(data) in new version not needed
 
-  tmp <- melt(dist,id.vars = NULL)
+  tmp <- reshape2::melt(dist,id.vars = NULL)
   tmp$xx <- rep(x_temp, ncol(dist))
   tmp$lin <- 1
   tmp$lin[which(tmp$variable == "Main")] <- 0
   if (ncol(dist)==2){
     col <- c("darkgreen", "grey25")
   } else{
-    col <- colorRampPalette(brewer.pal(8,pal))(ncol(dist))
+    col <- grDevices::colorRampPalette(brewer.pal(8,pal))(ncol(dist))
     col <- c(col[2:ncol(dist)], "grey25")}
 
 
@@ -84,8 +83,8 @@ plot_gmm_1D <- function(X, dist, Y=NULL, threshold=NA, pal=NULL){
 #' @param data Vector of original data
 #' @param GModel \code{data.frame} of GMM parameters i.e GModel$alpha, GModel$mu, GModel$sigma (correct \code{colnames} are obligatory)
 #'
-#' @import ggpubr
 #' @import ggplot2
+#' @importFrom  ggpubr ggarrange
 #' @importFrom stats qqplot
 #'
 #' @examples
@@ -99,7 +98,7 @@ plot_gmm_1D <- function(X, dist, Y=NULL, threshold=NA, pal=NULL){
 #' @export
 plot_QQplot<-function(data,GModel){
   tor<-generate_norm1D(length(data), GModel$alpha, GModel$mu, GModel$sigma)
-  quants<-qqplot(data,tor$Dist,plot.it = F)
+  quants<-stats::qqplot(data,tor$Dist,plot.it = F)
   tmp<-data.frame(data=quants$x,theor=quants$y)
 
   p2<-ggplot(tmp,aes(theor,data))+theme_bw()+
@@ -112,5 +111,5 @@ plot_QQplot<-function(data,GModel){
     ylab("Data")+xlab("Normal distribution")+theme_bw()+
     ggtitle("QQ plot: one dist.")+theme(plot.title = element_text(hjust = 0.5))
 
-  return(ggarrange(p1,p2,align="hv"))
+  return(ggpubr::ggarrange(p1,p2,align="hv"))
 }

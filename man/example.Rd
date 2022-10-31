@@ -8,7 +8,7 @@
 A vector containing 1500 observations
 }
 \source{
-Simulated data
+Randomly generated data
 }
 \usage{
 data(example)

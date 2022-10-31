@@ -6,13 +6,14 @@
 #' @param m Number of random alphas
 #'
 #' @importFrom stats runif
+#' @importFrom Matrix rowSums
 #'
 #' @examples
 #' alpha_rand(1,4)
 #'
 alpha_rand <- function(n,m) {
-  ri <- matrix(runif(m*n,0,1), ncol=m)
-  ri<- sweep( ri, 1, rowSums( ri), FUN="/")
+  ri <- matrix(stats::runif(m*n,0,1), ncol=m)
+  ri<- sweep( ri, 1, Matrix::rowSums( ri), FUN="/")
   ri
 }
 
@@ -27,6 +28,7 @@ alpha_rand <- function(n,m) {
 #'
 #' @importFrom stats dnorm
 #' @importFrom pracma linspace
+#' @importFrom Matrix rowSums
 #'
 #' @returns List with following elements::\describe{
 #'    \item{x}{Numeric vector with equaliy spread data of given precison}
@@ -37,14 +39,14 @@ alpha_rand <- function(n,m) {
 #' @seealso \code{\link{runGMM}} and \code{\link{generate_norm1D}}
 #' @export
 generate_dist<-function(data, GModel, precision){
-  x_temp = linspace(min(data),max(data),precision)
+  x_temp = pracma::linspace(min(data),max(data),precision)
   f_temp = matrix(0, precision, nrow(GModel))
   for(k in 1:nrow(GModel)){
-    f_temp[,k] = GModel$alpha[k] * dnorm(x_temp, mean = GModel$mu[k], sd =GModel$sigma[k])
+    f_temp[,k] = GModel$alpha[k] * stats::dnorm(x_temp, mean = GModel$mu[k], sd =GModel$sigma[k])
   }
 
   f_temp <- as.data.frame(f_temp)
-  f_temp$main <- rowSums(f_temp)
+  f_temp$main <- Matrix::rowSums(f_temp)
 
   return(list(x=x_temp,dist=f_temp))
 }
@@ -75,7 +77,7 @@ generate_norm1D <- function(n, alpha, mu, sigma){
   pts.kl<-c()
   for(i in 1:n){
     pts.kl[i] <- sample.int(KS, 1L, prob=alpha)
-    dist[i] <- rnorm(1, as.numeric(mu[pts.kl[i]]), as.numeric(sigma[pts.kl[i]]))
+    dist[i] <- stats::rnorm(1, as.numeric(mu[pts.kl[i]]), as.numeric(sigma[pts.kl[i]]))
   }
 
   idx<-order(dist,decreasing = F)
