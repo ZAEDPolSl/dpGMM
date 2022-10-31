@@ -9,7 +9,7 @@
 #' @name example
 #' @usage data(example)
 #' @format A vector containing 1500 observations
-#' @source Simulated data
+#' @source Randomly generated data
 "example"
 
 #' Binned data of mass spectrometry
