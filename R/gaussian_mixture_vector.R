@@ -1,7 +1,7 @@
 #' Gaussian mixture decomposition for a vector of data
 #'
 #' Function returns a list of GMM parameters for the optimal number of components
-#' which are computed in the EM algorithm
+#' which are computed in the EM algorithm.
 #'
 #' @param data Vector fo data to decompose by GMM.
 #' @param KS Maximum number of components.
@@ -130,3 +130,4 @@ gaussian_mixture_vector <- function(data, KS, Y = NULL, change = Inf, max_iter =
 
   return(res)
 }
+
