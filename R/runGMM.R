@@ -12,7 +12,7 @@
 #' @param IC Information Criterion to select best number of components.
 #' Possible "AIC","AICc", "BIC" (default), "ICL-BIC" or "LR".
 #' @param merge Logical value. If TRUE (default) overlapping components are merged at the distance defined in the \code{sigmas.dev} argument
-#' @param sigmas.dev Number of sigmas defining the distance to connect overlapping components of GMM. By default it is \code{sigma.dev = 2.5}
+#' @param sigmas.dev Number of sigmas defining the distance to merge overlapping components of GMM. By default it is \code{sigma.dev = 2.5}
 #' @param precision Precision of point linespacin. By default it is \code{precision = 1e4}
 #' @param plot Logical value. If TRUE (default), the GMM figure will be displayed.
 #' @param col.pal RColorBrewer palette name. \code{"Blues"} is by default

@@ -18,8 +18,8 @@
 #' Used to speed up the function (Default is TRUE).
 #' @param signi Significance level for Likelihood Ratio Test. By default is 0.05.
 #'
-#' @return Function returns a \code{list} of GMM parameters for the optimal number of components: \describe{
-#'  \item{model}{A \code{list} of model component parameters - mean values (mu), standard deviations (sigma)
+#' @returns Function returns a \code{list} of GMM parameters for the optimal number of components: \describe{
+#'  \item{model}{A \code{data.frame} of model component parameters - mean values (mu), standard deviations (sigma)
 #'  and weights (alpha) for each component. Output of \code{EM_iter}}
 #'  \item{IC}{Value of the selected information criterion which was used to calculate the optimal number of components}
 #'  \item{logL}{Log-likelihood value for the optimal number of components}

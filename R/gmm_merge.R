@@ -1,19 +1,35 @@
-gmm_merge <- function(GModel, sigmas.dev=1.5){
-  
+#' Merging of overlapping components
+#'
+#' Function merges distributions of overlapping components at distances defined in the argument \code{sigmas.dev}.
+#'
+#' @param GModel A \code{data.frame} of model component parameters - the rows are, in turn:  mean values (mu), standard deviations (sigma)
+#'  and weights (alpha) and each column corresponds to one component. Output of \code{EM_iter}}
+#' @param sigmas.dev Number of sigmas defining the distance to merge overlapping components of GMM.
+#' By default it is \code{sigma.dev = 2.5}
+#'
+#' @return Returns \code{data.frame} containing the parameters of the components after merging, and the new number of components.
+#'
+#' @examples
+#'
+#' @seealso \code{\link{runGMM}} and \code{\link{EM_iter}}
+#'
+#' @export
+gmm_merge <- function(GModel, sigmas.dev=2.5){
+
   KS <- length(GModel$mu) #number of comonents
-  
+
   merged <- list()
   merged$mu <- GModel$mu[1]
   merged$sigma <- GModel$sigma[1]
   merged$alpha <- GModel$alpha[1]
-  
+
   mergedKS <- 1
   indx_merged <- 1
-  
+
   for(jj in 2:KS){
     dd <- GModel$mu[jj] - merged$mu[mergedKS]
-    delta <- min(GModel$sigma[jj], merged$sigma[mergedKS])*sigmas.dev 
-    
+    delta <- min(GModel$sigma[jj], merged$sigma[mergedKS])*sigmas.dev
+
     if(dd < delta){
       pp_est <- c(GModel$alpha[jj], merged$alpha[mergedKS])
       mu_est <- c(GModel$mu[jj], merged$mu[mergedKS])
@@ -25,12 +41,12 @@ gmm_merge <- function(GModel, sigmas.dev=1.5){
     }else{
       merged$mu <- c(merged$mu, GModel$mu[jj])
       merged$sigma <- c(merged$sigma, GModel$sigma[jj])
-      merged$alpha = c(merged$alpha, GModel$alpha[jj])
+      merged$alpha <- c(merged$alpha, GModel$alpha[jj])
       mergedKS <- mergedKS + 1
     }
     indx_merged <- c(indx_merged, mergedKS)
   }
-  
+
   new_GModel <- list(model = as.data.frame(merged[1:3]), KS = length(merged$alpha))
   #merged$KS <- length(merged$alpha)
   return(new_GModel)
