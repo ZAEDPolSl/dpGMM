@@ -1,29 +1,37 @@
 #' Gaussian mixture decomposition for a vector of data
 #'
-#' Function returns a list of GMM parameters for the optimal number of components
-#' which are computed in the EM algorithm.
+#'Function to choose the optimal number of components of a mixture normal distributions,
+#'minimising the value of the information criterion.
 #'
-#' @param data Vector fo data to decompose by GMM.
+#' @param data Vector of data to decompose by GMM.
 #' @param KS Maximum number of components.
 #' @param Y Vector of counts, should be the same length as "data".
-#' Applies only to binned data therefore the default is Y = NULL
+#' Applies only to binned data therefore the default is Y = NULL.
 #' @param change Też nie wiem (chyba)
 #' @param max_iter Maximum number of iterations of EM algorithm.
 #' @param SW Minimum standard devation of component.
 #' Default set to range(x)/(5*no.of.components))^2.
-#' @param IC Information Criterion to select best no. of components.
+#' @param IC Information Criterion to select best number of components.
 #' Possible "AIC","AICc", "BIC" (default), "ICL-BIC" or "LR".
 #' @param quick_stop Logical value. Determines to stop the EM algorithm when adding
 #' another component is no longer significant according to the Likelihood Ratio Test.
 #' Used to speed up the function (Default is TRUE).
 #' @param signi Significance level for Likelihood Ratio Test. By default is 0.05.
 #'
+#' @return Function returns a \code{list} of GMM parameters for the optimal number of components: \describe{
+#'  \item{model}{A \code{list} of model component parameters - mean values (mu), standard deviations (sigma)
+#'  and weights (alpha) for each component. Output of \code{EM_iter}}
+#'  \item{IC}{Value of the selected information criterion which was used to calculate the optimal number of components}
+#'  \item{logL}{Log-likelihood value for the optimal number of components}
+#'  \item{KS}{Optimal number of components}
+#' }
 #'
 #' @importFrom stats pchisq qchisq
 #'
 #' @examples
 #' data <- generate_norm1D(1000, alpha=c(0.2,0.4,0.4), mu=c(-15,0,15), sigma=c(1,2,3))
 #' exp <- gaussian_mixture_vector(data, KS = 10, IC = "AIC", quick_stop = FALSE)
+#'
 #' @seealso \code{\link{runGMM}} and \code{\link{EM_iter}}
 #'
 #' @export
@@ -59,11 +67,6 @@ gaussian_mixture_vector <- function(data, KS, Y = NULL, change = Inf, max_iter =
   logL[1] <- rcpt[[4]]
   if(IC != "LR"){crit_vector[1] <- rcpt[[5]]}
 
-  # switch(IC,
-  #     "BIC" = crit_vector[1] <- -2*logL[1] + 2*log(bin_edge_sum),
-  #     "AIC" = crit_vector[1] <- -2*logL[1] + 2*(3*1-1),
-  #     "AICc" = crit_vector[1] <- -2*logL[1] + 2*(3*1-1)*(bin_edge_sum/(bin_edge_sum-(3*1-1)-1)), #dla k = 1
-  # )
   #decomposition for >2 components
   stop <- 1
   k <- 2
@@ -100,7 +103,7 @@ gaussian_mixture_vector <- function(data, KS, Y = NULL, change = Inf, max_iter =
     if(quick_stop | IC == "LR"){D[k] <- -2*logL[k-1] + 2*logL[k]}
 
     if(quick_stop){
-      if ((1 - pchisq(D[k],3)) > signi){stop <- 0}
+      if ((1 - stats::pchisq(D[k],3)) > signi){stop <- 0}
       }
 
     # if(IC == "LR"){crit_vector[k] <- (1-pchisq(D[k],3))}
@@ -109,10 +112,10 @@ gaussian_mixture_vector <- function(data, KS, Y = NULL, change = Inf, max_iter =
   }
 
   if(IC == "LR"){
-    LR_crit <- qchisq(1-signi, 3) # crit. val
+    LR_crit <- stats::qchisq(1-signi, 3) # crit. val
     D <- D[c(1, which(D > LR_crit))]
     cmp_nb <- which.min(D)
-    crit_est <- (1 - pchisq(D[cmp_nb], 3))
+    crit_est <- (1 - stats::pchisq(D[cmp_nb], 3))
   }else{
     cmp_nb <- which(crit_vector == min(crit_vector, na.rm = T))
     crit_est <- crit_vector[cmp_nb]
