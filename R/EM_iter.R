@@ -3,18 +3,18 @@
 #' The function performs the EM algorithm to find the local maximum likelihood for the estimated Gaussian mixture parameters.
 #'
 #' @param x Vector of data to decompose by GMM.
-#' @param alpha Vector containing the weights (\alpha) for each component in the statistical model.
-#' @param mu Vector containing the means (\mu) for each component in the statistical model.
-#' @param sig Vector containing the standard deviation (\sigma) for each component in the statistical model.
+#' @param alpha Vector containing the weights (alpha) for each component in the statistical model.
+#' @param mu Vector containing the means (mu) for each component in the statistical model.
+#' @param sig Vector containing the standard deviation (sigma) for each component in the statistical model.
 #' @param N Number of observations. Should be equal to \code{length(x)}
 #' Applies only to binned data therefore the default is Y = NULL.
 #' @param Y Vector of counts, should be the same length as "x".
 #' Applies only to binned data therefore the default is Y = NULL.
-#' @param change Stop of EM criterion (if lower than 1e-7). Calculated as follow:
-#' sum(abs(alpha-old_alpha)) + sum(((abs(sig2 - old_sig2))/sig2))/(length(alpha))
+#' @param change Stop of EM criterion (if < 1e-7). Default \code{Inf}. Calculated as follow:
+#' \deqn{sum|alpha-old_alpha| + \frac{sum(\frac{|sig2 - old_sig2|}{sig2})}{length(alpha)}}
 #' @param max_iter Maximum number of iterations of EM algorithm.
 #' @param SW Minimum standard deviation of component.
-#' Default set to \deqn{\frac{range(x)}{(5*no.of.components))^2}}.
+#' Default set to: \deqn{\frac{range(x)}{(5*no.of.components))^2}}.
 #' @param IC Information Criterion to select best number of components.
 #' Possible "AIC","AICc", "BIC" (default), "ICL-BIC" or "LR".
 #'
@@ -25,6 +25,8 @@
 #'  \item{logL}{Log-likelihood value in local extreme.}
 #'  \item{crit}{Value of the selected information criterion in local extreme of likelihood function.}
 #' }
+#'
+#' @importFrom stats dnorm
 #'
 #' @seealso \code{\link{runGMM}} and \code{\link{gaussian_mixture_vector}}
 #'
