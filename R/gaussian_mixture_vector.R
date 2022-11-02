@@ -1,16 +1,16 @@
 #' Gaussian mixture decomposition for a vector of data
 #'
-#'Function to choose the optimal number of components of a mixture normal distributions,
-#'minimising the value of the information criterion.
+#'Function to choose the optimal number of components of a mixture normal distributions, minimising the value of the information criterion.
 #'
 #' @param data Vector of data to decompose by GMM.
-#' @param KS Maximum number of components.
+#' @param KS Maximum number of components to evaluate.
 #' @param Y Vector of counts, should be the same length as "data".
 #' Applies only to binned data therefore the default is Y = NULL.
-#' @param change Też nie wiem (chyba)
+#' @param change Stop of EM criterion (if < 1e-7). Default \code{Inf}. Calculated as follow:
+#' sum(abs(alpha-old_alpha)) + sum(((abs(sig2 - old_sig2))/sig2))/(length(alpha))
 #' @param max_iter Maximum number of iterations of EM algorithm.
-#' @param SW Minimum standard devation of component.
-#' Default set to range(x)/(5*no.of.components))^2.
+#' @param SW Minimum standard deviation of component.
+#' Default set to: \deqn{\frac{range(x)}{(5*no.of.components))^2}}.
 #' @param IC Information Criterion to select best number of components.
 #' Possible "AIC","AICc", "BIC" (default), "ICL-BIC" or "LR".
 #' @param quick_stop Logical value. Determines to stop the EM algorithm when adding
@@ -27,6 +27,7 @@
 #' }
 #'
 #' @importFrom stats pchisq qchisq
+#' @importFrom graphics hist
 #'
 #' @examples
 #' data <- generate_norm1D(1000, alpha=c(0.2,0.4,0.4), mu=c(-15,0,15), sigma=c(1,2,3))
@@ -71,10 +72,10 @@ gaussian_mixture_vector <- function(data, KS, Y = NULL, change = Inf, max_iter =
   stop <- 1
   k <- 2
   Nb <- length(x)
-  aux_mx <- dyn_pr_split_w_aux(x,y)
+  aux_mx <- rGMMtest:::dyn_pr_split_w_aux(x,y) #CORRECT TO FINAL NAME OF PACKAGE !!!!!!!!!!!!!!!!!
 
   while (stop && k < KS){
-    tmp <- dyn_pr_split_w(x, y, k-1, aux_mx)
+    tmp <- rGMMtest:::dyn_pr_split_w(x, y, k-1, aux_mx) #CORRECT TO FINAL NAME OF PACKAGE!!!!!!
     opt_part <- tmp[[2]]
 
     part_cl <- c(1, opt_part, Nb+1)
@@ -103,19 +104,18 @@ gaussian_mixture_vector <- function(data, KS, Y = NULL, change = Inf, max_iter =
     if(quick_stop | IC == "LR"){D[k] <- -2*logL[k-1] + 2*logL[k]}
 
     if(quick_stop){
-      if ((1 - stats::pchisq(D[k],3)) > signi){stop <- 0}
+      if ((1 - pchisq(D[k],3)) > signi){stop <- 0}
       }
 
-    # if(IC == "LR"){crit_vector[k] <- (1-pchisq(D[k],3))}
     if(IC == "LR"){crit_vector[k] <- D[k]}
     k <- k+1
   }
 
   if(IC == "LR"){
-    LR_crit <- stats::qchisq(1-signi, 3) # crit. val
+    LR_crit <- qchisq(1-signi, 3) # crit. val
     D <- D[c(1, which(D > LR_crit))]
     cmp_nb <- which.min(D)
-    crit_est <- (1 - stats::pchisq(D[cmp_nb], 3))
+    crit_est <- (1 - pchisq(D[cmp_nb], 3))
   }else{
     cmp_nb <- which(crit_vector == min(crit_vector, na.rm = T))
     crit_est <- crit_vector[cmp_nb]
@@ -133,4 +133,3 @@ gaussian_mixture_vector <- function(data, KS, Y = NULL, change = Inf, max_iter =
 
   return(res)
 }
-

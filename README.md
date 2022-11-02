@@ -8,7 +8,7 @@ Package functionality:
 3) Quick stop if LR test does not show improvement. Possibility to control significance level,
 4) Analysis of single measurements/vector as well as binned data,
 5) Distribution plot with selected components in ggplot,
-6) QQ-plot of fitted distribution oand standard normal distribution,
+6) QQ-plot of fitted distribution and standard normal distribution,
 7) Gaussian Mixture Modeling for 2D data.
 
 ## Installation

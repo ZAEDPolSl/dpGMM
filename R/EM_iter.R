@@ -1,29 +1,32 @@
 #' Expectation–maximization algorithm for GMM
 #'
-#'The function performs the EM algorithm to find the local maximum likelihood for the estimated Gaussian mixture prameters.
+#' The function performs the EM algorithm to find the local maximum likelihood for the estimated Gaussian mixture parameters.
 #'
 #' @param x Vector of data to decompose by GMM.
 #' @param alpha Vector containing the weights (alpha) for each component in the statistical model.
-#' @param Y Vector of counts, should be the same length as "x".
-#' Applies only to binned data therefore the default is Y = NULL.
 #' @param mu Vector containing the means (mu) for each component in the statistical model.
 #' @param sig Vector containing the standard deviation (sigma) for each component in the statistical model.
 #' @param N Number of observations. Should be equal to \code{length(x)}
 #' Applies only to binned data therefore the default is Y = NULL.
-#' @param change Też nie wiem (chyba)
+#' @param Y Vector of counts, should be the same length as "x".
+#' Applies only to binned data therefore the default is Y = NULL.
+#' @param change Stop of EM criterion (if < 1e-7). Default \code{Inf}. Calculated as follow:
+#' \deqn{sum|alpha-old_alpha| + \frac{sum(\frac{|sig2 - old_sig2|}{sig2})}{length(alpha)}}
 #' @param max_iter Maximum number of iterations of EM algorithm.
 #' @param SW Minimum standard deviation of component.
-#' Default set to range(x)/(5*no.of.components))^2.
+#' Default set to: \deqn{\frac{range(x)}{(5*no.of.components))^2}}.
 #' @param IC Information Criterion to select best number of components.
 #' Possible "AIC","AICc", "BIC" (default), "ICL-BIC" or "LR".
 #'
 #' @return Returns a \code{list} of GMM parameter values that correspond to the local extremes for each component.\describe{
-#'  \item{alpha}{Vector of optimal alpha values.}
-#'  \item{mu}{Vector of optimal mu values.}
-#'  \item{sigma}{Vector of optimal sigma values.}
+#'  \item{alpha}{Vector of optimal alpha (weights) values.}
+#'  \item{mu}{Vector of optimal mu (means) values.}
+#'  \item{sigma}{Vector of optimal sigma (standard devations) values.}
 #'  \item{logL}{Log-likelihood value in local extreme.}
 #'  \item{crit}{Value of the selected information criterion in local extreme of likelihood function.}
 #' }
+#'
+#' @importFrom stats dnorm
 #'
 #' @seealso \code{\link{runGMM}} and \code{\link{gaussian_mixture_vector}}
 #'
@@ -50,7 +53,6 @@ EM_iter <- function(x, alpha, mu, sig, N, Y = NULL, change = Inf, max_iter = 500
   while (change > eps_change && count < max_iter){
     old_alpha <- alpha
     old_sig2 <- sig2
-    #cat(alpha, "  ",mu, "   ",sig," \n")
     f <- matrix(0, KS, N)
     sig <- sqrt(sig2)
 
@@ -64,7 +66,7 @@ EM_iter <- function(x, alpha, mu, sig, N, Y = NULL, change = Inf, max_iter = 500
       }
 
       for(a in 1:KS){
-        f[a,] <- norm_pdf(x, mu[a], sig[a])
+        f[a,] <- dnorm(x, mu[a], sig[a])
       }
 
       px <- matrix(0, KS, N)
@@ -72,7 +74,6 @@ EM_iter <- function(x, alpha, mu, sig, N, Y = NULL, change = Inf, max_iter = 500
         px[i,] <- alpha[i] * f[i,]
       }
       px <- colSums(px)
-      #px <- alpha*f
       px[is.nan(px) | px==0] = 5e-324
 
       for (a in 1:KS){
@@ -88,6 +89,7 @@ EM_iter <- function(x, alpha, mu, sig, N, Y = NULL, change = Inf, max_iter = 500
 
     count <- count + 1
   }
+
   #RETURN RESULTS
   if(sum(tmp)>1){
     logL <- -Inf
@@ -99,9 +101,7 @@ EM_iter <- function(x, alpha, mu, sig, N, Y = NULL, change = Inf, max_iter = 500
   sig_est <- sqrt(sig2[ind])
   pp_est <- alpha[ind]
 
-  #KS <- length(alpha) #będzie odpowiadać k
   #calculating the information criterion
-
   if(IC == "ICL-BIC"){
     if(change != 0){
       pk[is.nan(pk) | pk==0] = 5e-324
@@ -118,11 +118,6 @@ EM_iter <- function(x, alpha, mu, sig, N, Y = NULL, change = Inf, max_iter = 500
          "ICL-BIC" = crit_val <- -2*logL + 2*EN + (3*KS-1)*log(bin_edge_sum),
          "LR" = crit_val <- NULL
   )
-  # switch(IC,
-  #        "BIC" = crit_val <- -2*logL + 2*log(bin_edge_sum),
-  #        "AIC" = crit_val <- -2*logL + 2*(3*1-1),
-  #        "AICc" = crit_val<- -2*logL + 2*(3*1-1)*(bin_edge_sum/(bin_edge_sum-(3*1-1)-1)), #dla k = 1
-  # )
 
   return(list(alpha = pp_est, mu = mu_est, sigma = sig_est, logL = logL, crit = crit_val))
 }
