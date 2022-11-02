@@ -1,3 +1,41 @@
+#' Gaussian mixture decomposition for a vector of data
+#'
+#'Function to choose the optimal number of components of a mixture normal distributions, minimising the value of the information criterion.
+#'
+#' @param data Vector of data to decompose by GMM.
+#' @param KS Maximum number of components to evaluate.
+#' @param Y Vector of counts, should be the same length as "data".
+#' Applies only to binned data therefore the default is Y = NULL.
+#' @param change Stop of EM criterion (if < 1e-7). Default \code{Inf}. Calculated as follow:
+#' sum(abs(alpha-old_alpha)) + sum(((abs(sig2 - old_sig2))/sig2))/(length(alpha))
+#' @param max_iter Maximum number of iterations of EM algorithm.
+#' @param SW Minimum standard deviation of component.
+#' Default set to: \deqn{\frac{range(x)}{(5*no.of.components))^2}}.
+#' @param IC Information Criterion to select best number of components.
+#' Possible "AIC","AICc", "BIC" (default), "ICL-BIC" or "LR".
+#' @param quick_stop Logical value. Determines to stop the EM algorithm when adding
+#' another component is no longer significant according to the Likelihood Ratio Test.
+#' Used to speed up the function (Default is TRUE).
+#' @param signi Significance level for Likelihood Ratio Test. By default is 0.05.
+#'
+#' @returns Function returns a \code{list} of GMM parameters for the optimal number of components: \describe{
+#'  \item{model}{A \code{data.frame} of model component parameters - mean values (mu), standard deviations (sigma)
+#'  and weights (alpha) for each component. Output of \code{EM_iter}}
+#'  \item{IC}{Value of the selected information criterion which was used to calculate the optimal number of components}
+#'  \item{logL}{Log-likelihood value for the optimal number of components}
+#'  \item{KS}{Optimal number of components}
+#' }
+#'
+#' @importFrom stats pchisq qchisq
+#' @importFrom graphics hist
+#'
+#' @examples
+#' data <- generate_norm1D(1000, alpha=c(0.2,0.4,0.4), mu=c(-15,0,15), sigma=c(1,2,3))
+#' exp <- gaussian_mixture_vector(data, KS = 10, IC = "AIC", quick_stop = FALSE)
+#'
+#' @seealso \code{\link{runGMM}} and \code{\link{EM_iter}}
+#'
+#' @export
 gaussian_mixture_vector <- function(data, KS, Y = NULL, change = Inf, max_iter = 5000, SW=NULL, IC = "BIC", quick_stop = TRUE, signi = 0.05){
 
   if (min(dim(as.matrix(data))) !=1){

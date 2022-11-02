@@ -46,7 +46,6 @@ find_thr_by_params <- function(GModel,input){
 
       if (delta<0){
         thr2<-c(thr2,find_thr_by_dist(input)[i])
-        #print(paste0("For ",i, " im in dist select"))
       } else{
 
         x1 = (-B - sqrt(delta))/(2*A)
@@ -54,12 +53,9 @@ find_thr_by_params <- function(GModel,input){
 
         if (x1 > GModel$mu[i] && x1 < GModel$mu[i+1]){
           thr2 <- c(thr2, x1)
-          #  print(paste0("For ",i, " select x1"))
         } else if (x2 > GModel$mu[i] && x2 < GModel$mu[i+1]){
           thr2 <- c(thr2, x2)
-          #  print(paste0("For ",i, " select x2"))
         } else {
-          # print(paste0("For ",i, " in new else"))
           d1<-min(c(abs(x1-GModel$mu[i]),abs(x1-GModel$mu[i+1])))
           d2<-min(c(abs(x2-GModel$mu[i]),abs(x2-GModel$mu[i+1])))
           if (d1<d2){
