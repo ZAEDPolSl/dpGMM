@@ -9,7 +9,9 @@
 #' @importFrom Matrix rowSums
 #'
 #' @examples
+#' \dontrun{
 #' alpha_rand(1,4)
+#'}
 #'
 alpha_rand <- function(n,m) {
   ri <- matrix(stats::runif(m*n,0,1), ncol=m)
@@ -68,8 +70,9 @@ generate_dist<-function(data, GModel, precision){
 #' }
 #'
 #' @examples
+#' \dontrun{
 #' data<-generate_norm1D(1000, alpha=c(0.2,0.4,0.4), mu=c(-15,0,15), sigma=c(1,2,3))
-#'
+#' }
 #' @export
 generate_norm1D <- function(n, alpha, mu, sigma){
   KS <- length(mu)

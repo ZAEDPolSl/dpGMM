@@ -23,11 +23,12 @@ Function returns a \code{list} which contains: \describe{
 Function merges distributions of overlapping components at distances defined in the argument \code{sigmas.dev}.
 }
 \examples{
+\dontrun{
 GModel<-data.frame(alpha=c(0.45,0.5,0.05),
                   mu=c(-14,-2,5),
                   sigma=c(2,4,1.5))
 gmm_merge(GModel, sigmas.dev=5)
-
+}
 
 }
 \seealso{

@@ -36,7 +36,9 @@
 #'  It contains fit diagnostic Quantile-Quantile plot for one normal distribution and fitted GMM.}
 #' }
 #'
+#' @importFrom methods hasArg
 #' @examples
+#' \dontrun{
 #' data(example)
 #' mix_test1 <- runGMM(example$Dist, KS = 15, IC = "AICc", quick_stop = F, merge = F)
 #'
@@ -47,6 +49,7 @@
 #' data(binned)
 #' binned_test <- runGMM(X = binned$V1, Y = binned$V2, KS =40, col.pal ="Dark2", plot = F, quick_stop = T)
 #' binned_test$fig
+#' }
 #'
 #' @seealso \code{\link{gaussian_mixture_vector}}, \code{\link{EM_iter}}, \code{\link{generate_dist}}, \code{\link{find_thr_by_params}}
 #'

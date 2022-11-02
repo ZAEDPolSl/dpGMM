@@ -15,6 +15,8 @@ alpha_rand(n, m)
 Function generating alpha values of mixture distribution. Sum of alpha equals 1.
 }
 \examples{
+\dontrun{
 alpha_rand(1,4)
+}
 
 }
