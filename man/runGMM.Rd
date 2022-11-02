@@ -74,6 +74,7 @@ Function returns a \code{list} which contains: \describe{
 Function runs GMM with stable initial points of EM algorithm and all possible control parameters within package.
 }
 \examples{
+\dontrun{
 data(example)
 mix_test1 <- runGMM(example$Dist, KS = 15, IC = "AICc", quick_stop = F, merge = F)
 
@@ -84,6 +85,7 @@ mix_test2$QQplot
 data(binned)
 binned_test <- runGMM(X = binned$V1, Y = binned$V2, KS =40, col.pal ="Dark2", plot = F, quick_stop = T)
 binned_test$fig
+}
 
 }
 \seealso{

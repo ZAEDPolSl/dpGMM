@@ -30,8 +30,10 @@
 #' @importFrom graphics hist
 #'
 #' @examples
+#' \dontrun{
 #' data <- generate_norm1D(1000, alpha=c(0.2,0.4,0.4), mu=c(-15,0,15), sigma=c(1,2,3))
 #' exp <- gaussian_mixture_vector(data, KS = 10, IC = "AIC", quick_stop = FALSE)
+#' }
 #'
 #' @seealso \code{\link{runGMM}} and \code{\link{EM_iter}}
 #'
