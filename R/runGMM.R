@@ -41,7 +41,7 @@ runGMM <- function(X, KS, Y = NULL, change = Inf, max_iter = 5000, SW=NULL, IC =
     pl<-plot_gmm_1D(X, dist.plot, Y, thr, pal=col.pal)
 
   # QQplot
-    pl.qq<-plot_QQplot(X,GModel)
+    pl.qq<-plot_QQplot(X,GModel$model)
 
   # Output of function
     mix_gmm <- list(model = GModel$model, KS = nrow(GModel$model), IC = GModel$IC, logLik = GModel$logL,
