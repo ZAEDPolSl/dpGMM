@@ -16,11 +16,14 @@ Function return ggplot object with fit diagnostic Quantile-Quantile plot for one
 This plot is also return as regular output of \code{\link{runGMM}}.
 }
 \examples{
+\dontrun{
 data(example)
 GModel<-data.frame(alpha=c(0.45,0.5,0.05),
                   mu=c(-14,-2,5),
                   sigma=c(2,4,1.5))
 plot_QQplot(example$Dist,GModel)
+}
+
 }
 \seealso{
 \code{\link{runGMM}} and \code{\link{gaussian_mixture_vector}}

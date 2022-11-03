@@ -25,6 +25,7 @@ List with following elements::\describe{
 Generator of mixed-normal distribution with given model parameters for certain points number.
 }
 \examples{
+\dontrun{
 data<-generate_norm1D(1000, alpha=c(0.2,0.4,0.4), mu=c(-15,0,15), sigma=c(1,2,3))
-
+}
 }

@@ -20,6 +20,7 @@
 #' @seealso \code{\link{runGMM}}
 #'
 #' @examples
+#' \dontrun{
 #' data(example)
 #' GModel<-data.frame(alpha=c(0.45,0.5,0.05),
 #'                   mu=c(-14,-2,5),
@@ -27,6 +28,7 @@
 #' dist.plot<-generate_dist(example$Dist, GModel, 1e4)
 #' thr <- find_thr_by_params(GModel,dist.plot)
 #' plot_gmm_1D(example$Dist, dist.plot,Y=NULL,threshold=thr, pal="Dark2")
+#' }
 #'
 #' @export
 plot_gmm_1D <- function(X, dist, Y=NULL, threshold=NA, pal=NULL){
@@ -88,11 +90,14 @@ plot_gmm_1D <- function(X, dist, Y=NULL, threshold=NA, pal=NULL){
 #' @importFrom stats qqplot
 #'
 #' @examples
+#' \dontrun{
 #' data(example)
 #' GModel<-data.frame(alpha=c(0.45,0.5,0.05),
 #'                   mu=c(-14,-2,5),
 #'                   sigma=c(2,4,1.5))
 #' plot_QQplot(example$Dist,GModel)
+#' }
+#'
 #' @seealso \code{\link{runGMM}} and \code{\link{gaussian_mixture_vector}}
 #'
 #' @export

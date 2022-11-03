@@ -1,3 +1,59 @@
+#' Function to perform Gaussian Mixture Model
+#'
+#' Function runs GMM with stable initial points of EM algorithm and all possible control parameters within package.
+#'
+#' @param X Vector of data to decompose by GMM.
+#' @param KS Maximum number of components.
+#' @param Y Vector of counts, should be the same length as "X".
+#' Applies only to binned data therefore the default is Y = NULL.
+#' @param change Stop of EM criterion (if < 1e-7). Default \code{Inf}. Calculated as follow:
+#' sum(abs(alpha-old_alpha)) + sum(((abs(sig2 - old_sig2))/sig2))/(length(alpha))
+#' @param max_iter Maximum number of iterations of EM algorithm. By default it is \code{max_iter = 5000}
+#' @param SW Minimum standard deviation of component.
+#' Default set to: \deqn{\frac{range(x)}{(5*no.of.components))^2}}.
+#' @param IC Information Criterion to select best number of components.
+#' Possible "AIC","AICc", "BIC" (default), "ICL-BIC" or "LR".
+#' @param merge Logical value. If TRUE (default) overlapping components are merged at the distance defined in the \code{sigmas.dev} argument
+#' @param sigmas.dev Number of sigmas defining the distance to merge overlapping components of GMM. By default it is \code{sigma.dev = 2.5}
+#' @param precision Precision of point linespacin. By default it is \code{precision = 1e4}
+#' @param plot Logical value. If TRUE (default), the GMM figure will be displayed.
+#' @param col.pal RColorBrewer palette name for coloring components ong figure. \code{"Blues"} is by default
+#' @param quick_stop Logical value. Determines to stop the EM algorithm when adding
+#' another component is no longer significant according to the Likelihood Ratio Test.
+#' Used to speed up the function (Default is TRUE).
+#' @param signi Significance level for Likelihood Ratio Test. By default is 0.05.
+#'
+#' @returns Function returns a \code{list} which contains: \describe{
+#'  \item{model}{A \code{list} of model component parameters - mean values (mu), standard deviations (sigma)
+#'  and weights (alpha) for each component. Output of \code{gaussian_mixture_vector}.}
+#'  \item{KS}{Optimal number of components.}
+#'  \item{IC}{Value of the selected information criterion which was used to calculate the optimal number of components.}
+#'  \item{logLik}{Log-likelihood value for the optimal number of components.}
+#'  \item{threshold}{Vector of thresholds between each components.}
+#'  \item{cluster}{Assignment of original \code{X} values to individual components (clusters).}
+#'  \item{fig}{ggplot object (output of the \code{plot_gmm_1D} function). It contains decomposed distributions together with a histogram of the data.}
+#'  \item{QQplot}{ggplot object (output of the \code{plot_QQplot} function).
+#'  It contains fit diagnostic Quantile-Quantile plot for one normal distribution and fitted GMM.}
+#' }
+#'
+#' @importFrom methods hasArg
+#' @examples
+#' \dontrun{
+#' data(example)
+#' mix_test1 <- runGMM(example$Dist, KS = 15, IC = "AICc", quick_stop = F, merge = F)
+#'
+#' data(example)
+#' mix_test2 <- runGMM(example$Dist, KS = 10, IC = "BIC", merge = T, dev = 1.5)
+#' mix_test2$QQplot
+#'
+#' data(binned)
+#' binned_test <- runGMM(X = binned$V1, Y = binned$V2, KS =40, col.pal ="Dark2", plot = F, quick_stop = T)
+#' binned_test$fig
+#' }
+#'
+#' @seealso \code{\link{gaussian_mixture_vector}}, \code{\link{EM_iter}}, \code{\link{generate_dist}}, \code{\link{find_thr_by_params}}
+#'
+#' @export
 runGMM <- function(X, KS, Y = NULL, change = Inf, max_iter = 5000, SW=NULL, IC = "BIC", merge = TRUE, sigmas.dev = 2.5,
                    precision=1e4, plot = TRUE, col.pal="Blues", quick_stop = TRUE, signi = 0.05) {
   # Check part
