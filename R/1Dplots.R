@@ -64,10 +64,10 @@ plot_gmm_1D <- function(X, dist, Y=NULL, threshold=NA, pal=NULL){
     p<- p+geom_bar(aes(x=X,y=Y),stat="identity",color="grey65", fill="grey65",alpha=0.2)
 
   } else{
-    p<- p+geom_histogram(aes(x=X,y=..density..),binwidth = binwidth,color="black", fill="grey",alpha=0.2)
+    p<- p+geom_histogram(aes(x=X,y=after_stat(density)),binwidth = binwidth,color="black", fill="grey",alpha=0.2)
   }
 
-  p<-p+geom_line(aes(x=tmp$xx, y=tmp$value, group=tmp$variable, color=as.factor(tmp$variable), linetype=as.factor(tmp$lin)), size=1)+
+  p<-p+geom_line(aes(x=tmp$xx, y=tmp$value, group=tmp$variable, color=as.factor(tmp$variable), linetype=as.factor(tmp$lin)), linewidth=1)+
     scale_color_manual(values=col,name="") +
     scale_linetype_manual(values=c("dashed","solid")) + xlab("x")+ylab("Density")+guides(linetype="none")
 
