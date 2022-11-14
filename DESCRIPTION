@@ -3,16 +3,16 @@ Type: Package
 Title: An R package for GMM of 1D and 2D data with stable inital point of EM algoritm
 Version: 0.1.0
 Author: c(
+    person("Michal", "Marczyk",email = "michal.marczyk@polsl.pl", role = c("aut","cre")),
     person("Kamila", "Szumala", role = c("aut","cre")),
-    person("Joanna", "Zyla",  email = "joanna.zyla@polsl.pl",role = c("aut","cre")),
-    person("Michal", "Marczyk",email = "michal.marczyk@polsl.pl", role = c("aut","cre")))
+    person("Joanna", "Zyla",  email = "joanna.zyla@polsl.pl",role = c("aut","cre")))
 Maintainer: The package maintainer <joanna.zyla@polsl.pl>
 Description: R package for Gaussian Mixture Model (GMM) clustering using EM algorithm with initialization points See Polanski, A. et al. (2018)
   <doi:10.1142/S0219876218500123>.
 Depends:
-    R (>= 3.5), ggplot2, RColorBrewer
+    R (>= 3.5), ggplot2, RColorBrewer, stats
 Imports: 
-    grDevices, ggpubr, pracma, Matrix, reshape2, graphics, stats, methods
+    grDevices, ggpubr, pracma, Matrix, reshape2, graphics, methods
 License: GPL-2
 Encoding: UTF-8
 LazyData: true
