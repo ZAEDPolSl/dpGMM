@@ -4,7 +4,7 @@
 \alias{find_thr_by_params}
 \title{Calculation of GMM thresholds}
 \usage{
-find_thr_by_params(GModel, input)
+find_thr_by_params(GModel, input, sigmas.dev = 2.5)
 }
 \arguments{
 \item{GModel}{\code{data.frame} of GMM parameters i.e GModel$alpha, GModel$mu, GModel$sigma (correct \code{colnames} are obligatory)}
@@ -14,6 +14,8 @@ It is a list with following elements:\describe{
    \item{x}{Numeric vector with equaliy spread data of given precison}
    \item{dist}{Matrix with PDF of each GMM component and cumulative distribution}
 }}
+
+\item{sigmas.dev}{Number of sigmas to secure thresholds on the ends of distributions. Equivalent to sigma.dev in merging GMMs.}
 }
 \value{
 Return a vector of thresholds.
