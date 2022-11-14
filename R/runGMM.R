@@ -86,7 +86,7 @@ runGMM <- function(X, KS, Y = NULL, change = Inf, max_iter = 5000, SW=NULL, IC =
   # Thresholds estimation
     #thr <- find_thr_by_dist_VMM(dist.plot)
     if(GModel$KS>1){
-      thr <- find_thr_by_params(GModel$model,dist.plot)
+      thr <- find_thr_by_params(GModel$model,dist.plot,sigmas.dev)
     } else {thr=NULL}
 
   # Clusters assignment

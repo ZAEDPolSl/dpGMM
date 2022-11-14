@@ -4,13 +4,17 @@
 \alias{find_thr_by_dist}
 \title{Calculation of GMM thresholds from distribution}
 \usage{
-find_thr_by_dist(input)
+find_thr_by_dist(input, sigmas.dev = 2.5, GModel)
 }
 \arguments{
 \item{input}{output of \code{generate_dist} function. It is a list with following elements:\describe{
    \item{x}{Numeric vector with equaliy spread data of given precison}
    \item{dist}{Matrix with PDF of each GMM component and cumulative distribution}
 }}
+
+\item{sigmas.dev}{Number of sigmas to secure thresholds on the ends of distributions. Equivalent to sigma.dev in merging GMMs.}
+
+\item{GModel}{\code{data.frame} of GMM parameters i.e GModel$alpha, GModel$mu, GModel$sigma (correct \code{colnames} are obligatory)}
 }
 \value{
 Return a vector of thresholds.
@@ -25,7 +29,7 @@ GModel<-data.frame(alpha=c(0.45,0.5,0.05),
                   mu=c(-14,-2,5),
                   sigma=c(2,4,1.5))
 dist.plot<-generate_dist(example$Dist, GModel, 1e4)
-thr <- find_thr_by_dist(dist.plot)
+thr <- find_thr_by_dist(dist.plot,2.5,GModel)
 }
 
 }
