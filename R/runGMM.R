@@ -6,8 +6,8 @@
 #' @param KS Maximum number of components.
 #' @param Y Vector of counts, should be the same length as "X".
 #' Applies only to binned data therefore the default is Y = NULL.
-#' @param change Stop of EM criterion (if < 1e-7). Default \code{Inf}. Calculated as follow:
-#' sum(abs(alpha-old_alpha)) + sum(((abs(sig2 - old_sig2))/sig2))/(length(alpha))
+#' @param change Stop of EM criterion (if < 1e-7). Default calculated as follow:
+#' \deqn{\sum{(|alpha - alpha_{old})|} + \frac{\sum{(\frac{|sig2 - sig2_{old}|}{sig2})}}{length(alpha)}}
 #' @param max_iter Maximum number of iterations of EM algorithm. By default it is \code{max_iter = 5000}
 #' @param SW Minimum standard deviation of component.
 #' Default set to: \deqn{\frac{range(x)}{(5*no.of.components))^2}}.

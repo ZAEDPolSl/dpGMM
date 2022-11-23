@@ -32,8 +32,8 @@ Applies only to binned data therefore the default is Y = NULL.}
 \item{Y}{Vector of counts, should be the same length as "x".
 Applies only to binned data therefore the default is Y = NULL.}
 
-\item{change}{Stop of EM criterion (if < 1e-7). Default \code{Inf}. Calculated as follow:
-\deqn{sum|alpha-old_alpha| + \frac{sum(\frac{|sig2 - old_sig2|}{sig2})}{length(alpha)}}}
+\item{change}{Stop of EM criterion (if < 1e-7). Default calculated as follow:
+\deqn{\sum{(|alpha - alpha_{old})|} + \frac{\sum{(\frac{|sig2 - sig2_{old}|}{sig2})}}{length(alpha)}}}
 
 \item{max_iter}{Maximum number of iterations of EM algorithm.}
 
@@ -42,11 +42,6 @@ Default set to: \deqn{\frac{range(x)}{(5*no.of.components))^2}}.}
 
 \item{IC}{Information Criterion to select best number of components.
 Possible "AIC","AICc", "BIC" (default), "ICL-BIC" or "LR".}
-
-\item{change2}{Fancy equation
-$$
-\sum_{(|\bar{alpha} - old alpha)|} + \frac{\sum_{(\frac{|\bar{sig2} - old sig2|}{sig2})}}{length(alpha)}
-$$}
 }
 \value{
 Returns a \code{list} of GMM parameter values that correspond to the local extremes for each component.\describe{
