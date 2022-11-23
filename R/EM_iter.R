@@ -12,6 +12,11 @@
 #' Applies only to binned data therefore the default is Y = NULL.
 #' @param change Stop of EM criterion (if < 1e-7). Default \code{Inf}. Calculated as follow:
 #' \deqn{sum|alpha-old_alpha| + \frac{sum(\frac{|sig2 - old_sig2|}{sig2})}{length(alpha)}}
+#'
+#' @param change2 Fancy equation
+#' $$
+#' \sum_{(|\bar{alpha} - old alpha)|} + \frac{\sum_{(\frac{|\bar{sig2} - old sig2|}{sig2})}}{length(alpha)}
+#' $$
 #' @param max_iter Maximum number of iterations of EM algorithm.
 #' @param SW Minimum standard deviation of component.
 #' Default set to: \deqn{\frac{range(x)}{(5*no.of.components))^2}}.
