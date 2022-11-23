@@ -42,6 +42,11 @@ Default set to: \deqn{\frac{range(x)}{(5*no.of.components))^2}}.}
 
 \item{IC}{Information Criterion to select best number of components.
 Possible "AIC","AICc", "BIC" (default), "ICL-BIC" or "LR".}
+
+\item{change2}{Fancy equation
+$$
+\sum_{(|\bar{alpha} - old alpha)|} + \frac{\sum_{(\frac{|\bar{sig2} - old sig2|}{sig2})}}{length(alpha)}
+$$}
 }
 \value{
 Returns a \code{list} of GMM parameter values that correspond to the local extremes for each component.\describe{
