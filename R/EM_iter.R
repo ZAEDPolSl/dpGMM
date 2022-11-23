@@ -14,9 +14,7 @@
 #' \deqn{sum|alpha-old_alpha| + \frac{sum(\frac{|sig2 - old_sig2|}{sig2})}{length(alpha)}}
 #'
 #' @param change2 Fancy equation
-#' $$
-#' \sum_{(|\bar{alpha} - old alpha)|} + \frac{\sum_{(\frac{|\bar{sig2} - old sig2|}{sig2})}}{length(alpha)}
-#' $$
+#' \deqn{\sum{(|\alpha - \alpha_{old})|} + \frac{\sum{(\frac{|\sigma^2 - \sigma^2_{old}|}{\sigma^2})}}{length(\alpha)}}
 #' @param max_iter Maximum number of iterations of EM algorithm.
 #' @param SW Minimum standard deviation of component.
 #' Default set to: \deqn{\frac{range(x)}{(5*no.of.components))^2}}.
