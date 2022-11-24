@@ -33,7 +33,7 @@ Applies only to binned data therefore the default is Y = NULL.}
 Applies only to binned data therefore the default is Y = NULL.}
 
 \item{change}{Stop of EM criterion (if < 1e-7). Default calculated as follow:
-\deqn{\sum{(|alpha - alpha_{old})|} + \frac{\sum{(\frac{|sig^2 - sig^2_{old}|}{sig^2})}}{length(alpha)}}}
+\deqn{\sum{(|\alpha - \alpha_{old})|} + \frac{\sum{(\frac{|\sigma^2 - \sigma^2_{old}|}{\sigma^2})}}{length(\alpha)}}}
 
 \item{max_iter}{Maximum number of iterations of EM algorithm.}
 
