@@ -65,7 +65,7 @@ runGMM <- function(X, KS, Y = NULL, change = Inf, max_iter = 5000, SW=NULL, IC =
 
   IC_list <- c("AIC","AICc", "BIC", "ICL-BIC", "LR")
   if (!IC %in% IC_list) {
-    stop("Criterion not implemented. Please use AIC, AICc, BIC, ICL-BIC, LR, gap or NbClust")
+    stop("Criterion not implemented. Please use AIC, AICc, BIC, ICL-BIC or LR")
   }
 
 
