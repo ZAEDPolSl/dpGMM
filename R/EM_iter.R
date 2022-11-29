@@ -14,7 +14,7 @@
 #' \deqn{\sum{(|\alpha - \alpha_{old})|} + \frac{\sum{(\frac{|\sigma^2 - \sigma^2_{old}|}{\sigma^2})}}{length(\alpha)}}
 #' @param max_iter Maximum number of iterations of EM algorithm.
 #' @param SW Minimum standard deviation of component.
-#' Default set to: \deqn{\frac{range(x)}{(5*no.of.components))^2}}.
+#' Default set to: \deqn{\frac{range(x)}{(SW*no.of.components))^2}}.  SW=0 (default) than whole equation is equal 0.
 #' @param IC Information Criterion to select best number of components.
 #' Possible "AIC","AICc", "BIC" (default), "ICL-BIC" or "LR".
 #'
@@ -31,7 +31,7 @@
 #' @seealso \code{\link{runGMM}} and \code{\link{gaussian_mixture_vector}}
 #'
 #' @export
-EM_iter <- function(x, alpha, mu, sig, N, Y = NULL, change = Inf, max_iter = 5000, SW = NULL, IC = "BIC"){
+EM_iter <- function(x, alpha, mu, sig, N, Y = NULL, change = Inf, max_iter = 5000, SW = 0, IC = "BIC"){
 
   if(is.null(Y)){Y<-matrix(1, 1, length(x))}
   bin_edge_sum <- sum(Y)
@@ -46,8 +46,9 @@ EM_iter <- function(x, alpha, mu, sig, N, Y = NULL, change = Inf, max_iter = 500
   eps_change <- 1e-7
   KS <- length(alpha)
 
-  if (is.null(SW)){
-    SW <- ((max(x)-min(x))/(5*KS))^2 #minimum variance
+  #if (is.null(SW)){
+  if (SW!=0){
+    SW <- ((max(x)-min(x))/(SW*KS))^2 #minimum variance
   }
 
   while (change > eps_change && count < max_iter){

@@ -10,7 +10,7 @@
 #' \deqn{\sum{(|\alpha - \alpha_{old})|} + \frac{\sum{(\frac{|\sigma^2 - \sigma^2_{old}|}{\sigma^2})}}{length(\alpha)}}
 #' @param max_iter Maximum number of iterations of EM algorithm. By default it is \code{max_iter = 5000}
 #' @param SW Minimum standard deviation of component.
-#' Default set to: \deqn{\frac{range(x)}{(5*no.of.components))^2}}.
+#' Default set to: \deqn{\frac{range(x)}{(SW*no.of.components))^2}}.  SW=0 (default) than whole equation is equal 0.
 #' @param IC Information Criterion to select best number of components.
 #' Possible "AIC","AICc", "BIC" (default), "ICL-BIC" or "LR".
 #' @param merge Logical value. If TRUE (default) overlapping components are merged at the distance defined in the \code{sigmas.dev} argument
@@ -54,7 +54,7 @@
 #' @seealso \code{\link{gaussian_mixture_vector}}, \code{\link{EM_iter}}, \code{\link{generate_dist}}, \code{\link{find_thr_by_params}}
 #'
 #' @export
-runGMM <- function(X, KS, Y = NULL, change = Inf, max_iter = 5000, SW=NULL, IC = "BIC", merge = TRUE, sigmas.dev = 2.5,
+runGMM <- function(X, KS, Y = NULL, change = Inf, max_iter = 5000, SW=0, IC = "BIC", merge = TRUE, sigmas.dev = 2.5,
                    precision=1e4, plot = TRUE, col.pal="Blues", quick_stop = TRUE, signi = 0.05) {
   # Check part
   if (!hasArg("X")){
