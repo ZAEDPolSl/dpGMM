@@ -30,7 +30,7 @@
 GMM_2D_opts <- list(
   eps_change = 1e-4,
   max_iter = 5000,
-  SW = 1,            #regularizing coefficient for covariance
+  SW = 10,            #regularizing coefficient for covariance
   max_var_ratio = 5,
   crit = 'BIC',
   res = 1,

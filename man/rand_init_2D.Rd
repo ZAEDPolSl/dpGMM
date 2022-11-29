@@ -4,12 +4,12 @@
 \alias{rand_init_2D}
 \title{Random initialization of 2D GMM.}
 \usage{
-rand_init_2D(data, KS)
+rand_init_2D(X, KS)
 }
 \arguments{
-\item{KS}{Number of components.}
-
 \item{X}{x coordinates of histogram.}
+
+\item{KS}{Number of components.}
 }
 \value{
 List of parameters.
