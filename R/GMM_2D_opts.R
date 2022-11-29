@@ -49,4 +49,4 @@ GMM_1D_opts <- list(
   bla = 4,
   bla1 =34.5
 )
-class(GMM_1D_opts) <- "gmm2_opts"
+class(GMM_1D_opts) <- "gmm2_opts"
