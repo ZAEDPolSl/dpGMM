@@ -10,7 +10,7 @@
 #' \deqn{\sum{(|\alpha - \alpha_{old})|} + \frac{\sum{(\frac{|\sigma^2 - \sigma^2_{old}|}{\sigma^2})}}{length(\alpha)}}
 #' @param max_iter Maximum number of iterations of EM algorithm.
 #' @param SW Minimum standard deviation of component.
-#' Default set to: \deqn{\frac{range(x)}{(5*no.of.components))^2}}.
+#' Default set to: \deqn{\frac{range(x)}{(SW*no.of.components))^2}}.  SW=0 (default) than whole equation is equal 0.
 #' @param IC Information Criterion to select best number of components.
 #' Possible "AIC","AICc", "BIC" (default), "ICL-BIC" or "LR".
 #' @param quick_stop Logical value. Determines to stop the EM algorithm when adding
@@ -38,7 +38,7 @@
 #' @seealso \code{\link{runGMM}} and \code{\link{EM_iter}}
 #'
 #' @export
-gaussian_mixture_vector <- function(data, KS, Y = NULL, change = Inf, max_iter = 5000, SW=NULL, IC = "BIC", quick_stop = TRUE, signi = 0.05){
+gaussian_mixture_vector <- function(data, KS, Y = NULL, change = Inf, max_iter = 5000, SW=0, IC = "BIC", quick_stop = TRUE, signi = 0.05){
 
   if (min(dim(as.matrix(data))) !=1){
     stop("data must be 1D signal.")
@@ -58,7 +58,7 @@ gaussian_mixture_vector <- function(data, KS, Y = NULL, change = Inf, max_iter =
   sigma <- list()
 
   #histogram of input data (for drawing and IC).. soon
-  h  <- hist(data, breaks = seq(min(data), max(data), l=(max(min(20,round(sqrt(N))), 100)+1)),plot = F)
+  h  <- hist(data, breaks = seq(min(data), max(data), l=(min(max(20,round(sqrt(N))), 100)+1)),plot = F)
   y <- h$counts
   x <- h$mids
   #decomposition for 1 component
