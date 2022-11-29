@@ -10,7 +10,7 @@ gaussian_mixture_vector(
   Y = NULL,
   change = Inf,
   max_iter = 5000,
-  SW = NULL,
+  SW = 0,
   IC = "BIC",
   quick_stop = TRUE,
   signi = 0.05
@@ -30,7 +30,7 @@ Applies only to binned data therefore the default is Y = NULL.}
 \item{max_iter}{Maximum number of iterations of EM algorithm.}
 
 \item{SW}{Minimum standard deviation of component.
-Default set to: \deqn{\frac{range(x)}{(5*no.of.components))^2}}.}
+Default set to: \deqn{\frac{range(x)}{(SW*no.of.components))^2}}.  SW=0 (default) than whole equation is equal 0.}
 
 \item{IC}{Information Criterion to select best number of components.
 Possible "AIC","AICc", "BIC" (default), "ICL-BIC" or "LR".}
