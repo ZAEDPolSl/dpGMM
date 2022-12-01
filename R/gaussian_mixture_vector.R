@@ -115,13 +115,18 @@ gaussian_mixture_vector <- function(data, KS, Y = NULL, change = Inf, max_iter =
 
   if(IC == "LR"){
     LR_crit <- qchisq(1-signi, 3) # crit. val
-    D <- D[c(1, which(D > LR_crit))]
-    cmp_nb <- which.min(D)
-    crit_est <- (1 - pchisq(D[cmp_nb], 3))
+    ind_tmp <- which(D > LR_crit)
+    if (length(ind_tmp) > 0){
+      cmp_nb <- which.min(D)
+      crit_est <- (1 - pchisq(D[cmp_nb], 3))
+    } else {
+      cmp_nb <- 1
+      crit_est <- NA
+    }
   }else{
     cmp_nb <- which(crit_vector == min(crit_vector, na.rm = T))
     crit_est <- crit_vector[cmp_nb]
-    }
+  }
 
   pp_est <- alpha[[cmp_nb]]
   mu_est <- mu[[cmp_nb]]
