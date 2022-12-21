@@ -25,6 +25,7 @@
 #' @seealso \code{\link{find_thr_by_dist}} and \code{\link{generate_dist}}
 #' @export
 find_thr_by_params <- function(GModel,input,sigmas.dev=2.5){
+  GModel<-GModel[order(GModel$mu,decreasing = F),]
   tol = 1e-10
   thr2 <- c()
   for (i in 1 : (nrow(GModel)-1)){
