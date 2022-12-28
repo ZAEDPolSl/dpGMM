@@ -13,7 +13,7 @@ EM_iter(
   Y = NULL,
   change = Inf,
   max_iter = 5000,
-  SW = 0,
+  SW = 0.1,
   IC = "BIC"
 )
 }

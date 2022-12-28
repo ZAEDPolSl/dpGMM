@@ -10,7 +10,7 @@ gaussian_mixture_vector(
   Y = NULL,
   change = Inf,
   max_iter = 5000,
-  SW = 0,
+  SW = 0.1,
   IC = "BIC",
   quick_stop = TRUE,
   signi = 0.05

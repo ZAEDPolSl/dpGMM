@@ -1,7 +1,7 @@
 Package: rGMMtest
 Type: Package
 Title: An R package for GMM of 1D and 2D data with stable inital point of EM algoritm
-Version: 0.1.2
+Version: 0.1.4
 Author: c(
     person("Michal", "Marczyk",email = "michal.marczyk@polsl.pl", role = c("aut","cre")),
     person("Kamila", "Szumala", role = c("aut","cre")),
