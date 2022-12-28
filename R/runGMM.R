@@ -54,7 +54,7 @@
 #' @seealso \code{\link{gaussian_mixture_vector}}, \code{\link{EM_iter}}, \code{\link{generate_dist}}, \code{\link{find_thr_by_params}}
 #'
 #' @export
-runGMM <- function(X, KS, Y = NULL, change = Inf, max_iter = 5000, SW=0, IC = "BIC", merge = TRUE, sigmas.dev = 2.5,
+runGMM <- function(X, KS, Y = NULL, change = Inf, max_iter = 5000, SW=0.1, IC = "BIC", merge = TRUE, sigmas.dev = 2.5,
                    precision=1e4, plot = TRUE, col.pal="Blues", quick_stop = TRUE, signi = 0.05) {
   # Check part
   if (!hasArg("X")){

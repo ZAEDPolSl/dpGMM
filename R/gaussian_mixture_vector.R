@@ -38,7 +38,7 @@
 #' @seealso \code{\link{runGMM}} and \code{\link{EM_iter}}
 #'
 #' @export
-gaussian_mixture_vector <- function(data, KS, Y = NULL, change = Inf, max_iter = 5000, SW=0, IC = "BIC", quick_stop = TRUE, signi = 0.05){
+gaussian_mixture_vector <- function(data, KS, Y = NULL, change = Inf, max_iter = 5000, SW=0.1, IC = "BIC", quick_stop = TRUE, signi = 0.05){
 
   if (min(dim(as.matrix(data))) !=1){
     stop("data must be 1D signal.")
