@@ -72,8 +72,6 @@ Function runs GMM with stable initial points of EM algorithm and all possible co
 \dontrun{
 data(example)
 mix_test1 <- runGMM(example$Dist, KS = 15, IC = "AICc", quick_stop = F, merge = F)
-
-data(example)
 mix_test2 <- runGMM(example$Dist, KS = 10, IC = "BIC", merge = T, sigmas.dev = 1.5)
 mix_test2$QQplot
 
