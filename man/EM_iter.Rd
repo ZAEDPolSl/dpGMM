@@ -29,7 +29,7 @@ EM_iter(
 \item{N}{Number of observations. Should be equal to \code{length(X)}
 Applies only to binned data therefore the default is Y = NULL.}
 
-\item{Y}{Vector of counts, should be the same length as "x".
+\item{Y}{Vector of counts, should be the same length as \code{X}.
 Applies only to binned data therefore the default is Y = NULL.}
 
 \item{change}{Stop of EM criterion (default Inf), value compared to following formula:

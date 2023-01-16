@@ -8,7 +8,7 @@
 #' @param sig Vector containing the standard deviation (sigma) for each component in the statistical model.
 #' @param N Number of observations. Should be equal to \code{length(X)}
 #' Applies only to binned data therefore the default is Y = NULL.
-#' @param Y Vector of counts, should be the same length as "x".
+#' @param Y Vector of counts, should be the same length as \code{X}.
 #' Applies only to binned data therefore the default is Y = NULL.
 #' @param change Stop of EM criterion (default Inf), value compared to following formula:
 #' \deqn{\sum{(|\alpha - \alpha_{old})|} + \frac{\sum{(\frac{|\sigma^2 - \sigma^2_{old}|}{\sigma^2})}}{length(\alpha)}}
