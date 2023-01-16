@@ -8,6 +8,7 @@ runGMM(
   X,
   KS,
   Y = NULL,
+  fixed = FALSE,
   change = Inf,
   max_iter = 5000,
   SW = 0.1,
@@ -27,6 +28,8 @@ runGMM(
 
 \item{Y}{Vector of counts, should be the same length as "X".
 Applies only to binned data therefore the default is Y = NULL.}
+
+\item{fixed}{perform GMM only for number of components given in KS.}
 
 \item{change}{Stop of EM criterion (default Inf), value compared to following formula:
 \deqn{\sum{(|\alpha - \alpha_{old})|} + \frac{\sum{(\frac{|\sigma^2 - \sigma^2_{old}|}{\sigma^2})}}{length(\alpha)}}}

@@ -6,6 +6,7 @@
 #' @param KS Maximum number of components to test.
 #' @param Y Vector of counts, should be the same length as "X".
 #' Applies only to binned data therefore the default is Y = NULL.
+#' @param fixed perform GMM only for number of components given in KS.
 #' @param change Stop of EM criterion (default Inf), value compared to following formula:
 #' \deqn{\sum{(|\alpha - \alpha_{old})|} + \frac{\sum{(\frac{|\sigma^2 - \sigma^2_{old}|}{\sigma^2})}}{length(\alpha)}}
 #' @param max_iter Maximum number of iterations of EM algorithm. By default it is \code{max_iter = 5000}
@@ -49,7 +50,7 @@
 #' @seealso \code{\link{gaussian_mixture_vector}}, \code{\link{EM_iter}}, \code{\link{generate_dist}}, \code{\link{find_thr_by_params}}
 #'
 #' @export
-runGMM <- function(X, KS, Y = NULL, change = Inf, max_iter = 5000, SW=0.1, IC = "BIC", merge = TRUE, sigmas.dev = 2.5,
+runGMM <- function(X, KS, Y = NULL, fixed=FALSE , change = Inf, max_iter = 5000, SW=0.1, IC = "BIC", merge = TRUE, sigmas.dev = 2.5,
                    plot = TRUE, col.pal="Blues", quick_stop = TRUE, signi = 0.05) {
   # Check part
   if (!hasArg("X")){
@@ -58,6 +59,9 @@ runGMM <- function(X, KS, Y = NULL, change = Inf, max_iter = 5000, SW=0.1, IC = 
   if (length(X) < 2){
     stop("Not enough data.")}
 
+  if (KS < 2){
+    stop("KS (no of components) must be larger than 1.")}
+
   IC_list <- c("AIC","AICc", "BIC", "ICL-BIC", "LR")
   if (!IC %in% IC_list) {
     stop("Criterion not implemented. Please use AIC, AICc, BIC, ICL-BIC or LR")
@@ -65,7 +69,7 @@ runGMM <- function(X, KS, Y = NULL, change = Inf, max_iter = 5000, SW=0.1, IC = 
 
 
   # Main GMM run
-    GModel<- gaussian_mixture_vector(X, KS, Y, change, max_iter, SW, IC, quick_stop, signi)
+    GModel<- gaussian_mixture_vector(X, KS, Y, fixed , change, max_iter, SW, IC, quick_stop, signi)
 
     if(merge & GModel$KS>1){
       IC_tmp <- GModel$IC
