@@ -1,7 +1,7 @@
 #' Default configuration for GMM_2D
 #'
 #' A list with parameters customizing a GMM_2D. Each component of the
-#' list is an effective argument for **nazwa funkcji głównej**.
+#' list is an effective argument for \code{\link{runGMM2D}}.
 #'
 #' @param eps_change Criterion for stopping the EM algorithm. By default it is \code{1e-4}
 #' @param max_iter Maximum number of iterations of EM algorithm. By default it is \code{max_iter = 5000}
@@ -49,4 +49,4 @@ GMM_1D_opts <- list(
   bla = 4,
   bla1 =34.5
 )
-class(GMM_1D_opts) <- "gmm2_opts"
+class(GMM_1D_opts) <- "gmm2_opts"

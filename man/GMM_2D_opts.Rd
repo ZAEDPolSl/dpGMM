@@ -38,7 +38,7 @@ Possible "AIC","AICc", "BIC" (default) or "ICL-BIC".}
 }
 \description{
 A list with parameters customizing a GMM_2D. Each component of the
-list is an effective argument for **nazwa funkcji głównej**.
+list is an effective argument for \code{\link{runGMM2D}}.
 }
 \examples{
 # display all default settings
