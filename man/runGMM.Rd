@@ -14,7 +14,6 @@ runGMM(
   IC = "BIC",
   merge = TRUE,
   sigmas.dev = 2.5,
-  precision = 10000,
   plot = TRUE,
   col.pal = "Blues",
   quick_stop = TRUE,
@@ -24,35 +23,31 @@ runGMM(
 \arguments{
 \item{X}{Vector of data to decompose by GMM.}
 
-\item{KS}{Maximum number of components.}
+\item{KS}{Maximum number of components to test.}
 
 \item{Y}{Vector of counts, should be the same length as "X".
 Applies only to binned data therefore the default is Y = NULL.}
 
-\item{change}{Stop of EM criterion (if < 1e-7). Default calculated as follow:
+\item{change}{Stop of EM criterion (default Inf), value compared to following formula:
 \deqn{\sum{(|\alpha - \alpha_{old})|} + \frac{\sum{(\frac{|\sigma^2 - \sigma^2_{old}|}{\sigma^2})}}{length(\alpha)}}}
 
 \item{max_iter}{Maximum number of iterations of EM algorithm. By default it is \code{max_iter = 5000}}
 
-\item{SW}{Minimum standard deviation of component.
-Default set to: \deqn{\frac{range(x)}{(SW*no.of.components))^2}}.  SW=0 (default) than whole equation is equal 0.}
+\item{SW}{Minimum standard deviation of component (default 0.1). Values from 0 to 1 are treated according to their values, for SW >1 the following formula is applied:
+\deqn{\frac{range(x)}{(SW*no.of.components))^2}}.}
 
-\item{IC}{Information Criterion to select best number of components.
+\item{IC}{Information criterion to select best number of components.
 Possible "AIC","AICc", "BIC" (default), "ICL-BIC" or "LR".}
 
 \item{merge}{Logical value. If TRUE (default) overlapping components are merged at the distance defined in the \code{sigmas.dev} argument}
 
-\item{sigmas.dev}{Number of sigmas defining the distance to merge overlapping components of GMM. By default it is \code{sigma.dev = 2.5}}
-
-\item{precision}{Precision of point linespacin. By default it is \code{precision = 1e4}}
+\item{sigmas.dev}{Defines the sigma distance to merge between the overlapping components of GMM. By default it is \code{sigma.dev = 2.5}}
 
 \item{plot}{Logical value. If TRUE (default), the GMM figure will be displayed.}
 
-\item{col.pal}{RColorBrewer palette name for coloring components ong figure. \code{"Blues"} is by default}
+\item{col.pal}{RColorBrewer palette name for coloring components on figure. By default \code{"Blues"}.}
 
-\item{quick_stop}{Logical value. Determines to stop the EM algorithm when adding
-another component is no longer significant according to the Likelihood Ratio Test.
-Used to speed up the function (Default is TRUE).}
+\item{quick_stop}{Logical value. Determines to stop the EM algorithm when adding another component is no longer significant according to the Likelihood Ratio Test. Used to speed up the function (Default is TRUE).}
 
 \item{signi}{Significance level for Likelihood Ratio Test. By default is 0.05.}
 }

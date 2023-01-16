@@ -4,10 +4,10 @@
 \alias{generate_dist}
 \title{Generation of GMM data with high precision}
 \usage{
-generate_dist(data, GModel, precision)
+generate_dist(X, GModel, precision)
 }
 \arguments{
-\item{data}{Vector of original data}
+\item{X}{Vector of original data}
 
 \item{GModel}{\code{data.frame} of GMM parameters i.e GModel$alpha, GModel$mu, GModel$sigma (correct \code{colnames} are obligatory)}
 

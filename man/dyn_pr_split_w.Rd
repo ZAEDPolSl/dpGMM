@@ -4,14 +4,14 @@
 \alias{dyn_pr_split_w}
 \title{Dynamic programming split.}
 \usage{
-dyn_pr_split_w(data, ygreki, K_gr, aux_mx)
+dyn_pr_split_w(xhist, yhist, K, aux_mx)
 }
 \arguments{
-\item{data}{x coordinates of histogram.}
+\item{xhist}{x coordinates of histogram.}
 
-\item{ygreki}{y coordinates of histogram.}
+\item{yhist}{y coordinates of histogram.}
 
-\item{K_gr}{Number of components.}
+\item{K}{Number of components.}
 
 \item{aux_mx}{Return of function \code{dyn_pr_split_w_aux}.}
 }

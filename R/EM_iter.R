@@ -2,19 +2,19 @@
 #'
 #' The function performs the EM algorithm to find the local maximum likelihood for the estimated Gaussian mixture parameters.
 #'
-#' @param x Vector of data to decompose by GMM.
+#' @param X Vector of data to decompose by GMM.
 #' @param alpha Vector containing the weights (alpha) for each component in the statistical model.
 #' @param mu Vector containing the means (mu) for each component in the statistical model.
 #' @param sig Vector containing the standard deviation (sigma) for each component in the statistical model.
-#' @param N Number of observations. Should be equal to \code{length(x)}
+#' @param N Number of observations. Should be equal to \code{length(X)}
 #' Applies only to binned data therefore the default is Y = NULL.
 #' @param Y Vector of counts, should be the same length as "x".
 #' Applies only to binned data therefore the default is Y = NULL.
-#' @param change Stop of EM criterion (if < 1e-7). Default calculated as follow:
+#' @param change Stop of EM criterion (default Inf), value compared to following formula:
 #' \deqn{\sum{(|\alpha - \alpha_{old})|} + \frac{\sum{(\frac{|\sigma^2 - \sigma^2_{old}|}{\sigma^2})}}{length(\alpha)}}
-#' @param max_iter Maximum number of iterations of EM algorithm.
-#' @param SW Minimum standard deviation of component.
-#' Default set to: \deqn{\frac{range(x)}{(SW*no.of.components))^2}}.  SW=0 (default) than whole equation is equal 0.
+#' @param max_iter Maximum number of iterations of EM algorithm. By default it is \code{max_iter = 5000}
+#' @param SW Minimum standard deviation of component (default 0.1). Values from 0 to 1 are treated according to their values, for SW >1 the following formula is applied:
+#' \deqn{\frac{range(x)}{(SW*no.of.components))^2}}.
 #' @param IC Information Criterion to select best number of components.
 #' Possible "AIC","AICc", "BIC" (default), "ICL-BIC" or "LR".
 #'
@@ -31,16 +31,16 @@
 #' @seealso \code{\link{runGMM}} and \code{\link{gaussian_mixture_vector}}
 #'
 #' @export
-EM_iter <- function(x, alpha, mu, sig, N, Y = NULL, change = Inf, max_iter = 5000, SW = 0.1, IC = "BIC"){
+EM_iter <- function(X, alpha, mu, sig, N, Y = NULL, change = Inf, max_iter = 5000, SW = 0.1, IC = "BIC"){
 
-  if(is.null(Y)){Y<-matrix(1, 1, length(x))}
+  if(is.null(Y)){Y<-matrix(1, 1, length(X))}
   bin_edge_sum <- sum(Y)
 
   alpha <- c(alpha)
   mu <- c(mu)
   sig <- c(sig)
 
-  x <- sort(x)
+  X <- sort(X)
   sig2 <- sig^2
   count <- 1
   eps_change <- 1e-7
@@ -48,7 +48,7 @@ EM_iter <- function(x, alpha, mu, sig, N, Y = NULL, change = Inf, max_iter = 500
 
   #if (is.null(SW)){
   if (SW>1){
-    SW <- ((max(x)-min(x))/(SW*KS))^2 #minimum variance
+    SW <- ((max(X)-min(X))/(SW*KS))^2 #minimum variance
   }
 
   while (change > eps_change && count < max_iter){
@@ -67,7 +67,7 @@ EM_iter <- function(x, alpha, mu, sig, N, Y = NULL, change = Inf, max_iter = 500
       }
 
       for(a in 1:KS){
-        f[a,] <- dnorm(x, mu[a], sig[a])
+        f[a,] <- dnorm(X, mu[a], sig[a])
       }
 
       px <- matrix(0, KS, N)
@@ -80,8 +80,8 @@ EM_iter <- function(x, alpha, mu, sig, N, Y = NULL, change = Inf, max_iter = 500
       for (a in 1:KS){
         pk <- ((alpha[a]*f[a,])*Y)/px
         denom <- sum(pk)
-        mu[a] <- sum((pk*x)/denom)
-        sig2num <- sum(pk*((x-mu[a])^2))
+        mu[a] <- sum((pk*X)/denom)
+        sig2num <- sum(pk*((X-mu[a])^2))
         sig2[a] <- max(SW, sig2num/denom)
         alpha[a] <- denom/bin_edge_sum
       }

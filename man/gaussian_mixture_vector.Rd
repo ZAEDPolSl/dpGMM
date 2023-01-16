@@ -5,7 +5,7 @@
 \title{Gaussian mixture decomposition for a vector of data}
 \usage{
 gaussian_mixture_vector(
-  data,
+  X,
   KS,
   Y = NULL,
   change = Inf,
@@ -17,27 +17,25 @@ gaussian_mixture_vector(
 )
 }
 \arguments{
-\item{data}{Vector of data to decompose by GMM.}
+\item{X}{Vector of data to decompose by GMM.}
 
-\item{KS}{Maximum number of components to evaluate.}
+\item{KS}{Maximum number of components to test.}
 
 \item{Y}{Vector of counts, should be the same length as "data".
 Applies only to binned data therefore the default is Y = NULL.}
 
-\item{change}{Stop of EM criterion (if < 1e-7). Default calculated as follow:
+\item{change}{Stop of EM criterion (default Inf), value compared to following formula:
 \deqn{\sum{(|\alpha - \alpha_{old})|} + \frac{\sum{(\frac{|\sigma^2 - \sigma^2_{old}|}{\sigma^2})}}{length(\alpha)}}}
 
-\item{max_iter}{Maximum number of iterations of EM algorithm.}
+\item{max_iter}{Maximum number of iterations of EM algorithm. By default it is \code{max_iter = 5000}}
 
-\item{SW}{Minimum standard deviation of component.
-Default set to: \deqn{\frac{range(x)}{(SW*no.of.components))^2}}.  SW=0 (default) than whole equation is equal 0.}
+\item{SW}{Minimum standard deviation of component (default 0.1). Values from 0 to 1 are treated according to their values, for SW >1 the following formula is applied:
+\deqn{\frac{range(x)}{(SW*no.of.components))^2}}.}
 
 \item{IC}{Information Criterion to select best number of components.
 Possible "AIC","AICc", "BIC" (default), "ICL-BIC" or "LR".}
 
-\item{quick_stop}{Logical value. Determines to stop the EM algorithm when adding
-another component is no longer significant according to the Likelihood Ratio Test.
-Used to speed up the function (Default is TRUE).}
+\item{quick_stop}{Logical value. Determines to stop the EM algorithm when adding another component is no longer significant according to the Likelihood Ratio Test. Used to speed up the function (Default is TRUE).}
 
 \item{signi}{Significance level for Likelihood Ratio Test. By default is 0.05.}
 }

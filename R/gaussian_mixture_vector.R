@@ -2,20 +2,18 @@
 #'
 #'Function to choose the optimal number of components of a mixture normal distributions, minimising the value of the information criterion.
 #'
-#' @param data Vector of data to decompose by GMM.
-#' @param KS Maximum number of components to evaluate.
+#' @param X Vector of data to decompose by GMM.
+#' @param KS Maximum number of components to test.
 #' @param Y Vector of counts, should be the same length as "data".
 #' Applies only to binned data therefore the default is Y = NULL.
-#' @param change Stop of EM criterion (if < 1e-7). Default calculated as follow:
+#' @param change Stop of EM criterion (default Inf), value compared to following formula:
 #' \deqn{\sum{(|\alpha - \alpha_{old})|} + \frac{\sum{(\frac{|\sigma^2 - \sigma^2_{old}|}{\sigma^2})}}{length(\alpha)}}
-#' @param max_iter Maximum number of iterations of EM algorithm.
-#' @param SW Minimum standard deviation of component.
-#' Default set to: \deqn{\frac{range(x)}{(SW*no.of.components))^2}}.  SW=0 (default) than whole equation is equal 0.
+#' @param max_iter Maximum number of iterations of EM algorithm. By default it is \code{max_iter = 5000}
+#' @param SW Minimum standard deviation of component (default 0.1). Values from 0 to 1 are treated according to their values, for SW >1 the following formula is applied:
+#' \deqn{\frac{range(x)}{(SW*no.of.components))^2}}.
 #' @param IC Information Criterion to select best number of components.
 #' Possible "AIC","AICc", "BIC" (default), "ICL-BIC" or "LR".
-#' @param quick_stop Logical value. Determines to stop the EM algorithm when adding
-#' another component is no longer significant according to the Likelihood Ratio Test.
-#' Used to speed up the function (Default is TRUE).
+#' @param quick_stop Logical value. Determines to stop the EM algorithm when adding another component is no longer significant according to the Likelihood Ratio Test. Used to speed up the function (Default is TRUE).
 #' @param signi Significance level for Likelihood Ratio Test. By default is 0.05.
 #'
 #' @returns Function returns a \code{list} of GMM parameters for the optimal number of components: \describe{
@@ -38,18 +36,18 @@
 #' @seealso \code{\link{runGMM}} and \code{\link{EM_iter}}
 #'
 #' @export
-gaussian_mixture_vector <- function(data, KS, Y = NULL, change = Inf, max_iter = 5000, SW=0.1, IC = "BIC", quick_stop = TRUE, signi = 0.05){
+gaussian_mixture_vector <- function(X, KS, Y = NULL, change = Inf, max_iter = 5000, SW=0.1, IC = "BIC", quick_stop = TRUE, signi = 0.05){
 
-  if (min(dim(as.matrix(data))) !=1){
+  if (min(dim(as.matrix(X))) !=1){
     stop("data must be 1D signal.")
   }
 
-  if(is.null(Y)){Y<-matrix(1, 1, length(data))}
+  if(is.null(Y)){Y<-matrix(1, 1, length(X))}
   bin_edge_sum <- sum(Y)
 
   IC_list<-c("AIC","AICc","BIC", "ICL-BIC", "LR")
 
-  N <- length(data)
+  N <- length(X)
   crit_vector <- matrix(NaN, KS, 1)
   logL <- crit_vector
   D <- matrix(NaN, 1, KS)
@@ -58,11 +56,11 @@ gaussian_mixture_vector <- function(data, KS, Y = NULL, change = Inf, max_iter =
   sigma <- list()
 
   #histogram of input data (for drawing and IC).. soon
-  h  <- hist(data, breaks = seq(min(data), max(data), l=(min(max(20,round(sqrt(N))), 100)+1)),plot = F)
+  h  <- hist(X, breaks = seq(min(X), max(X), l=(min(max(20,round(sqrt(N))), 100)+1)),plot = F)
   y <- h$counts
   x <- h$mids
   #decomposition for 1 component
-  rcpt <- EM_iter(data, 1, mean(data), sd(data), N, Y, change, max_iter, SW, IC)
+  rcpt <- EM_iter(X, 1, mean(X), sd(X), N, Y, change, max_iter, SW, IC)
 
   alpha[[1]] <- rcpt[[1]]
   mu[[1]] <- rcpt[[2]]
@@ -95,7 +93,7 @@ gaussian_mixture_vector <- function(data, KS, Y = NULL, change = Inf, max_iter =
     }
 
     #perform decomposition
-    rcpt1<- EM_iter(data, pp_ini, mu_ini, sig_ini, N, Y, change, max_iter, SW, IC)
+    rcpt1<- EM_iter(X, pp_ini, mu_ini, sig_ini, N, Y, change, max_iter, SW, IC)
     alpha[[k]] <- rcpt1[[1]]
     mu[[k]] <- rcpt1[[2]]
     sigma[[k]] <- rcpt1[[3]]

@@ -4,12 +4,12 @@
 \alias{my_qu_ix_w}
 \title{Supporting function for spliters.}
 \usage{
-my_qu_ix_w(invec, yinwec)
+my_qu_ix_w(xinvec, yinvec)
 }
 \arguments{
-\item{invec}{x coordinates of histogram.}
+\item{xinvec}{x coordinates of histogram.}
 
-\item{yinwec}{y coordinates of histogram.}
+\item{yinvec}{y coordinates of histogram.}
 }
 \description{
 Supporting function used in spliters \code{dyn_pr_split_w_aux} and \code{dyn_pr_split_w}.

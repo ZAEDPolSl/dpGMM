@@ -84,7 +84,7 @@ plot_gmm_1D <- function(X, dist, Y=NULL, threshold=NA, pal=NULL){
 #' Function return ggplot object with fit diagnostic Quantile-Quantile plot for one normal distribution and fitted GMM.
 #' This plot is also return as regular output of \code{\link{runGMM}}.
 #'
-#' @param data Vector of original data
+#' @param X Vector of original data
 #' @param GModel \code{data.frame} of GMM parameters i.e GModel$alpha, GModel$mu, GModel$sigma (correct \code{colnames} are obligatory)
 #'
 #' @import ggplot2
@@ -103,9 +103,9 @@ plot_gmm_1D <- function(X, dist, Y=NULL, threshold=NA, pal=NULL){
 #' @seealso \code{\link{runGMM}} and \code{\link{gaussian_mixture_vector}}
 #'
 #' @export
-plot_QQplot<-function(data,GModel){
-  tor<-generate_norm1D(length(data), GModel$alpha, GModel$mu, GModel$sigma)
-  quants<-stats::qqplot(data,tor$Dist,plot.it = F)
+plot_QQplot<-function(X,GModel){
+  tor<-generate_norm1D(length(X), GModel$alpha, GModel$mu, GModel$sigma)
+  quants<-stats::qqplot(X,tor$Dist,plot.it = F)
   tmp<-data.frame(data=quants$x,theor=quants$y)
 
   p2<-ggplot(tmp,aes(theor,data))+theme_bw()+

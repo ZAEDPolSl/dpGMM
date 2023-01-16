@@ -4,10 +4,10 @@
 \alias{plot_QQplot}
 \title{QQplot for GMM decomposition}
 \usage{
-plot_QQplot(data, GModel)
+plot_QQplot(X, GModel)
 }
 \arguments{
-\item{data}{Vector of original data}
+\item{X}{Vector of original data}
 
 \item{GModel}{\code{data.frame} of GMM parameters i.e GModel$alpha, GModel$mu, GModel$sigma (correct \code{colnames} are obligatory)}
 }

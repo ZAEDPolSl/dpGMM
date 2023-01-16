@@ -4,12 +4,12 @@
 \alias{dyn_pr_split_w_aux}
 \title{Dynamic programming split of aux.}
 \usage{
-dyn_pr_split_w_aux(data, ygreki)
+dyn_pr_split_w_aux(xhist, yhist)
 }
 \arguments{
-\item{data}{x coordinates of histogram.}
+\item{xhist}{x coordinates of histogram.}
 
-\item{ygreki}{y coordinates of histogram.}
+\item{yhist}{y coordinates of histogram.}
 }
 \description{
 Supporting function for dynamic programming in 1D decomposition.

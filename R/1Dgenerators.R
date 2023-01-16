@@ -1,30 +1,8 @@
-#' Generating alpha for GMM distribution
-#'
-#' Function generating alpha values of mixture distribution. Sum of alpha equals 1.
-#'
-#' @param n Number of alpha sets
-#' @param m Number of random alphas
-#'
-#' @importFrom stats runif
-#' @importFrom Matrix rowSums
-#'
-#' @examples
-#' \dontrun{
-#' alpha_rand(1,4)
-#'}
-#'
-alpha_rand <- function(n,m) {
-  ri <- matrix(stats::runif(m*n,0,1), ncol=m)
-  ri<- sweep( ri, 1, Matrix::rowSums( ri), FUN="/")
-  ri
-}
-
-
 #' Generation of GMM data with high precision
 #'
 #' Function to generate PDF of GMM distributions and its cumulative results with high lincespacing.
 #'
-#' @param data Vector of original data
+#' @param X Vector of original data
 #' @param GModel \code{data.frame} of GMM parameters i.e GModel$alpha, GModel$mu, GModel$sigma (correct \code{colnames} are obligatory)
 #' @param precision Precision of point linespacing
 #'
@@ -40,8 +18,8 @@ alpha_rand <- function(n,m) {
 #'
 #' @seealso \code{\link{runGMM}} and \code{\link{generate_norm1D}}
 #' @export
-generate_dist<-function(data, GModel, precision){
-  x_temp = pracma::linspace(min(data),max(data),precision)
+generate_dist<-function(X, GModel, precision){
+  x_temp = pracma::linspace(min(X),max(X),precision)
   f_temp = matrix(0, precision, nrow(GModel))
   for(k in 1:nrow(GModel)){
     f_temp[,k] = GModel$alpha[k] * stats::dnorm(x_temp, mean = GModel$mu[k], sd =GModel$sigma[k])

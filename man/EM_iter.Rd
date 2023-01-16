@@ -5,7 +5,7 @@
 \title{Expectation–maximization algorithm for GMM}
 \usage{
 EM_iter(
-  x,
+  X,
   alpha,
   mu,
   sig,
@@ -18,7 +18,7 @@ EM_iter(
 )
 }
 \arguments{
-\item{x}{Vector of data to decompose by GMM.}
+\item{X}{Vector of data to decompose by GMM.}
 
 \item{alpha}{Vector containing the weights (alpha) for each component in the statistical model.}
 
@@ -26,19 +26,19 @@ EM_iter(
 
 \item{sig}{Vector containing the standard deviation (sigma) for each component in the statistical model.}
 
-\item{N}{Number of observations. Should be equal to \code{length(x)}
+\item{N}{Number of observations. Should be equal to \code{length(X)}
 Applies only to binned data therefore the default is Y = NULL.}
 
 \item{Y}{Vector of counts, should be the same length as "x".
 Applies only to binned data therefore the default is Y = NULL.}
 
-\item{change}{Stop of EM criterion (if < 1e-7). Default calculated as follow:
+\item{change}{Stop of EM criterion (default Inf), value compared to following formula:
 \deqn{\sum{(|\alpha - \alpha_{old})|} + \frac{\sum{(\frac{|\sigma^2 - \sigma^2_{old}|}{\sigma^2})}}{length(\alpha)}}}
 
-\item{max_iter}{Maximum number of iterations of EM algorithm.}
+\item{max_iter}{Maximum number of iterations of EM algorithm. By default it is \code{max_iter = 5000}}
 
-\item{SW}{Minimum standard deviation of component.
-Default set to: \deqn{\frac{range(x)}{(SW*no.of.components))^2}}.  SW=0 (default) than whole equation is equal 0.}
+\item{SW}{Minimum standard deviation of component (default 0.1). Values from 0 to 1 are treated according to their values, for SW >1 the following formula is applied:
+\deqn{\frac{range(x)}{(SW*no.of.components))^2}}.}
 
 \item{IC}{Information Criterion to select best number of components.
 Possible "AIC","AICc", "BIC" (default), "ICL-BIC" or "LR".}
