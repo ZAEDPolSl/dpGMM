@@ -1,39 +1,29 @@
-#' Plot of GMM decomposition for 2D data
+#' Plot of GMM decomposition for 2D binned data
 #'
 #' Function plot the decomposed distribution together with histogram of data.
 #' This plot is also return as regular output of \code{\link{runGMM}}.
 #'
-#' @param X Vector of data
-#' @param dist Output of \code{generate_dist} function. Its list of following elements\describe{
-#'    \item{x}{Vector of generated data}
-#'    \item{dist}{Matrix of pdf of for each generated mixture model. The last column is sum of all previous ones}
-#' }
-#' @param Y Vector of X counts (dedicated to binned data). Default=NULL
-#' @param threshold Vector with GMM cutoffs
-#' @param pal RColorBrewer palette name
+#' @param data Matrix of data
+#' @param img Vector of X counts (dedicated to binned data)
+#' @param gmm results of runGMM2D decomposition
+#' @param opts parameters of run saves in \code{\link{GMM_2D_opts}} variable
 #'
 #' @import ggplot2
 #' @import RColorBrewer
 #' @importFrom grDevices colorRampPalette
 #' @importFrom reshape2 melt
+#' @importFrom pracma rot90
 #'
-#' @seealso \code{\link{runGMM}}
 #'
 #' @examples
 #' \dontrun{
-#' data(example)
-#' GModel<-data.frame(alpha=c(0.45,0.5,0.05),
-#'                   mu=c(-14,-2,5),
-#'                   sigma=c(2,4,1.5))
-#' dist.plot<-generate_dist(example$Dist, GModel, 1e4)
-#' thr <- find_thr_by_params(GModel,dist.plot)
-#' plot_gmm_1D(example$Dist, dist.plot,Y=NULL,threshold=thr, pal="Dark2")
 #' }
 #'
 #' @export
 plot_gmm_2D_binned <- function(data, img, gmm, opts){
   #Plot 2D binned data versus GMM decomposition.
-  m <- dim(img)[1];  n <- dim(img)[2]
+  #m <- dim(img)[1];  n <- dim(img)[2] # TAK BYŁO ALE POPRAWIŁAM NA PONIŻEJ
+  m <- dim(data)[1];  n <- dim(data)[2]
   ploty <- matrix(0, m, n)
 
   for(c in 1:gmm$KS){
@@ -42,13 +32,13 @@ plot_gmm_2D_binned <- function(data, img, gmm, opts){
   }
   scale <- sum(255-img)/sum(ploty)
 
-  #plot z dodawaniem kszta??w w petli z plot_2DGauss na zdjecie
+  #plot z dodawaniem kszta??w w petli z ellips2D na zdjecie
   cov_type <- opts$cov_type
   coors <- data.frame()
   for (a in 1:gmm$KS){
     center <- gmm$center[a,]- c(min(data[,1]) - 1, min(data[,2]) - 1)
     covariance <- pracma:::rot90(gmm$covar[,,a], 2)
-    tmp <- plot_2DGauss(center, covariance, cov_type)
+    tmp <- ellips2D(center, covariance, cov_type)
     tmp$KS <- rep(a, 100)
     coors <- rbind(coors, tmp)
   }
@@ -58,6 +48,26 @@ plot_gmm_2D_binned <- function(data, img, gmm, opts){
   return(list(scale,p))
 }
 
+#' Plot of GMM decomposition for 2D data
+#'
+#' Function plot the decomposed distribution together with histogram of data.
+#' This plot is also return as regular output of \code{\link{runGMM}}.
+#'
+#' @param X Matrix of data
+#' @param gmm results of runGMM2D decomposition
+#' @param opts parameters of run saves in \code{\link{GMM_2D_opts}} variable
+#'
+#' @import ggplot2
+#' @import RColorBrewer
+#' @importFrom grDevices colorRampPalette
+#' @importFrom reshape2 melt
+#' @importFrom pracma rot90
+#'
+#'
+#' @examples
+#' \dontrun{
+#' }
+#'
 #' @export
 plot_gmm_2D_orig <- function(X, gmm, opts){
 
@@ -67,7 +77,7 @@ plot_gmm_2D_orig <- function(X, gmm, opts){
   for (a in 1:gmm$KS){
     center <- gmm$center[a,]- c(min(X[,1]) - 1, min(X[,2]) - 1)
     covariance <- pracma::rot90(gmm$covar[,,a], 2)
-    tmp <- plot_2DGauss(center, covariance, cov_type)
+    tmp <- ellips2D(center, covariance, cov_type)
     tmp$KS <- rep(a, 100)
     coors <- rbind(coors, tmp)
   }
@@ -77,31 +87,16 @@ plot_gmm_2D_orig <- function(X, gmm, opts){
   return(list(scale,p))
 }
 
-#' QQplot for GMM decomposition
+#' Support function for plot 2D GMM
 #'
-#' Function return ggplot object with fit diagnostic Quantile-Quantile plot for one normal distribution and fitted GMM.
-#' This plot is also return as regular output of \code{\link{runGMM}}.
+#' Function for managing ellipses in 2D GMM plot
 #'
-#' @param data Vector of original data
-#' @param GModel \code{data.frame} of GMM parameters i.e GModel$alpha, GModel$mu, GModel$sigma (correct \code{colnames} are obligatory)
-#'
-#' @import ggplot2
-#' @importFrom  ggpubr ggarrange
-#' @importFrom stats qqplot
-#'
-#' @examples
-#' \dontrun{
-#' data(example)
-#' GModel<-data.frame(alpha=c(0.45,0.5,0.05),
-#'                   mu=c(-14,-2,5),
-#'                   sigma=c(2,4,1.5))
-#' plot_QQplot(example$Dist,GModel)
-#' }
-#'
-#' @seealso \code{\link{runGMM}} and \code{\link{gaussian_mixture_vector}}
+#' @param center Means of decomposition
+#' @param covariance Covariances of each component
+#' @param cov_type NEED explenation!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 #'
 #' @export
-plot_2DGauss <- function(center, covariance, cov_type){
+ellips2D <- function(center, covariance, cov_type){
   e <- eigen(covariance)
   eigenvec <- apply(e$vectors, 1, rev)
   eigenval <- diag(rev(e$values))

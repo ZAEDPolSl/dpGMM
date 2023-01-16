@@ -25,17 +25,17 @@ test_2D_init <- function(){
 
     # run GMM with different IC
     gmm <- list()
-    init <- rand_init_2D(X, KS)
+    init <- rGMMtest:::rand_init_2D(X, KS)
     #gmm[["rand"]] <- init
-    gmm[["rand"]] <- EM_iter_2D(X, Y, init , opts);
+    gmm[["rand"]] <- rGMMtest:::EM_iter_2D(X, Y, init , opts);
 
-    init <- DP_init_2D(X, Y, KS)
+    init <- rGMMtest:::DP_init_2D(X, Y, KS)
     #gmm[["DP"]] <- init
-    gmm[["DP"]] <- EM_iter_2D(X, Y, init , opts);
+    gmm[["DP"]] <- rGMMtest:::EM_iter_2D(X, Y, init , opts);
 
-    init <- diag_init_2D(X, KS)
+    init <- rGMMtest:::diag_init_2D(X, KS)
     #gmm[["diag"]] <- init
-    gmm[["diag"]] <- EM_iter_2D(X, Y, init , opts);
+    gmm[["diag"]] <- rGMMtest:::EM_iter_2D(X, Y, init , opts);
 
     # calculate difference between truth and estimated values
     res_tmp <- data.frame(matrix(nrow=length(gmm),ncol=5))

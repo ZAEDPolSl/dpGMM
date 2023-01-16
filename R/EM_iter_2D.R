@@ -1,18 +1,33 @@
+#' Expectation–maximization algorithm for 2D data
+#'
+#' The function performs the EM algorithm to find the local maximum likelihood for the estimated Gaussian mixture parameters.
+#'
+#' @param X Vector of data to decompose by GMM.
+#' @param Y Vector of counts, should be the same length as "data".
+#' Applies only to binned data therefore the default is Y = NULL.
+#' @param init vector of initial parameters for Gaussian components
+#' @param opts parameters of run saves in \code{\link{GMM_2D_opts}} variable
+#'
+#' @returns Function returns a \code{list} of GMM parameters for tested number of components: \describe{
+#'  \item{alpha}{Weights (alpha) of each component}
+#'  \item{center}{Means of decomposition}
+#'  \item{covar}{Covariances of each component}
+#'  \item{KS}{Number of components}
+#'  \item{logL}{Log-likelihood value for the tested number of components}
+#'  \item{IC}{Value of the selected information criterion which was used to calculate the tested number of components}
+#' }
+#'
+#'
+#' @examples
+#' \dontrun{
+#' }
+#'
+#' @seealso \code{\link{runGMM2D}}
+#'
+#' @export
 EM_iter_2D <- function(X, Y, init, opts){
 
-  # EM_ITER(X,Y,INIT)
-  # EM algorithm for 2D Gaussian mixture model.
-  # Input:
-  # X - pixel coordinates [n,2]
-  # Y - intensity values [n,1]
-  # init - vector of initial parameters for Gaussian components
-  # opts - structure with algorithm parameters
-  # Output:
-  #gmm - structure with estimated model parameters and statistics
-
-  # Author: Michal.Marczyk@polsl.pl
-
-  Y <- as.vector(Y)
+    Y <- as.vector(Y)
   N <- length(Y)
   change <- Inf
   L_new <- 0

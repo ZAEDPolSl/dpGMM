@@ -1,6 +1,37 @@
+#' Gaussian mixture decomposition for 2D data
+#'
+#'Function to choose the optimal number of components of a 2D mixture normal distributions, minimising the value of the information criterion.
+#'
+#' @param X matrix of data to decompose by GMM.
+#' @param Y Vector of counts, should be the same length as "data".
+#' Applies only to binned data therefore the default is Y = NULL.
+#' @param opts parameters of run saves in \code{\link{GMM_2D_opts}} variable
+#'
+#' @returns Function returns a \code{list} of GMM parameters for the optimal number of components: \describe{
+#'  \item{alpha}{Weights (alpha) of each component}
+#'  \item{center}{Means of decomposition}
+#'  \item{covar}{Covariances of each component}
+#'  \item{KS}{Optimal number of components}
+#'  \item{logL}{Log-likelihood value for the optimal number of components}
+#'  \item{IC}{Value of the selected information criterion which was used to calculate the optimal number of components}
+#' }
+#'
+#' @importFrom stats pchisq
+#'
+#' @examples
+#' \dontrun{
+#' data(example2D_1)
+#' opts<-GMM_2D_opts
+#' exp <- gaussian_mixture_2D(example2D_1[,1:2], example2D_1[,3], opts)
+#' }
+#'
+#' @seealso \code{\link{runGMM2D}}
+#'
+#' @export
 gaussian_mixture_2D <- function(X, Y=NULL, opts){
 
   if (dim(X)[1] == 2){
+
     X <- t(X)
   }
   if (is.null(Y)){
@@ -22,7 +53,9 @@ gaussian_mixture_2D <- function(X, Y=NULL, opts){
   gmm[[1]] <- EM_iter_2D(X, Y, rand_init_2D(X, 1), opts)
   logL[,1] <- matrix(gmm[[1]]$logL, opts$init_nb, 1)
   IC <- gmm[[1]]$IC
-  IC[,1] <- matrix(IC, opts$init_nb, 1)
+  IC <- matrix(NA, opts$init_nb, opts$KS+1)
+  IC[,1]<-gmm[[1]]$IC
+  #IC[,1] <- matrix(IC, opts$init_nb, 1)
   # gmm[[1]]$IC <- IC
 
   # decomposition for >2 components
@@ -52,9 +85,10 @@ gaussian_mixture_2D <- function(X, Y=NULL, opts){
     logL[,k] <- logL_tmp
     IC[,k] <- IC_tmp
 
+
     # check convergence
     D[k] <- -2*median(logL[,k-1]) + 2*median(logL[,k])
-    if(pchisq(D[k], 7, lower.tail = F) > opts$D_thr){stop <- 0}
+    if(stats::pchisq(D[k], 7, lower.tail = F) > opts$D_thr){stop <- 0}
 
     k <- k+1
   }

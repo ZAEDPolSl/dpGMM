@@ -6,6 +6,7 @@
 #' @param KS Number of components.
 #'
 #' @return List of parameters.
+#' @export
 rand_init_2D <- function(X, KS){
   # Random initialization of 2D Gaussian components.
   n <- dim(X)[1]
