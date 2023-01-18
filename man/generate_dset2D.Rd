@@ -2,14 +2,14 @@
 % Please edit documentation in R/2Dgenerators.R
 \name{generate_dset2D}
 \alias{generate_dset2D}
-\title{Create multiple random 2D datasets.}
+\title{Create multiple random 2D Gaussian mixture datasets}
 \usage{
 generate_dset2D(
   n = 1500,
   m = 1500,
   KS_range = 2:8,
   mu_range = c(-15, 15),
-  sig_range = c(1, 5)
+  cov_range = c(1, 5)
 )
 }
 \arguments{
@@ -17,17 +17,14 @@ generate_dset2D(
 
 \item{m}{Number of distribution to generate.}
 
-\item{mu_range}{Vector of mean range in random draw. Default \code{-15:15}.}
+\item{KS_range}{Range of possible number of components of generated distribution. Default \code{KS=2:8}.}
 
-\item{sig_range}{Vector of mean range in random draw. Default \code{1:5}.}
+\item{mu_range}{Range of means of components of generated distribution. Default \code{-15:15}.}
 
-\item{KS}{Vector of possible components. Default \code{KS=2:8}.}
+\item{cov_range}{Range of means of components of generated distribution. Default \code{1:5}.}
 }
 \value{
-List with following elements::\describe{
-   \item{Dist}{Numeric vector with generated data}
-   \item{Cls}{Numeric vector with classification of each point to particular distribution}
-}
+List with 2D GMM distributions where each list contains elements of \code{\link{generate_norm2D}}
 }
 \description{
 Generator of multiple 2D mixed normal distribution with given model parameters ranges.

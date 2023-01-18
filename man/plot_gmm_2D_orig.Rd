@@ -9,9 +9,9 @@ plot_gmm_2D_orig(X, gmm, opts)
 \arguments{
 \item{X}{Matrix of data}
 
-\item{gmm}{results of runGMM2D decomposition}
+\item{gmm}{results of \code{\link{gaussian_mixture_2D}} decomposition}
 
-\item{opts}{parameters of run saves in \code{\link{GMM_2D_opts}} variable}
+\item{opts}{parameters of run stored in \code{\link{GMM_2D_opts}} variable}
 }
 \description{
 Function plot the decomposed distribution together with histogram of data.

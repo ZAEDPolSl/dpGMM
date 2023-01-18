@@ -1,7 +1,7 @@
 Package: rGMMtest
 Type: Package
 Title: An R package for GMM of 1D and 2D data with stable inital point of EM algoritm
-Version: 0.1.5
+Version: 0.1.6
 Author: c(
     person("Michal", "Marczyk",email = "michal.marczyk@polsl.pl", role = c("aut","cre")),
     person("Kamila", "Szumala", role = c("aut","cre")),
@@ -10,9 +10,9 @@ Maintainer: The package maintainer <joanna.zyla@polsl.pl>
 Description: R package for Gaussian Mixture Model (GMM) clustering using EM algorithm with initialization points See Polanski, A. et al. (2018)
   <doi:10.1142/S0219876218500123>.
 Depends:
-    R (>= 3.5), ggplot2, RColorBrewer, stats
+    R (>= 3.5), ggplot2, RColorBrewer, stats, ggExtra, pracma
 Imports: 
-    grDevices, ggpubr, pracma, Matrix, reshape2, graphics, methods, mvtnorm
+    grDevices, ggpubr, Matrix, reshape2, graphics, methods, mvtnorm
 License: GPL-2
 Encoding: UTF-8
 LazyData: true

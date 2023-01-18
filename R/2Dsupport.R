@@ -1,11 +1,11 @@
-#' Random initialization of 2D GMM EM.
+#' Random initialization of 2D GMM EM
 #'
 #' Function for generating random initial conditions of 2D GMM model.
 #'
-#' @param X x coordinates of histogram.
+#' @param X matrix of data to decompose by GMM.
 #' @param KS Number of components.
 #'
-#' @return List of parameters.
+#' @return Initial values for EM.
 #' @export
 rand_init_2D <- function(X, KS){
   # Random initialization of 2D Gaussian components.
@@ -19,13 +19,15 @@ rand_init_2D <- function(X, KS){
   return(init)
 }
 
-#' Dynamic programming initialization of 2D GMM EM.
+#' Dynamic programming initialization of 2D GMM EM
 #'
 #' Function for generating initial conditions of 2D GMM model by dynamic programming.
 #'
-#' @param X x coordinates of histogram.
+#' @param X matrix of data to decompose by GMM.
 #' @param Y y coordinates of histogram.
 #' @param K number of components.
+#'
+#' @return Initial values for EM.
 #'
 #' @export
 DP_init_2D <- function(X, Y, KS){
@@ -119,24 +121,18 @@ DP_init_2D <- function(X, Y, KS){
   }
   init$alpha <- init$alpha/sum(init$alpha)
 
-  # par(mfrow=c(1,3))
-  # plot(X[,1],X[,2],main="Points")
-  # points(init$center[,1],init$center[,2],  col="red")
-  # plot(density(X[,1]),main="Dens X")
-  # points(init$center[,1],rep(0,init$KS),  col="red")
-  # plot(density(X[,2]),main="Dens Y")
-  # points(init$center[,2],rep(0,init$KS),  col="red")
-
   return(init)
 }
 
 
-#' Diagonal initialization of 2D GMM.
+#' Diagonal initialization of 2D GMM
 #'
 #' Function for generating initial conditions of 2D GMM model by diagonal.
 #'
-#' @param X x coordinates of histogram.
+#' @param X matrix of 2D GMM data.
 #' @param K number of components.
+#'
+#' @return Initial values for EM.
 #'
 #' @export
 diag_init_2D <- function(X, KS){
@@ -155,11 +151,11 @@ diag_init_2D <- function(X, KS){
   return(init)
 }
 
-#' 2D normal distribution
+#' Probability distribution of 2D normal distribution
 #'
-#' Function for calculation PDF of 2D normal model
+#' Function for calculation PDF of 2D normal model.
 #'
-#' @param x x coordinates of histogram.
+#' @param X matrix of 2D GMM data.
 #' @param center centers of 2D distributions (means)
 #' @param covar matrix of covariances
 #'
@@ -177,8 +173,10 @@ norm_pdf_2D <- function(x, center, covar){
 #'
 #' Supporting function for 2D GMM ploting
 #'
-#' @param X x coordinates of histogram.
+#' @param X matrix of 2D GMM data.
 #' @param Y y coordinates of histogram.
+#'
+#'
 #'
 #' @export
 coords_to_img <- function(X,Y){
@@ -198,13 +196,18 @@ coords_to_img <- function(X,Y){
   return(img)
 }
 
-#' Log-Likelihood for 2D GMM
+#' Log-Likelihood for 2D Gaussian Mixture Model.
 #'
 #' Function calculate log-likelihood of 2D Gaussian distribution
 #'
-#' @param X x coordinates of histogram.
+#' @param X matrix of 2D GMM data.
 #' @param Y y coordinates of histogram.
 #' @param gmm 2D GMM fit, output of \code{\link{gaussian_mixture_2D}} function
+#'
+#'@returns Function returns a \code{list} with: \describe{
+#'  \item{lLik}{Log-Likelihood for 2D GMM}
+#'  \item{cum_pdf}{Cumulative probability distibution}
+#' }
 #'
 #' @export
 calc_lLik2D <- function(X,Y,gmm){

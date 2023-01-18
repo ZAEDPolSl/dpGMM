@@ -12,7 +12,7 @@ gaussian_mixture_2D(X, Y = NULL, opts)
 \item{Y}{Vector of counts, should be the same length as "data".
 Applies only to binned data therefore the default is Y = NULL.}
 
-\item{opts}{parameters of run saves in \code{\link{GMM_2D_opts}} variable}
+\item{opts}{parameters of run saved in \code{\link{GMM_2D_opts}} variable}
 }
 \value{
 Function returns a \code{list} of GMM parameters for the optimal number of components: \describe{
@@ -22,6 +22,7 @@ Function returns a \code{list} of GMM parameters for the optimal number of compo
  \item{KS}{Optimal number of components}
  \item{logL}{Log-likelihood value for the optimal number of components}
  \item{IC}{Value of the selected information criterion which was used to calculate the optimal number of components}
+ \item{cls}{Assigment of point to the cluster}
 }
 }
 \description{

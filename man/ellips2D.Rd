@@ -2,17 +2,19 @@
 % Please edit documentation in R/2Dplots.R
 \name{ellips2D}
 \alias{ellips2D}
-\title{Support function for plot 2D GMM}
+\title{Ellipses for plot 2D GMM}
 \usage{
-ellips2D(center, covariance, cov_type)
+ellips2D(center, covariance, cov_type, crit = 0.95)
 }
 \arguments{
 \item{center}{Means of decomposition}
 
 \item{covariance}{Covariances of each component}
 
-\item{cov_type}{NEED explenation!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!}
+\item{cov_type}{Type of covariance model same as in \code{\link{GMM_2D_opts}}. Possible "sphere","diag" or "full" (default).}
+
+\item{crit}{Confidence interval level of ellipse. Default 0.95.}
 }
 \description{
-Function for managing ellipses in 2D GMM plot
+Function for defining ellipses in 2D GMM plot by the confidence interval.
 }

@@ -5,7 +5,7 @@
 #' @param X matrix of data to decompose by GMM.
 #' @param Y Vector of counts, should be the same length as "data".
 #' Applies only to binned data therefore the default is Y = NULL.
-#' @param opts parameters of run saves in \code{\link{GMM_2D_opts}} variable
+#' @param opts parameters of run stored in \code{\link{GMM_2D_opts}} variable
 #' @param plot Logical value. If TRUE (default FALSE), the GMM figure will be displayed.
 #'
 #' @returns Function returns a \code{list} of GMM parameters for the optimal number of components: \describe{

@@ -2,16 +2,19 @@
 % Please edit documentation in R/2Dsupport.R
 \name{DP_init_2D}
 \alias{DP_init_2D}
-\title{Dynamic programming initialization of 2D GMM EM.}
+\title{Dynamic programming initialization of 2D GMM EM}
 \usage{
 DP_init_2D(X, Y, KS)
 }
 \arguments{
-\item{X}{x coordinates of histogram.}
+\item{X}{matrix of data to decompose by GMM.}
 
 \item{Y}{y coordinates of histogram.}
 
 \item{K}{number of components.}
+}
+\value{
+Initial values for EM.
 }
 \description{
 Function for generating initial conditions of 2D GMM model by dynamic programming.

@@ -2,17 +2,17 @@
 % Please edit documentation in R/2Dsupport.R
 \name{norm_pdf_2D}
 \alias{norm_pdf_2D}
-\title{2D normal distribution}
+\title{Probability distribution of 2D normal distribution}
 \usage{
 norm_pdf_2D(x, center, covar)
 }
 \arguments{
-\item{x}{x coordinates of histogram.}
-
 \item{center}{centers of 2D distributions (means)}
 
 \item{covar}{matrix of covariances}
+
+\item{X}{matrix of 2D GMM data.}
 }
 \description{
-Function for calculation PDF of 2D normal model
+Function for calculation PDF of 2D normal model.
 }

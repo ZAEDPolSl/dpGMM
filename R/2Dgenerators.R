@@ -1,23 +1,22 @@
-#' Generator of 2D Gaussian mixture distributions
+#' Generator of 2D Gaussian mixture distribution
 #'
 #' Generator of 2D mixed normal distribution with given model parameters for certain points number.
 #'
 #' @param n Number of points to generate
 #' @param alpha Vector of alphas (weights) for each distribution
-#' @param mu Vector of means for each distribution
-#' @param sigma Vector of  sigmas for each distribution.
+#' @param mu Matrix of means for each distribution
+#' @param cov Vector of covariances for each distribution.
 #'
 #' @importFrom mvtnorm rmvnorm
 #'
 #' @returns List with following elements::\describe{
-#'    \item{Dist}{Numeric vector with generated data}
+#'    \item{Dist}{Numeric marix with generated data}
 #'    \item{Cls}{Numeric vector with classification of each point to particular distribution}
 #' }
 #'
 #' @examples
 #' \dontrun{
-#' data<-generate_norm2D(1500, alpha=c(0.2,0.4,0.4), mu=matrix(c(1,2,1,3,2,2), nrow=2),
-#' cov =c(0.01,0.02,0.03))
+#' data<-generate_norm2D(1500, alpha=c(0.2,0.4,0.4), mu=matrix(c(1,2,1,3,2,2),nrow=2),cov =c(0.01,0.02,0.03))
 #' }
 #' @seealso \code{\link{generate_dset2D}}
 #' @export
@@ -29,36 +28,28 @@ generate_norm2D <- function(n, alpha, mu, cov){
     pts.kl[i] <- sample.int(KS, 1L, prob=alpha)
     dist[i,] <- mvtnorm::rmvnorm(1, mu[,pts.kl[i]], diag(2)*(cov[pts.kl[i]]), method="svd" )
   }
-
-  # par(mfrow=c(1,3))
-  # plot(dist[,1],dist[,2],main="Points")
-  # plot(density(dist[,1]),main="Dens X")
-  # plot(density(dist[,2]),main="Dens Y")
-
   res<-list(Dist=dist,Cls=pts.kl)
   return(res)
 }
 
-#' Create multiple random 2D datasets.
+#' Create multiple random 2D Gaussian mixture datasets
 #'
 #' Generator of multiple 2D mixed normal distribution with given model parameters ranges.
 #'
 #' @param n Number of points to generate.
 #' @param m Number of distribution to generate.
-#' @param KS Vector of possible components. Default \code{KS=2:8}.
-#' @param mu_range Vector of mean range in random draw. Default \code{-15:15}.
-#' @param sig_range Vector of mean range in random draw. Default \code{1:5}.
+#' @param KS_range Range of possible number of components of generated distribution. Default \code{KS=2:8}.
+#' @param mu_range Range of means of components of generated distribution. Default \code{-15:15}.
+#' @param cov_range Range of means of components of generated distribution. Default \code{1:5}.
 #'
 #' @importFrom stats runif
 #'
-#' @returns List with following elements::\describe{
-#'    \item{Dist}{Numeric vector with generated data}
-#'    \item{Cls}{Numeric vector with classification of each point to particular distribution}
-#' }
+#' @returns List with 2D GMM distributions where each list contains elements of \code{\link{generate_norm2D}}
+
 #'
 #' @seealso \code{\link{generate_norm2D}}
 #' @export
-generate_dset2D <- function(n=1500,m=1500,KS_range=2:8,mu_range=c(-15,15),sig_range=c(1,5)){
+generate_dset2D <- function(n=1500,m=1500,KS_range=2:8,mu_range=c(-15,15),cov_range=c(1,5)){
 
   res<- list()
   for(i in 1:m){
@@ -70,7 +61,7 @@ generate_dset2D <- function(n=1500,m=1500,KS_range=2:8,mu_range=c(-15,15),sig_ra
     # randomly generate components' parameters
     res_tmp[["mu"]] <- rbind(stats::runif(res_tmp[["KS"]],mu_range[1],mu_range[2]),
                              stats::runif(res_tmp[["KS"]],mu_range[1],mu_range[2]))
-    res_tmp[["sigma"]] <- stats::runif(res_tmp[["KS"]],sig_range[1],sig_range[2])
+    res_tmp[["sigma"]] <- stats::runif(res_tmp[["KS"]],cov_range[1],cov_range[2])
     res_tmp[["alpha"]] <- stats::runif(res_tmp[["KS"]],0,1)
     res_tmp[["alpha"]] <- res_tmp[["alpha"]]/sum(res_tmp[["alpha"]])
 
@@ -83,38 +74,3 @@ generate_dset2D <- function(n=1500,m=1500,KS_range=2:8,mu_range=c(-15,15),sig_ra
   }
   return(res)
 }
-
-
-#' Generation of GMM data with high precision
-#'
-#' Function to generate PDF of GMM distributions and its cumulative results with high lincespacing.
-#'
-#' @param data Vector of original data
-#' @param GModel \code{data.frame} of GMM parameters i.e GModel$alpha, GModel$mu, GModel$sigma (correct \code{colnames} are obligatory)
-#' @param precision Precision of point linespacing
-#'
-#' @importFrom stats dnorm
-#' @importFrom pracma linspace
-#' @importFrom Matrix rowSums
-#'
-#' @returns List with following elements::\describe{
-#'    \item{x}{Numeric vector with equaliy spread data of given precison}
-#'    \item{dist}{Matrix with PDF of each GMM component and cumulative distribution}
-#' }
-#'
-#'
-#' @seealso \code{\link{runGMM}} and \code{\link{generate_norm1D}}
-#' @export
-# generate_dist2D<-function(data, GModel, precision){
-#   x_temp = pracma::linspace(min(data),max(data),precision)
-#   f_temp = matrix(0, precision, nrow(GModel))
-#   for(k in 1:nrow(GModel)){
-#     f_temp[,k] = GModel$alpha[k] * stats::dnorm(x_temp, mean = GModel$mu[k], sd =GModel$sigma[k])
-#   }
-#
-#   f_temp <- as.data.frame(f_temp)
-#   f_temp$main <- Matrix::rowSums(f_temp)
-#
-#   return(list(x=x_temp,dist=f_temp))
-# }
-

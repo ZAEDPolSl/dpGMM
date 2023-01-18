@@ -3,9 +3,9 @@
 \docType{data}
 \name{GMM_2D_opts}
 \alias{GMM_2D_opts}
-\title{Default configuration for GMM_2D}
+\title{Default configuration for 2D Gaussian Mixture decomposition}
 \format{
-An object of class \code{gmm2_opts} of length 12.
+An object of class \code{gmm2_opts} of length 11.
 }
 \usage{
 GMM_2D_opts
@@ -17,16 +17,14 @@ GMM_2D_opts
 
 \item{SW}{Regularizing coefficient for covariance (nie ja)}
 
-\item{max_var_ratio}{Maximum disimilarity between horizontal and vertical dispersion. By default it is \code{max_var_ratio = 5}}
+\item{max_var_ratio}{Maximum dissimilarity between horizontal and vertical dispersion. By default it is \code{max_var_ratio = 5}}
 
 \item{crit}{Information Criterion to select best number of components.
 Possible "AIC","AICc", "BIC" (default) or "ICL-BIC".}
 
-\item{res}{Parameter for modyifing resolution (>1 less spots). **1** is as a default value.}
+\item{res}{Parameter for modifying resolution (>1 less spots). **1** is as a default value. UŻYWAMY TEGO?!!!!!!!!!!!!!!!!!!!!!!!!}
 
 \item{cov_type}{Type of covariance model. Possible "sphere","diag" or "full" (default).}
-
-\item{show}{\code{True} if the figure should be displayed.}
 
 \item{init_nb}{Number of random initial conditions. By default it is \code{init_nb = 10}.}
 
@@ -34,7 +32,7 @@ Possible "AIC","AICc", "BIC" (default) or "ICL-BIC".}
 
 \item{D_thr}{Significance threshold for D statistic By default is 0.1.(Likelihood Ratio Test ?)}
 
-\item{init_con}{Type of initial conditions. Could be "rand" (default) or "diag".}
+\item{init_con}{Type of initial conditions. Could be "rand" (default),"DP" or "diag". See \code{\link{rand_init_2D}}, \code{\link{DP_init_2D}} or \code{\link{diag_init_2D}}.}
 }
 \description{
 A list with parameters customizing a GMM_2D. Each component of the

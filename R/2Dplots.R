@@ -54,13 +54,13 @@ plot_gmm_2D_binned <- function(data, img, gmm, opts){
 #' This plot is also return as regular output of \code{\link{runGMM}}.
 #'
 #' @param X Matrix of data
-#' @param gmm results of runGMM2D decomposition
-#' @param opts parameters of run saves in \code{\link{GMM_2D_opts}} variable
+#' @param gmm results of \code{\link{gaussian_mixture_2D}} decomposition
+#' @param opts parameters of run stored in \code{\link{GMM_2D_opts}} variable
 #'
 #' @import ggplot2
 #' @import RColorBrewer
+#' @import ggExtra
 #' @importFrom grDevices colorRampPalette
-#' @importFrom reshape2 melt
 #' @importFrom pracma rot90
 #'
 #'
@@ -70,33 +70,52 @@ plot_gmm_2D_binned <- function(data, img, gmm, opts){
 #'
 #' @export
 plot_gmm_2D_orig <- function(X, gmm, opts){
-
+  X<-as.data.frame(X)
+  colnames(X)<-c("X1","X2")
+  X$cls<-gmm$cls
   #Plot 2D data versus GMM decomposition.
   cov_type <- opts$cov_type
-  coors <- data.frame()
-  for (a in 1:gmm$KS){
-    center <- gmm$center[a,]- c(min(X[,1]) - 1, min(X[,2]) - 1)
-    covariance <- pracma::rot90(gmm$covar[,,a], 2)
-    tmp <- ellips2D(center, covariance, cov_type)
-    tmp$KS <- rep(a, 100)
-    coors <- rbind(coors, tmp)
-  }
+  crits<-c(0.25,0.75,0.95)
+  elps<-list()
+    for (j in 1:length(crits)){
+      coors <- data.frame()
+      for (a in 1:gmm$KS){
+        center <- gmm$center[a,]#- c(min(X[,1]) - 1, min(X[,2]) - 1)
+        covariance <- pracma::rot90(gmm$covar[,,a], 2)
+        tmp <- ellips2D(center, covariance, cov_type, crits[j])
+        tmp$KS <- rep(a, 100)
+        coors <- rbind(coors, tmp)
+      }
+    elps[[j]]<-coors
+    }
 
-  p <- ggplot(coors, aes(x = ellipse_x_r, y = ellipse_y_r, group = KS)) + geom_path() +theme_bw()
 
-  return(list(scale,p))
+  col <- grDevices::colorRampPalette(brewer.pal(8,"Dark2"))(gmm$KS)
+
+  p<-ggplot()
+  p<-p+geom_point(aes(x = X$X1, y = X$X2,alpha=0.25,color=factor(X$cls)),show.legend = F)+
+       geom_path(aes(x = elps[[1]]$V2, y = elps[[1]]$V1, group = coors$KS,color=factor(coors$KS)),show.legend = F,size=1,linetype="dashed")+
+       geom_path(aes(x = elps[[2]]$V2, y = elps[[2]]$V1, group = coors$KS,color=factor(coors$KS)),show.legend = F,size=1,linetype="dashed")+
+       geom_path(aes(x = elps[[3]]$V2, y = elps[[3]]$V1, group = coors$KS,color=factor(coors$KS)),show.legend = F,size=1,linetype="dashed")+
+       scale_color_manual(values=col)
+
+  p<-p+geom_point(aes(x=gmm$center[,1],y=gmm$center[,2]),color="red",size=3)+xlab("X1")+ylab('X2')+
+    theme_bw()+theme(plot.title = element_text(hjust = 0.5))
+  p<-ggMarginal(p, type = "density",color="#324376", xparams = list(size = 1),yparams = list(size = 1))
+  return(p)
 }
 
-#' Support function for plot 2D GMM
+#' Ellipses for plot 2D GMM
 #'
-#' Function for managing ellipses in 2D GMM plot
+#' Function for defining ellipses in 2D GMM plot by the confidence interval.
 #'
 #' @param center Means of decomposition
 #' @param covariance Covariances of each component
-#' @param cov_type NEED explenation!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+#' @param cov_type Type of covariance model same as in \code{\link{GMM_2D_opts}}. Possible "sphere","diag" or "full" (default).
+#' @param crit Confidence interval level of ellipse. Default 0.95.
 #'
 #' @export
-ellips2D <- function(center, covariance, cov_type){
+ellips2D <- function(center, covariance, cov_type, crit=0.95){
   e <- eigen(covariance)
   eigenvec <- apply(e$vectors, 1, rev)
   eigenval <- diag(rev(e$values))
@@ -129,9 +148,9 @@ ellips2D <- function(center, covariance, cov_type){
   #Get the confidence interval error ellipse
   #chisquare_val = 3.0349;   % 99%
   if (cov_type == "sphere"){
-    chisquare_val <- sqrt(qchisq(.95, 1))
+    chisquare_val <- sqrt(qchisq(crit, 1))
   } else{
-    chisquare_val <- sqrt(qchisq(.95, 2))
+    chisquare_val <- sqrt(qchisq(crit, 2))
   }
 
   theta_grid <- seq(from=0, to=2*pi, length.out=100)
@@ -149,8 +168,9 @@ ellips2D <- function(center, covariance, cov_type){
   R <- rbind(c(cos(phi), sin(phi)), c(-sin(phi), cos(phi)))
 
   #let's rotate the ellipse to some angle phi
-  r_ellipse <- t(apply(cbind(ellipse_x_r, ellipse_y_r), 1, "*", rowSums(R)))
-  r_ellipse[,1] <- r_ellipse[,1] + y0; r_ellipse[,2] <- r_ellipse[,2]+x0
+  r_ellipse <- cbind(ellipse_x_r, ellipse_y_r)%*%R
+  r_ellipse[,1] <- r_ellipse[,1]+ y0;
+  r_ellipse[,2] <- r_ellipse[,2]+ x0
 
   return(as.data.frame(r_ellipse))
 }

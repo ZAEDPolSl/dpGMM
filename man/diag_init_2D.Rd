@@ -2,14 +2,17 @@
 % Please edit documentation in R/2Dsupport.R
 \name{diag_init_2D}
 \alias{diag_init_2D}
-\title{Diagonal initialization of 2D GMM.}
+\title{Diagonal initialization of 2D GMM}
 \usage{
 diag_init_2D(X, KS)
 }
 \arguments{
-\item{X}{x coordinates of histogram.}
+\item{X}{matrix of 2D GMM data.}
 
 \item{K}{number of components.}
+}
+\value{
+Initial values for EM.
 }
 \description{
 Function for generating initial conditions of 2D GMM model by diagonal.

@@ -12,7 +12,7 @@ runGMM2D(X, Y = NULL, opts, plot = FALSE)
 \item{Y}{Vector of counts, should be the same length as "data".
 Applies only to binned data therefore the default is Y = NULL.}
 
-\item{opts}{parameters of run saves in \code{\link{GMM_2D_opts}} variable}
+\item{opts}{parameters of run stored in \code{\link{GMM_2D_opts}} variable}
 
 \item{plot}{Logical value. If TRUE (default FALSE), the GMM figure will be displayed.}
 }

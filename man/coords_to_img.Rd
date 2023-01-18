@@ -7,7 +7,7 @@
 coords_to_img(X, Y)
 }
 \arguments{
-\item{X}{x coordinates of histogram.}
+\item{X}{matrix of 2D GMM data.}
 
 \item{Y}{y coordinates of histogram.}
 }

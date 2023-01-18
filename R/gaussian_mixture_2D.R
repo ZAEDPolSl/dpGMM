@@ -5,7 +5,7 @@
 #' @param X matrix of data to decompose by GMM.
 #' @param Y Vector of counts, should be the same length as "data".
 #' Applies only to binned data therefore the default is Y = NULL.
-#' @param opts parameters of run saves in \code{\link{GMM_2D_opts}} variable
+#' @param opts parameters of run saved in \code{\link{GMM_2D_opts}} variable
 #'
 #' @returns Function returns a \code{list} of GMM parameters for the optimal number of components: \describe{
 #'  \item{alpha}{Weights (alpha) of each component}
@@ -14,6 +14,7 @@
 #'  \item{KS}{Optimal number of components}
 #'  \item{logL}{Log-likelihood value for the optimal number of components}
 #'  \item{IC}{Value of the selected information criterion which was used to calculate the optimal number of components}
+#'  \item{cls}{Assigment of point to the cluster}
 #' }
 #'
 #' @importFrom stats pchisq
@@ -31,7 +32,6 @@
 gaussian_mixture_2D <- function(X, Y=NULL, opts){
 
   if (dim(X)[1] == 2){
-
     X <- t(X)
   }
   if (is.null(Y)){
@@ -108,5 +108,11 @@ gaussian_mixture_2D <- function(X, Y=NULL, opts){
     gmm_out$IC <- IC[ind, cmp_nb]
   }
 
+  if (gmm_out$KS>1){
+  cls<-find_class_2D(X,gmm_out)
+  } else {
+    cls<-rep(1,dim(X)[1])
+  }
+  gmm_out$cls<-cls
   return(gmm_out)
 }

@@ -2,16 +2,22 @@
 % Please edit documentation in R/2Dsupport.R
 \name{calc_lLik2D}
 \alias{calc_lLik2D}
-\title{Log-Likelihood for 2D GMM}
+\title{Log-Likelihood for 2D Gaussian Mixture Model.}
 \usage{
 calc_lLik2D(X, Y, gmm)
 }
 \arguments{
-\item{X}{x coordinates of histogram.}
+\item{X}{matrix of 2D GMM data.}
 
 \item{Y}{y coordinates of histogram.}
 
 \item{gmm}{2D GMM fit, output of \code{\link{gaussian_mixture_2D}} function}
+}
+\value{
+Function returns a \code{list} with: \describe{
+ \item{lLik}{Log-Likelihood for 2D GMM}
+ \item{cum_pdf}{Cumulative probability distibution}
+}
 }
 \description{
 Function calculate log-likelihood of 2D Gaussian distribution

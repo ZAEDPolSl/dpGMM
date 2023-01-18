@@ -2,7 +2,7 @@
 % Please edit documentation in R/2Dgenerators.R
 \name{generate_norm2D}
 \alias{generate_norm2D}
-\title{Generator of 2D Gaussian mixture distributions}
+\title{Generator of 2D Gaussian mixture distribution}
 \usage{
 generate_norm2D(n, alpha, mu, cov)
 }
@@ -11,13 +11,13 @@ generate_norm2D(n, alpha, mu, cov)
 
 \item{alpha}{Vector of alphas (weights) for each distribution}
 
-\item{mu}{Vector of means for each distribution}
+\item{mu}{Matrix of means for each distribution}
 
-\item{sigma}{Vector of  sigmas for each distribution.}
+\item{cov}{Vector of covariances for each distribution.}
 }
 \value{
 List with following elements::\describe{
-   \item{Dist}{Numeric vector with generated data}
+   \item{Dist}{Numeric marix with generated data}
    \item{Cls}{Numeric vector with classification of each point to particular distribution}
 }
 }
@@ -26,8 +26,7 @@ Generator of 2D mixed normal distribution with given model parameters for certai
 }
 \examples{
 \dontrun{
-data<-generate_norm2D(1500, alpha=c(0.2,0.4,0.4), mu=matrix(c(1,2,1,3,2,2), nrow=2),
-cov =c(0.01,0.02,0.03))
+data<-generate_norm2D(1500, alpha=c(0.2,0.4,0.4), mu=matrix(c(1,2,1,3,2,2),nrow=2),cov =c(0.01,0.02,0.03))
 }
 }
 \seealso{

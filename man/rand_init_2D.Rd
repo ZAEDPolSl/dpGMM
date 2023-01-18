@@ -2,17 +2,17 @@
 % Please edit documentation in R/2Dsupport.R
 \name{rand_init_2D}
 \alias{rand_init_2D}
-\title{Random initialization of 2D GMM EM.}
+\title{Random initialization of 2D GMM EM}
 \usage{
 rand_init_2D(X, KS)
 }
 \arguments{
-\item{X}{x coordinates of histogram.}
+\item{X}{matrix of data to decompose by GMM.}
 
 \item{KS}{Number of components.}
 }
 \value{
-List of parameters.
+Initial values for EM.
 }
 \description{
 Function for generating random initial conditions of 2D GMM model.
