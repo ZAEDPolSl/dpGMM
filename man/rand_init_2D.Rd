@@ -2,7 +2,7 @@
 % Please edit documentation in R/2Dsupport.R
 \name{rand_init_2D}
 \alias{rand_init_2D}
-\title{Random initialization of 2D GMM.}
+\title{Random initialization of 2D GMM EM.}
 \usage{
 rand_init_2D(X, KS)
 }

@@ -2,15 +2,15 @@
 % Please edit documentation in R/2Dsupport.R
 \name{diag_init_2D}
 \alias{diag_init_2D}
-\title{Supporting function for spliters.}
+\title{Diagonal initialization of 2D GMM.}
 \usage{
 diag_init_2D(X, KS)
 }
 \arguments{
-\item{invec}{x coordinates of histogram.}
+\item{X}{x coordinates of histogram.}
 
-\item{yinwec}{y coordinates of histogram.}
+\item{K}{number of components.}
 }
 \description{
-Supporting function used in spliters \code{dyn_pr_split_w_aux} and \code{dyn_pr_split_w}.
+Function for generating initial conditions of 2D GMM model by diagonal.
 }

@@ -1,4 +1,4 @@
-#' Random initialization of 2D GMM.
+#' Random initialization of 2D GMM EM.
 #'
 #' Function for generating random initial conditions of 2D GMM model.
 #'
@@ -19,12 +19,13 @@ rand_init_2D <- function(X, KS){
   return(init)
 }
 
-#' Dynamic programming split of aux.
+#' Dynamic programming initialization of 2D GMM EM.
 #'
-#' Supporting function for dynamic programming in 1D decomposition.
+#' Function for generating initial conditions of 2D GMM model by dynamic programming.
 #'
 #' @param X x coordinates of histogram.
-#' @param ygreki y coordinates of histogram.
+#' @param Y y coordinates of histogram.
+#' @param K number of components.
 #'
 #' @export
 DP_init_2D <- function(X, Y, KS){
@@ -130,12 +131,12 @@ DP_init_2D <- function(X, Y, KS){
 }
 
 
-#' Supporting function for spliters.
+#' Diagonal initialization of 2D GMM.
 #'
-#' Supporting function used in spliters \code{dyn_pr_split_w_aux} and \code{dyn_pr_split_w}.
+#' Function for generating initial conditions of 2D GMM model by diagonal.
 #'
-#' @param invec x coordinates of histogram.
-#' @param yinwec y coordinates of histogram.
+#' @param X x coordinates of histogram.
+#' @param K number of components.
 #'
 #' @export
 diag_init_2D <- function(X, KS){
@@ -154,6 +155,14 @@ diag_init_2D <- function(X, KS){
   return(init)
 }
 
+#' 2D normal distribution
+#'
+#' Function for calculation PDF of 2D normal model
+#'
+#' @param x x coordinates of histogram.
+#' @param center centers of 2D distributions (means)
+#' @param covar matrix of covariances
+#'
 #' @export
 norm_pdf_2D <- function(x, center, covar){
   den <- (6.283185307179585 * sqrt(det(covar)))
@@ -164,6 +173,13 @@ norm_pdf_2D <- function(x, center, covar){
   return(y)
 }
 
+#' 2D plot support
+#'
+#' Supporting function for 2D GMM ploting
+#'
+#' @param X x coordinates of histogram.
+#' @param Y y coordinates of histogram.
+#'
 #' @export
 coords_to_img <- function(X,Y){
 
@@ -182,6 +198,14 @@ coords_to_img <- function(X,Y){
   return(img)
 }
 
+#' Log-Likelihood for 2D GMM
+#'
+#' Function calculate log-likelihood of 2D Gaussian distribution
+#'
+#' @param X x coordinates of histogram.
+#' @param Y y coordinates of histogram.
+#' @param gmm 2D GMM fit, output of \code{\link{gaussian_mixture_2D}} function
+#'
 #' @export
 calc_lLik2D <- function(X,Y,gmm){
 

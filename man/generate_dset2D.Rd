@@ -2,7 +2,7 @@
 % Please edit documentation in R/2Dgenerators.R
 \name{generate_dset2D}
 \alias{generate_dset2D}
-\title{Create random 2D dataset}
+\title{Create multiple random 2D datasets.}
 \usage{
 generate_dset2D(
   n = 1500,
@@ -12,6 +12,26 @@ generate_dset2D(
   sig_range = c(1, 5)
 )
 }
+\arguments{
+\item{n}{Number of points to generate.}
+
+\item{m}{Number of distribution to generate.}
+
+\item{mu_range}{Vector of mean range in random draw. Default \code{-15:15}.}
+
+\item{sig_range}{Vector of mean range in random draw. Default \code{1:5}.}
+
+\item{KS}{Vector of possible components. Default \code{KS=2:8}.}
+}
+\value{
+List with following elements::\describe{
+   \item{Dist}{Numeric vector with generated data}
+   \item{Cls}{Numeric vector with classification of each point to particular distribution}
+}
+}
 \description{
-Create random 2D dataset
+Generator of multiple 2D mixed normal distribution with given model parameters ranges.
+}
+\seealso{
+\code{\link{generate_norm2D}}
 }

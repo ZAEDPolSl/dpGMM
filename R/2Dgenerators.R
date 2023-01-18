@@ -19,7 +19,7 @@
 #' data<-generate_norm2D(1500, alpha=c(0.2,0.4,0.4), mu=matrix(c(1,2,1,3,2,2), nrow=2),
 #' cov =c(0.01,0.02,0.03))
 #' }
-#' @seealso \code{\link{generate_dset2D}} and \code{\link{generate_norm1D}}
+#' @seealso \code{\link{generate_dset2D}}
 #' @export
 generate_norm2D <- function(n, alpha, mu, cov){
   KS <- dim(mu)[2]
@@ -39,7 +39,24 @@ generate_norm2D <- function(n, alpha, mu, cov){
   return(res)
 }
 
-#' Create random 2D dataset
+#' Create multiple random 2D datasets.
+#'
+#' Generator of multiple 2D mixed normal distribution with given model parameters ranges.
+#'
+#' @param n Number of points to generate.
+#' @param m Number of distribution to generate.
+#' @param KS Vector of possible components. Default \code{KS=2:8}.
+#' @param mu_range Vector of mean range in random draw. Default \code{-15:15}.
+#' @param sig_range Vector of mean range in random draw. Default \code{1:5}.
+#'
+#' @importFrom stats runif
+#'
+#' @returns List with following elements::\describe{
+#'    \item{Dist}{Numeric vector with generated data}
+#'    \item{Cls}{Numeric vector with classification of each point to particular distribution}
+#' }
+#'
+#' @seealso \code{\link{generate_norm2D}}
 #' @export
 generate_dset2D <- function(n=1500,m=1500,KS_range=2:8,mu_range=c(-15,15),sig_range=c(1,5)){
 
@@ -51,10 +68,10 @@ generate_dset2D <- function(n=1500,m=1500,KS_range=2:8,mu_range=c(-15,15),sig_ra
     res_tmp[["KS"]] <- sample(KS_range,1)
 
     # randomly generate components' parameters
-    res_tmp[["mu"]] <- rbind(runif(res_tmp[["KS"]],mu_range[1],mu_range[2]),
-                             runif(res_tmp[["KS"]],mu_range[1],mu_range[2]))
-    res_tmp[["sigma"]] <- runif(res_tmp[["KS"]],sig_range[1],sig_range[2])
-    res_tmp[["alpha"]] <- runif(res_tmp[["KS"]],0,1)
+    res_tmp[["mu"]] <- rbind(stats::runif(res_tmp[["KS"]],mu_range[1],mu_range[2]),
+                             stats::runif(res_tmp[["KS"]],mu_range[1],mu_range[2]))
+    res_tmp[["sigma"]] <- stats::runif(res_tmp[["KS"]],sig_range[1],sig_range[2])
+    res_tmp[["alpha"]] <- stats::runif(res_tmp[["KS"]],0,1)
     res_tmp[["alpha"]] <- res_tmp[["alpha"]]/sum(res_tmp[["alpha"]])
 
     # generate data based on parameters

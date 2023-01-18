@@ -2,15 +2,17 @@
 % Please edit documentation in R/2Dsupport.R
 \name{DP_init_2D}
 \alias{DP_init_2D}
-\title{Dynamic programming split of aux.}
+\title{Dynamic programming initialization of 2D GMM EM.}
 \usage{
 DP_init_2D(X, Y, KS)
 }
 \arguments{
 \item{X}{x coordinates of histogram.}
 
-\item{ygreki}{y coordinates of histogram.}
+\item{Y}{y coordinates of histogram.}
+
+\item{K}{number of components.}
 }
 \description{
-Supporting function for dynamic programming in 1D decomposition.
+Function for generating initial conditions of 2D GMM model by dynamic programming.
 }

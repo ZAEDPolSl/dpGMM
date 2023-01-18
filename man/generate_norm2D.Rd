@@ -31,5 +31,5 @@ cov =c(0.01,0.02,0.03))
 }
 }
 \seealso{
-\code{\link{generate_dset2D}} and \code{\link{generate_norm1D}}
+\code{\link{generate_dset2D}}
 }
