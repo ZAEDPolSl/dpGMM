@@ -10,8 +10,8 @@
 #'
 #' @import ggplot2
 #' @import RColorBrewer
+#' @import patchwork
 #' @importFrom grDevices colorRampPalette
-#' @importFrom reshape2 melt
 #' @importFrom pracma rot90
 #'
 #'
@@ -20,33 +20,68 @@
 #' }
 #'
 #' @export
-plot_gmm_2D_binned <- function(data, img, gmm, opts){
-  #Plot 2D binned data versus GMM decomposition.
-  #m <- dim(img)[1];  n <- dim(img)[2] # TAK BYŁO ALE POPRAWIŁAM NA PONIŻEJ
-  m <- dim(data)[1];  n <- dim(data)[2]
-  ploty <- matrix(0, m, n)
+plot_gmm_2D_binned <- function(X, Y, gmm, opts){
 
-  for(c in 1:gmm$KS){
-    tmp <- gmm$alpha[c]*(norm_pdf_2D(data, gmm$center[c,], gmm$covar[,,c]))
-    ploty <- ploty + matrix(tmp, m, n)
-  }
-  scale <- sum(255-img)/sum(ploty)
-
-  #plot z dodawaniem kszta??w w petli z ellips2D na zdjecie
   cov_type <- opts$cov_type
-  coors <- data.frame()
-  for (a in 1:gmm$KS){
-    center <- gmm$center[a,]- c(min(data[,1]) - 1, min(data[,2]) - 1)
-    covariance <- pracma:::rot90(gmm$covar[,,a], 2)
-    tmp <- ellips2D(center, covariance, cov_type)
-    tmp$KS <- rep(a, 100)
-    coors <- rbind(coors, tmp)
+  crits<-c(0.25,0.75,0.95)
+  elps<-list()
+  for (j in 1:length(crits)){
+    coors <- data.frame()
+    for (a in 1:gmm$KS){
+      center <- gmm$center[a,]#- c(min(X[,1]) - 1, min(X[,2]) - 1)
+      covariance <- pracma::rot90(gmm$covar[,,a], 2)
+      tmp <- ellips2D(center, covariance, cov_type, crits[j])
+      tmp$KS <- rep(a, 100)
+      coors <- rbind(coors, tmp)
+    }
+    elps[[j]]<-coors
   }
 
-  p <- ggplot(coors, aes(x = ellipse_x_r, y = ellipse_y_r, group = KS)) + geom_path() +theme_bw()
 
-  return(list(scale,p))
+  col <- grDevices::colorRampPalette(brewer.pal(8,"Dark2"))(gmm$KS)
+
+  p <- ggplot() +theme_bw()+
+      geom_tile(aes(x = X$Coordinates_1, y = X$Coordinates_2, fill = as.factor(gmm$cls)),show.legend = F)+
+      geom_path(aes(x = elps[[1]][,2], y = elps[[1]][,1], group = coors$KS),color="black",show.legend = F,size=1,linetype="dashed")+
+      scale_fill_manual(values=col)+
+      geom_point(aes(x=gmm$center[,1],y=gmm$center[,2]),color="red",size=3)+xlab("X1")+ylab('X2')
+
+  p2<-ggplot() +theme_bw()+
+    geom_tile(aes(x = X$Coordinates_1, y = X$Coordinates_2, fill = Y),show.legend = F)+
+    scale_fill_viridis_c()+
+    geom_point(aes(x=gmm$center[,1],y=gmm$center[,2]),color="red",size=3)+
+    xlab("X1")+ylab('X2')+
+    geom_path(aes(x = elps[[1]]$V2, y = elps[[1]]$V1, group = coors$KS),color="black",show.legend = F,size=1,linetype="dashed")
+
+
+
+  Heat<-matrix(Y,nrow=max(X[,1]))
+  ysum<-rowSums(Heat)
+  xsum<-colSums(Heat)
+
+  xsum<-as.data.frame(xsum)
+  p3<-ggplot(xsum,aes(x=xsum))+geom_density(color="#324376",size=1.5)+
+      theme_void()
+
+  ysum<-as.data.frame(ysum)
+  p4<-ggplot(ysum,aes(x=ysum))+geom_density(color="#324376",size=1.5)+coord_flip()+
+      theme_void()
+
+  return(pl)
+
+layout <- '
+A####
+B####
+CDEFG
+'
+    pl<-p3 + plot_spacer() +
+    p2 + plot_spacer() + p4 + plot_spacer() + p +
+    plot_layout(widths = c(3, -.45, 1.3, .3, 3), heights = c(1,-.32,3), design = layout)
+    return(pl)
+
 }
+
+
 
 #' Plot of GMM decomposition for 2D data
 #'
