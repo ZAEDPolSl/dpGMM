@@ -4,16 +4,16 @@
 \alias{plot_gmm_2D_binned}
 \title{Plot of GMM decomposition for 2D binned data}
 \usage{
-plot_gmm_2D_binned(data, img, gmm, opts)
+plot_gmm_2D_binned(X, Y, gmm, opts)
 }
 \arguments{
-\item{data}{Matrix of data}
-
-\item{img}{Vector of X counts (dedicated to binned data)}
-
 \item{gmm}{results of runGMM2D decomposition}
 
 \item{opts}{parameters of run saves in \code{\link{GMM_2D_opts}} variable}
+
+\item{data}{Matrix of data}
+
+\item{img}{Vector of X counts (dedicated to binned data)}
 }
 \description{
 Function plot the decomposed distribution together with histogram of data.

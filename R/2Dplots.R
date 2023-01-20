@@ -21,7 +21,7 @@
 #'
 #' @export
 plot_gmm_2D_binned <- function(X, Y, gmm, opts){
-
+   colnames(X)<-c("Coordinates_1","Coordinates_2")
   cov_type <- opts$cov_type
   crits<-c(0.25,0.75,0.95)
   elps<-list()
@@ -40,11 +40,11 @@ plot_gmm_2D_binned <- function(X, Y, gmm, opts){
 
   col <- grDevices::colorRampPalette(brewer.pal(8,"Dark2"))(gmm$KS)
 
-  p <- ggplot() +theme_bw()+
-      geom_tile(aes(x = X$Coordinates_1, y = X$Coordinates_2, fill = as.factor(gmm$cls)),show.legend = F)+
-      geom_path(aes(x = elps[[1]][,2], y = elps[[1]][,1], group = coors$KS),color="black",show.legend = F,size=1,linetype="dashed")+
-      scale_fill_manual(values=col)+
-      geom_point(aes(x=gmm$center[,1],y=gmm$center[,2]),color="red",size=3)+xlab("X1")+ylab('X2')
+  # p <- ggplot() +theme_bw()+
+  #     geom_tile(aes(x = X$Coordinates_1, y = X$Coordinates_2, fill = as.factor(gmm$cls)),show.legend = F)+
+  #     geom_path(aes(x = elps[[1]][,2], y = elps[[1]][,1], group = coors$KS),color="black",show.legend = F,size=1,linetype="dashed")+
+  #     scale_fill_manual(values=col)+
+  #     geom_point(aes(x=gmm$center[,1],y=gmm$center[,2]),color="red",size=3)+xlab("X1")+ylab('X2')
 
   p2<-ggplot() +theme_bw()+
     geom_tile(aes(x = X$Coordinates_1, y = X$Coordinates_2, fill = Y),show.legend = F)+
@@ -67,16 +67,16 @@ plot_gmm_2D_binned <- function(X, Y, gmm, opts){
   p4<-ggplot(ysum,aes(x=ysum))+geom_density(color="#324376",size=1.5)+coord_flip()+
       theme_void()
 
-  return(pl)
 
 layout <- '
-A####
-B####
-CDEFG
+A##
+B##
+CDE
 '
     pl<-p3 + plot_spacer() +
-    p2 + plot_spacer() + p4 + plot_spacer() + p +
-    plot_layout(widths = c(3, -.45, 1.3, .3, 3), heights = c(1,-.32,3), design = layout)
+    p2 + plot_spacer() + p4 +
+    plot_layout(widths = c(3, -.7, 1, .3), heights = c(1,-.45), design = layout)
+    pl
     return(pl)
 
 }
