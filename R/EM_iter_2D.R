@@ -2,8 +2,8 @@
 #'
 #' The function performs the EM algorithm to find the local maximum likelihood for the estimated Gaussian mixture parameters.
 #'
-#' @param X Vector of data to decompose by GMM.
-#' @param Y Vector of counts, should be the same length as "data".
+#' @param X matrix of data to decompose by GMM.
+#' @param Y vector of counts, should be the same length as "X".
 #' Applies only to binned data therefore the default is Y = NULL.
 #' @param init vector of initial parameters for Gaussian components. See \code{\link{rand_init_2D}}, \code{\link{DP_init_2D}} or \code{\link{diag_init_2D}}.
 #' @param opts parameters of run stored in \code{\link{GMM_2D_opts}} variable

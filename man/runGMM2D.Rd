@@ -9,12 +9,12 @@ runGMM2D(X, Y = NULL, opts, plot = FALSE)
 \arguments{
 \item{X}{matrix of data to decompose by GMM.}
 
-\item{Y}{Vector of counts, should be the same length as "data".
+\item{Y}{vector of counts, should be the same length as "X".
 Applies only to binned data therefore the default is Y = NULL.}
 
 \item{opts}{parameters of run stored in \code{\link{GMM_2D_opts}} variable}
 
-\item{plot}{Logical value. If TRUE (default FALSE), the GMM figure will be displayed.}
+\item{plot}{logical value. If TRUE (default FALSE), the GMM figure will be displayed.}
 }
 \value{
 Function returns a \code{list} of GMM parameters for the optimal number of components: \describe{

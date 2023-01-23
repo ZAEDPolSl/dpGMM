@@ -3,7 +3,7 @@
 #'Function to choose the optimal number of components of a 2D mixture normal distributions, minimising the value of the information criterion.
 #'
 #' @param X matrix of data to decompose by GMM.
-#' @param Y Vector of counts, should be the same length as "data".
+#' @param Y vector of counts, should be the same length as "X".
 #' Applies only to binned data therefore the default is Y = NULL.
 #' @param opts parameters of run saved in \code{\link{GMM_2D_opts}} variable
 #'

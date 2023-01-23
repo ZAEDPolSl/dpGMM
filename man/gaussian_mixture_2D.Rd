@@ -9,7 +9,7 @@ gaussian_mixture_2D(X, Y = NULL, opts)
 \arguments{
 \item{X}{matrix of data to decompose by GMM.}
 
-\item{Y}{Vector of counts, should be the same length as "data".
+\item{Y}{vector of counts, should be the same length as "X".
 Applies only to binned data therefore the default is Y = NULL.}
 
 \item{opts}{parameters of run saved in \code{\link{GMM_2D_opts}} variable}

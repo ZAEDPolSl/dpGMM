@@ -7,9 +7,9 @@
 EM_iter_2D(X, Y, init, opts)
 }
 \arguments{
-\item{X}{Vector of data to decompose by GMM.}
+\item{X}{matrix of data to decompose by GMM.}
 
-\item{Y}{Vector of counts, should be the same length as "data".
+\item{Y}{vector of counts, should be the same length as "X".
 Applies only to binned data therefore the default is Y = NULL.}
 
 \item{init}{vector of initial parameters for Gaussian components. See \code{\link{rand_init_2D}}, \code{\link{DP_init_2D}} or \code{\link{diag_init_2D}}.}

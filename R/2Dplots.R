@@ -3,9 +3,9 @@
 #' Function plot the decomposed distribution together with histogram of data.
 #' This plot is also return as regular output of \code{\link{runGMM}}.
 #'
-#' @param data Matrix of data
-#' @param img Vector of X counts (dedicated to binned data)
-#' @param gmm results of runGMM2D decomposition
+#' @param X matrix of data to decompose by GMM.
+#' @param Y vector of counts, should be the same length as "X".
+#' @param gmm results of \code{\link{gaussian_mixture_2D}} decomposition
 #' @param opts parameters of run saves in \code{\link{GMM_2D_opts}} variable
 #'
 #' @import ggplot2
@@ -23,7 +23,7 @@
 plot_gmm_2D_binned <- function(X, Y, gmm, opts){
    colnames(X)<-c("Coordinates_1","Coordinates_2")
   cov_type <- opts$cov_type
-  crits<-c(0.25,0.75,0.95)
+  crits<-c(0.25,0.35)
   elps<-list()
   for (j in 1:length(crits)){
     coors <- data.frame()
@@ -40,44 +40,16 @@ plot_gmm_2D_binned <- function(X, Y, gmm, opts){
 
   col <- grDevices::colorRampPalette(brewer.pal(8,"Dark2"))(gmm$KS)
 
-  # p <- ggplot() +theme_bw()+
-  #     geom_tile(aes(x = X$Coordinates_1, y = X$Coordinates_2, fill = as.factor(gmm$cls)),show.legend = F)+
-  #     geom_path(aes(x = elps[[1]][,2], y = elps[[1]][,1], group = coors$KS),color="black",show.legend = F,size=1,linetype="dashed")+
-  #     scale_fill_manual(values=col)+
-  #     geom_point(aes(x=gmm$center[,1],y=gmm$center[,2]),color="red",size=3)+xlab("X1")+ylab('X2')
 
-  p2<-ggplot() +theme_bw()+
+  p<-ggplot() +theme_bw()+
     geom_tile(aes(x = X$Coordinates_1, y = X$Coordinates_2, fill = Y),show.legend = F)+
     scale_fill_viridis_c()+
     geom_point(aes(x=gmm$center[,1],y=gmm$center[,2]),color="red",size=3)+
     xlab("X1")+ylab('X2')+
-    geom_path(aes(x = elps[[1]]$V2, y = elps[[1]]$V1, group = coors$KS),color="black",show.legend = F,size=1,linetype="dashed")
+    geom_path(aes(x = elps[[1]]$V2, y = elps[[1]]$V1, group = coors$KS),color="black",show.legend = F,size=0.75,linetype="dashed")+
+    geom_path(aes(x = elps[[2]]$V2, y = elps[[2]]$V1, group = coors$KS),color="black",show.legend = F,size=0.75,linetype="dashed")
 
-
-
-  Heat<-matrix(Y,nrow=max(X[,1]))
-  ysum<-rowSums(Heat)
-  xsum<-colSums(Heat)
-
-  xsum<-as.data.frame(xsum)
-  p3<-ggplot(xsum,aes(x=xsum))+geom_density(color="#324376",size=1.5)+
-      theme_void()
-
-  ysum<-as.data.frame(ysum)
-  p4<-ggplot(ysum,aes(x=ysum))+geom_density(color="#324376",size=1.5)+coord_flip()+
-      theme_void()
-
-
-layout <- '
-A##
-B##
-CDE
-'
-    pl<-p3 + plot_spacer() +
-    p2 + plot_spacer() + p4 +
-    plot_layout(widths = c(3, -.7, 1, .3), heights = c(1,-.45), design = layout)
-    pl
-    return(pl)
+    return(p)
 
 }
 

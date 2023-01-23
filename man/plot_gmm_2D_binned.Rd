@@ -7,13 +7,13 @@
 plot_gmm_2D_binned(X, Y, gmm, opts)
 }
 \arguments{
-\item{gmm}{results of runGMM2D decomposition}
+\item{X}{matrix of data to decompose by GMM.}
+
+\item{Y}{vector of counts, should be the same length as "X".}
+
+\item{gmm}{results of \code{\link{gaussian_mixture_2D}} decomposition}
 
 \item{opts}{parameters of run saves in \code{\link{GMM_2D_opts}} variable}
-
-\item{data}{Matrix of data}
-
-\item{img}{Vector of X counts (dedicated to binned data)}
 }
 \description{
 Function plot the decomposed distribution together with histogram of data.
