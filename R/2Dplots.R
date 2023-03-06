@@ -23,7 +23,7 @@
 plot_gmm_2D_binned <- function(X, Y, gmm, opts){
    colnames(X)<-c("Coordinates_1","Coordinates_2")
   cov_type <- opts$cov_type
-  crits<-c(0.25,0.35)
+  crits<-c(0.15,0.35)
   elps<-list()
   for (j in 1:length(crits)){
     coors <- data.frame()
