@@ -38,12 +38,13 @@ plot_gmm_2D_binned <- function(X, Y, gmm, opts){
   }
 
 
-  col <- grDevices::colorRampPalette(brewer.pal(8,"Dark2"))(gmm$KS)
+  col <- grDevices::colorRampPalette(brewer.pal(9,"Blues"))(150)
 
 
   p<-ggplot() +theme_bw()+
     geom_tile(aes(x = X$Coordinates_1, y = X$Coordinates_2, fill = Y),show.legend = F)+
-    scale_fill_viridis_c()+
+    coord_cartesian(expand = FALSE)+
+    scale_fill_gradientn(colours = col)+
     geom_point(aes(x=gmm$center[,1],y=gmm$center[,2]),color="red",size=3)+
     xlab("X1")+ylab('X2')+
     geom_path(aes(x = elps[[1]]$V2, y = elps[[1]]$V1, group = coors$KS),color="black",show.legend = F,size=0.75,linetype="dashed")+
@@ -103,7 +104,8 @@ plot_gmm_2D_orig <- function(X, gmm, opts){
     scale_color_manual(values=col)+
        geom_path(aes(x = elps[[1]]$V2, y = elps[[1]]$V1, group = coors$KS),color="grey35",show.legend = F,size=0.65,linetype="dashed")+ #color=factor(coors$KS)
        geom_path(aes(x = elps[[2]]$V2, y = elps[[2]]$V1, group = coors$KS),color="grey35",show.legend = F,size=0.65,linetype="dashed")+
-       geom_path(aes(x = elps[[3]]$V2, y = elps[[3]]$V1, group = coors$KS),color="grey35",show.legend = F,size=0.65,linetype="dashed")
+       geom_path(aes(x = elps[[3]]$V2, y = elps[[3]]$V1, group = coors$KS),color="grey35",show.legend = F,size=0.65,linetype="dashed")+
+      coord_cartesian(expand = FALSE)
   p<-p+geom_point(aes(x=gmm$center[,1],y=gmm$center[,2]),color="black",size=3)+xlab("X1")+ylab('X2')+
     theme_bw()+theme(plot.title = element_text(hjust = 0.5))
   p
