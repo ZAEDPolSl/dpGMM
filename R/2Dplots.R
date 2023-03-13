@@ -99,14 +99,14 @@ plot_gmm_2D_orig <- function(X, gmm, opts){
   col <- grDevices::colorRampPalette(brewer.pal(8,"Dark2"))(gmm$KS)
 
   p<-ggplot()
-  p<-p+geom_point(aes(x = X$X1, y = X$X2,alpha=0.25,color=factor(X$cls)),show.legend = F)+
-       geom_path(aes(x = elps[[1]]$V2, y = elps[[1]]$V1, group = coors$KS,color=factor(coors$KS)),show.legend = F,size=1,linetype="dashed")+
-       geom_path(aes(x = elps[[2]]$V2, y = elps[[2]]$V1, group = coors$KS,color=factor(coors$KS)),show.legend = F,size=1,linetype="dashed")+
-       geom_path(aes(x = elps[[3]]$V2, y = elps[[3]]$V1, group = coors$KS,color=factor(coors$KS)),show.legend = F,size=1,linetype="dashed")+
-       scale_color_manual(values=col)
-
-  p<-p+geom_point(aes(x=gmm$center[,1],y=gmm$center[,2]),color="red",size=3)+xlab("X1")+ylab('X2')+
+  p<-p+geom_point(aes(x = X$X1, y = X$X2,alpha=0.75,color=factor(X$cls)),show.legend = F)+
+    scale_color_manual(values=col)+
+       geom_path(aes(x = elps[[1]]$V2, y = elps[[1]]$V1, group = coors$KS),color="grey35",show.legend = F,size=0.65,linetype="dashed")+ #color=factor(coors$KS)
+       geom_path(aes(x = elps[[2]]$V2, y = elps[[2]]$V1, group = coors$KS),color="grey35",show.legend = F,size=0.65,linetype="dashed")+
+       geom_path(aes(x = elps[[3]]$V2, y = elps[[3]]$V1, group = coors$KS),color="grey35",show.legend = F,size=0.65,linetype="dashed")
+  p<-p+geom_point(aes(x=gmm$center[,1],y=gmm$center[,2]),color="black",size=3)+xlab("X1")+ylab('X2')+
     theme_bw()+theme(plot.title = element_text(hjust = 0.5))
+  p
  # p<-ggMarginal(p, type = "density",color="#324376", xparams = list(size = 1),yparams = list(size = 1))
   return(p)
 }
