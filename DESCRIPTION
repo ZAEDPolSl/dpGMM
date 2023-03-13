@@ -10,7 +10,7 @@ Maintainer: The package maintainer <joanna.zyla@polsl.pl>
 Description: R package for Gaussian Mixture Model (GMM) clustering using EM algorithm with initialization points See Polanski, A. et al. (2018)
   <doi:10.1142/S0219876218500123>.
 Depends:
-    R (>= 3.5), ggplot2, RColorBrewer, stats, ggExtra, pracma
+    R (>= 3.5), ggplot2, RColorBrewer, stats,pracma
 Imports: 
     grDevices, ggpubr, Matrix, reshape2, graphics, methods, mvtnorm
 License: GPL-2

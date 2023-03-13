@@ -66,7 +66,6 @@ plot_gmm_2D_binned <- function(X, Y, gmm, opts){
 #'
 #' @import ggplot2
 #' @import RColorBrewer
-#' @import ggExtra
 #' @importFrom grDevices colorRampPalette
 #' @importFrom pracma rot90
 #'
@@ -108,7 +107,7 @@ plot_gmm_2D_orig <- function(X, gmm, opts){
 
   p<-p+geom_point(aes(x=gmm$center[,1],y=gmm$center[,2]),color="red",size=3)+xlab("X1")+ylab('X2')+
     theme_bw()+theme(plot.title = element_text(hjust = 0.5))
-  p<-ggMarginal(p, type = "density",color="#324376", xparams = list(size = 1),yparams = list(size = 1))
+ # p<-ggMarginal(p, type = "density",color="#324376", xparams = list(size = 1),yparams = list(size = 1))
   return(p)
 }
 
