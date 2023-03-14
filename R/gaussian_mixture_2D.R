@@ -110,8 +110,10 @@ gaussian_mixture_2D <- function(X, Y=NULL, opts){
 
 
     # check convergence
-    D[k] <- -2*median(logL[,k-1]) + 2*median(logL[,k])
-    if(stats::pchisq(D[k], 7, lower.tail = F) > opts$D_thr){stop <- 0}
+    if(opts$sig){
+      D[k] <- -2*median(logL[,k-1]) + 2*median(logL[,k])
+      if(stats::pchisq(D[k], 7, lower.tail = F) > opts$D_thr){stop <- 0}
+    }
 
     k <- k+1
   }
