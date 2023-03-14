@@ -56,7 +56,7 @@ gaussian_mixture_vector <- function(X, KS, Y = NULL, fixed=FALSE , change = Inf,
   mu <- list()
   sigma <- list()
 
-  #histogram of input data (for drawing and IC).. soon
+  #histogram of input data (for drawing and IC)
   h  <- hist(X, breaks = seq(min(X), max(X), l=(min(max(20,round(sqrt(N))), 100)+1)),plot = F)
   y <- h$counts
   x <- h$mids

@@ -21,23 +21,14 @@
 #' @format A matrix of X and Y (in histogram)
 "binned"
 
-#' Data of 2D mixture - 1
+#' Data of 2D mixture
 #'
 #' This data set contain translated image information into X and Y coordinates and count for each pair X nad Y.
 
 #' @docType data
-#' @name example2D_1
-#' @usage data(example2D_1)
+#' @name example2D
+#' @usage data(example2D)
 #' @format \code{data.frame} of X and Y coordinates and counts
-"example2D_1"
+"example2D"
 
 
-#' Data of 2D mixture - 2
-#'
-#' This data set contain translated image information into X and Y coordinates and count for each pair X nad Y.
-
-#' @docType data
-#' @name example2D_2
-#' @usage data(example2D_2)
-#' @format \code{data.frame} of X and Y coordinates and counts
-"example2D_2"

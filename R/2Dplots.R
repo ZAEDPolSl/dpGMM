@@ -108,8 +108,7 @@ plot_gmm_2D_orig <- function(X, gmm, opts){
       coord_cartesian(expand = FALSE)
   p<-p+geom_point(aes(x=gmm$center[,1],y=gmm$center[,2]),color="black",size=3)+xlab("X1")+ylab('X2')+
     theme_bw()+theme(plot.title = element_text(hjust = 0.5))
-  p
- # p<-ggMarginal(p, type = "density",color="#324376", xparams = list(size = 1),yparams = list(size = 1))
+
   return(p)
 }
 

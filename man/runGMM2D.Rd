@@ -14,27 +14,30 @@ Applies only to binned data therefore the default is Y = NULL.}
 
 \item{opts}{parameters of run stored in \code{\link{GMM_2D_opts}} variable}
 
-\item{plot}{logical value. If TRUE (default FALSE), the GMM figure will be displayed.}
+\item{plot}{logical value. If TRUE (default=FALSE), the GMM decomposition figure will be displayed.}
 }
 \value{
 Function returns a \code{list} of GMM parameters for the optimal number of components: \describe{
- \item{alpha}{Weights (alpha) of each component}
- \item{center}{Means of decomposition}
- \item{covar}{Covariances of each component}
- \item{KS}{Optimal number of components}
- \item{logL}{Log-likelihood value for the optimal number of components}
- \item{IC}{Value of the selected information criterion which was used to calculate the optimal number of components}
+ \item{model}{\describe{
+    \item{alpha}{Weights (alpha) of each component}
+    \item{center}{Means of decomposition}
+    \item{covar}{Covariances of each component}
+    \item{KS}{Optimal number of components}
+    \item{logL}{Log-likelihood value for the optimal number of components}
+    \item{IC}{Value of the selected information criterion which was used to calculate the optimal number of components}}}
  \item{fig}{Plot of decomposition}
 }
 }
 \description{
-Function to choose the optimal number of components of a 2D mixture normal distributions, minimising the value of the information criterion.
+Main function to perform GMM on 2D data. Function choose the optimal number of components of a 2D mixture normal distributions by minimising the value of the information criterion.
 }
 \examples{
 \dontrun{
-data(example2D_1)
+data(example2D)
 opts<-GMM_2D_opts
-runGMM2D(example2D_1[,1:2], example2D_1[,3], opts, plot=T)
+opts$fixed<-T
+opts$KS<-3
+res<-runGMM2D(example2D[,1:2], example2D[,3], opts, plot=T)
 }
 
 

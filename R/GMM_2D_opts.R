@@ -15,6 +15,8 @@
 #' @param KS Maximum number of GMM components. By default it is \code{KS = 5}.
 #' @param D_thr Significance threshold for D statistic By default is 0.1.(Likelihood Ratio Test ?)
 #' @param init_con Type of initial conditions. Could be "rand" (default),"DP" or "diag". See \code{\link{rand_init_2D}}, \code{\link{DP_init_2D}} or \code{\link{diag_init_2D}}.
+#' @param fixed perform GMM only for number of components given in KS (defailt=FALSE).
+
 #'
 #' @examples
 #' # display all default settings
@@ -37,7 +39,8 @@ GMM_2D_opts <- list(
   init_nb = 10,
   KS = 5,
   D_thr = 0.1,
-  init_con = "rand"
+  init_con = "rand",
+  fixed=FALSE
 )
 class(GMM_2D_opts) <- "gmm2_opts"
 

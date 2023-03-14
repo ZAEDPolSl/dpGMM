@@ -1,16 +1,15 @@
 Package: rGMMtest
 Type: Package
-Title: An R package for GMM of 1D and 2D data with stable inital point of EM algoritm
-Version: 0.1.6
+Title: dpGMM: dynamic programming based Gaussian mixture modelling tool for 1D and 2D data.
+Version: 0.1.7
 Author: c(
     person("Michal", "Marczyk",email = "michal.marczyk@polsl.pl", role = c("aut","cre")),
     person("Kamila", "Szumala", role = c("aut","cre")),
     person("Joanna", "Zyla",  email = "joanna.zyla@polsl.pl",role = c("aut","cre")))
 Maintainer: The package maintainer <joanna.zyla@polsl.pl>
-Description: R package for Gaussian Mixture Model (GMM) clustering using EM algorithm with initialization points See Polanski, A. et al. (2018)
-  <doi:10.1142/S0219876218500123>.
+Description: Package for Gaussian mixture modelling clustering of 1D and 2D data with the option to plot and estimate the optimal number of clusters. The base of GMM model estimation is dynamic programming based EM algorithm. Input data can be vectors as well as binned data (histogram type).
 Depends:
-    R (>= 3.5), ggplot2, RColorBrewer, stats,pracma
+    R (>= 3.5), ggplot2, RColorBrewer, stats, pracma
 Imports: 
     grDevices, ggpubr, Matrix, reshape2, graphics, methods, mvtnorm
 License: GPL-2

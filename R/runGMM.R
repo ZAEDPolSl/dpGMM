@@ -87,6 +87,8 @@ runGMM <- function(X, KS, Y = NULL, fixed=FALSE , change = Inf, max_iter = 5000,
     if(GModel$KS>1){
       thr <- find_thr_by_params(GModel$model,dist.plot,sigmas.dev)
     } else {thr=NULL}
+  # remove Thresholds out of data range
+     thr<-thr[-which(thr>max(X) | thr<min(X))]
 
   # Clusters assignment
     clust <- matrix(1, 1, length(X))
