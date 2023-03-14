@@ -1,5 +1,5 @@
-# rGMM
-R package for Gaussian Mixture Model (GMM) clustering using EM algorithm with initialization points[1].
+# dpGMM
+R package dpGMM for dynamic programming based Gaussian mixture modelling clustering for 1D and 2D data.
 
 ## Description
 Package functionality:
