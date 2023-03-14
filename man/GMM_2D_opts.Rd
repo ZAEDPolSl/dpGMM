@@ -5,7 +5,7 @@
 \alias{GMM_2D_opts}
 \title{Default configuration for 2D Gaussian Mixture decomposition}
 \format{
-An object of class \code{gmm2_opts} of length 12.
+An object of class \code{gmm2_opts} of length 13.
 }
 \usage{
 GMM_2D_opts
@@ -30,7 +30,9 @@ Possible "AIC","AICc", "BIC" (default) or "ICL-BIC".}
 
 \item{KS}{Maximum number of GMM components. By default it is \code{KS = 5}.}
 
-\item{D_thr}{Significance threshold for D statistic By default is 0.1.(Likelihood Ratio Test ?)}
+\item{sig}{Logical value. Determines to stop the EM algorithm when adding another component is no longer significant according to the Likelihood Ratio Test. Used to speed up the function (Default is=FALSE).}
+
+\item{D_thr}{Significance threshold for D statistic By default is 0.1 (Likelihood Ratio Test).}
 
 \item{init_con}{Type of initial conditions. Could be "rand" (default),"DP" or "diag". See \code{\link{rand_init_2D}}, \code{\link{DP_init_2D}} or \code{\link{diag_init_2D}}.}
 
