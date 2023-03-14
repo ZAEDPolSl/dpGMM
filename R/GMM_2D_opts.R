@@ -13,7 +13,8 @@
 #' @param cov_type Type of covariance model. Possible "sphere","diag" or "full" (default).
 #' @param init_nb Number of random initial conditions. By default it is \code{init_nb = 10}.
 #' @param KS Maximum number of GMM components. By default it is \code{KS = 5}.
-#' @param D_thr Significance threshold for D statistic By default is 0.1.(Likelihood Ratio Test)
+#' @param sig Logical value. Determines to stop the EM algorithm when adding another component is no longer significant according to the Likelihood Ratio Test. Used to speed up the function (Default is=FALSE).
+#' @param D_thr Significance threshold for D statistic By default is 0.1 (Likelihood Ratio Test).
 #' @param init_con Type of initial conditions. Could be "rand" (default),"DP" or "diag". See \code{\link{rand_init_2D}}, \code{\link{DP_init_2D}} or \code{\link{diag_init_2D}}.
 #' @param fixed perform GMM only for number of components given in KS (defailt=FALSE).
 
@@ -38,6 +39,7 @@ GMM_2D_opts <- list(
   cov_type = 'full',
   init_nb = 10,
   KS = 5,
+  sig=FALSE,
   D_thr = 0.1,
   init_con = "rand",
   fixed=FALSE
