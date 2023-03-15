@@ -10,7 +10,6 @@
 #'
 #' @import ggplot2
 #' @import RColorBrewer
-#' @import patchwork
 #' @importFrom grDevices colorRampPalette
 #' @importFrom pracma rot90
 #'
