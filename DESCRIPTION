@@ -1,6 +1,6 @@
 Package: rGMMtest
 Type: Package
-Title: dpGMM: dynamic programming based Gaussian mixture modelling tool for 1D and 2D data.
+Title: dpGMM: dynamic programming based Gaussian mixture modelling tool for 1D and 2D data
 Version: 0.1.7
 Author: c(
     person("Michal", "Marczyk",email = "michal.marczyk@polsl.pl", role = c("aut","cre")),
