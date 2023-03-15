@@ -41,14 +41,14 @@ plot_gmm_2D_binned <- function(X, Y, gmm, opts){
   col <- grDevices::colorRampPalette(brewer.pal(9,"Blues"))(150)
 
 
-  p<-ggplot() +theme_bw()+
+  p<-ggplot() +theme_bw()+theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())+
     geom_tile(aes(x = X$Coordinates_1, y = X$Coordinates_2, fill = Y),show.legend = F)+
-    coord_cartesian(expand = FALSE)+
     scale_fill_gradientn(colours = col)+
     geom_point(aes(x=gmm$center[,1],y=gmm$center[,2]),color="red",size=3)+
     xlab("X1")+ylab('X2')+
     geom_path(aes(x = elps[[1]]$V2, y = elps[[1]]$V1, group = coors$KS),color="black",show.legend = F,size=0.75,linetype="dashed")+
-    geom_path(aes(x = elps[[2]]$V2, y = elps[[2]]$V1, group = coors$KS),color="black",show.legend = F,size=0.75,linetype="dashed")
+    geom_path(aes(x = elps[[2]]$V2, y = elps[[2]]$V1, group = coors$KS),color="black",show.legend = F,size=0.75,linetype="dashed")+
+    ylim(min(X$Coordinates_2),max(X$Coordinates_2))+xlim(min(X$Coordinates_1),max(X$Coordinates_1))+coord_cartesian(expand = FALSE)
 
     return(p)
 
