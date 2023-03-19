@@ -10,7 +10,7 @@
 #' }
 #' @param Y Vector of X counts (dedicated to binned data). Default=NULL
 #' @param threshold Vector with GMM cutoffs
-#' @param pal RColorBrewer palette name
+#' @param pal RColorBrewer palette name (default - *"Blues"*)
 #'
 #' @import ggplot2
 #' @import RColorBrewer
@@ -33,22 +33,23 @@
 #' @export
 plot_gmm_1D <- function(X, dist, Y=NULL, threshold=NA, pal= "Blues"){
   # estimating of bin width of histogram
-  binwidth = (max(X)-min(X))/floor(sqrt(length(X)))
+  binwidth <- (max(X)-min(X))/floor(sqrt(length(X)))
   #binwidth = 2.64*IQR(data$V1)*nrow(data)^(-1/3) # alternative
 
   # extract data from dist
-  x_temp<-dist$x
-  dist<-dist$dist
+  x_temp <- dist$x
+  dist <- dist$dist
 
   # organize data for line plot
-  colnames(dist)=paste('Comp:',1:ncol(dist),sep='')
-  colnames(dist)[ncol(dist)]<-"Main"
+  colnames(dist) <- paste('Comp:',1:ncol(dist),sep='')
+  colnames(dist)[ncol(dist)] <- "Main"
   #dist<-dist#*binwidth*length(data) in new version not needed
 
   tmp <- reshape2::melt(dist,id.vars = NULL)
   tmp$xx <- rep(x_temp, ncol(dist))
   tmp$lin <- 1
   tmp$lin[which(tmp$variable == "Main")] <- 0
+
   if (ncol(dist)==2){
     col <- c("darkgreen", "grey25")
   } else{
@@ -59,22 +60,22 @@ plot_gmm_1D <- function(X, dist, Y=NULL, threshold=NA, pal= "Blues"){
   p <- ggplot() + theme_bw()
 
   if (!is.null(Y)){
-    binwidth<-(max(X)-min(X))/length(X)
-    Y<-Y/(sum(Y)*binwidth)
-    p<- p+geom_bar(aes(x=X,y=Y),stat="identity",color="grey65", fill="grey65",alpha=0.2)
+    binwidth <- (max(X)-min(X))/length(X)
+    Y <- Y/(sum(Y)*binwidth)
+    p <- p + geom_bar(aes(x=X,y=Y),stat="identity",color="grey65", fill="grey65",alpha=0.2)
 
   } else{
-    p<- p+geom_histogram(aes(x=X,y=after_stat(density)),binwidth = binwidth,color="black", fill="grey",alpha=0.2)
+    p <- p + geom_histogram(aes(x=X,y=after_stat(density)),binwidth = binwidth,color="black", fill="grey",alpha=0.2)
   }
 
-  p<-p+geom_line(aes(x=tmp$xx, y=tmp$value, group=tmp$variable, color=as.factor(tmp$variable), linetype=as.factor(tmp$lin)), size=1)+
-    scale_color_manual(values=col,name="") +
-    scale_linetype_manual(values=c("dashed","solid")) + xlab("x")+ylab("Density")+guides(linetype="none")
+  p<-p+geom_line(aes(x = tmp$xx, y = tmp$value, group = tmp$variable, color = as.factor(tmp$variable), linetype = as.factor(tmp$lin)), linewidth = 1)+
+    scale_color_manual(values = col, name="") +
+    scale_linetype_manual(values = c("dashed","solid")) + xlab("x") + ylab("Density") + guides(linetype="none")
 
 
   threshold<-threshold[is.na(threshold)==F]
   if (sum(!is.na(threshold))){
-    p<-p+geom_vline(xintercept = threshold, lty = "dashed", col = "red")
+    p <- p + geom_vline(xintercept = threshold, lty = "dashed", col = "red")
   }
 
   return(p)
