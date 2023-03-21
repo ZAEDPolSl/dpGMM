@@ -1,7 +1,7 @@
 #' Function to fit Gaussian Mixture Model (GMM) to 1D data
 #'
 #' Function fits GMM with initial conditions found using dynamic programming-based approach by using expectation-maximization (EM) algorithm.
-#' The package works on original and binned (e.g. obtained by creating histogram on 1D data) data. Additionally, threshold values that allows to assign data to individual Gaussian components are provided.
+#' The function works on original and binned (e.g. obtained by creating histogram on 1D data) data. Additionally, threshold values that allows to assign data to individual Gaussian components are provided.
 #' Function allows to estimate the number of GMM components using five different information criteria and merging of similar components.
 #'
 #'
@@ -9,12 +9,12 @@
 #' @param KS Maximum number of components of the model.
 #' @param Y Vector of counts, with the same length as "X".
 #' Applies only to binned data (Y = NULL, by default).
-#' @param fixed Fit GMM for selected number of components given by KS.
+#' @param fixed Logical value. Fit GMM for selected number of components given by KS (FALSE, by default).
 #' @param eps_change Criterion for early stopping of EM (1e-7, by default) given by the following formula:
 #' \deqn{\sum{(|\alpha - \alpha_{old})|} + \frac{\sum{(\frac{|\sigma^2 - \sigma^2_{old}|}{\sigma^2})}}{length(\alpha)}}
 #' @param max_iter Maximum number of iterations of EM algorithm. By default it is \code{max_iter = 50 000}
 #' @param SW Parameter for calculating minimum variance of each Gaussian component (0.01, by default) using the following formula:
-#' \deqn{\frac{SW*range(x)}{no.of.components)^2}}. Lower value means smaller component variance allowed.
+#' \deqn{\frac{SW*range(x)}{no.of.components)}^2}. Lower value means smaller component variance allowed.
 #' @param IC Information criterion used to select the number of model components.
 #' Possible methods are "AIC","AICc", "BIC" (default), "ICL-BIC" or "LR".
 #' @param sigmas.dev Parameter used to define close GMM components that needs to be merged. For each component, standard deviation is multiplied by \code{sigmas.dev} to estimate the distance from component mean.
@@ -50,7 +50,7 @@
 #' binned_test$fig
 #' }
 #'
-#' @seealso \code{\link{gaussian_mixture_vector}}, \code{\link{EM_iter}}, \code{\link{generate_dist}}, \code{\link{find_thr_by_params}}
+#' @seealso \code{\link{gaussian_mixture_vector}}, \code{\link{EM_iter}}
 #'
 #' @export
 runGMM <- function(X, KS, Y = NULL, fixed=FALSE , eps_change = 1e-7, max_iter = 50000, SW=0.01, IC = "BIC", sigmas.dev = 2.5,
@@ -87,11 +87,10 @@ runGMM <- function(X, KS, Y = NULL, fixed=FALSE , eps_change = 1e-7, max_iter = 
   dist.plot<-generate_dist(X, GModel$model, 1e4)
 
   # Thresholds estimation
-  #thr <- find_thr_by_dist_VMM(dist.plot)
   if(GModel$KS>1){
     thr <- find_thr_by_params(GModel$model,dist.plot,sigmas.dev)
   } else {thr=NULL}
-  # remove Thresholds out of data range
+  # remove thresholds out of data range
   thr<-thr[-which(thr>max(X) | thr<min(X))]
 
   # Clusters assignment

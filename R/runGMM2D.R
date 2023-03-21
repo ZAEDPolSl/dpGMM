@@ -3,20 +3,20 @@
 #' Main function to perform GMM on 2D data. Function choose the optimal number of components of a 2D mixture normal distributions by minimising the value of the information criterion.
 #'
 #' @param X Matrix of 2D data to decompose by GMM.
-#' @param Y Vector of counts, should be the same length as "X".
-#' Applies only to binned data therefore the default is Y = NULL.
-#' @param opts parameters of run stored in \code{\link{GMM_2D_opts}} variable
-#' @param plot logical value. If TRUE (default=FALSE), the GMM decomposition figure will be displayed.
+#' @param Y Vector of counts, with the same length as "X".
+#' Applies only to binned data (Y = NULL, by default).
+#' @param opts Parameters of run stored in \code{\link{GMM_2D_opts}} variable.
+#' @param plot Logical value. If TRUE, the GMM decomposition figure will be displayed (FALSE, by default).
 #'
-#' @returns Function returns a \code{list} of GMM parameters for the optimal number of components: \describe{
+#' @returns Function returns a \code{list} of GMM parameters for the estimated number of components: \describe{
 #'  \item{model}{\describe{
-#'     \item{alpha}{Weights (alpha) of each component}
-#'     \item{center}{Means of decomposition}
-#'     \item{covar}{Covariances of each component}
-#'     \item{KS}{Estimated number of components}
-#'     \item{logL}{Log-likelihood value for the estimated number of components}
-#'     \item{IC}{Value of the selected information criterion which was used to calculate the number of components}}}
-#'  \item{fig}{Plot of decomposition}
+#'     \item{alpha}{Weights (alpha) of each component.}
+#'     \item{center}{Means of decomposition.}
+#'     \item{covar}{Covariances of each component.}
+#'     \item{KS}{Estimaged number of model components.}
+#'     \item{logL}{Log-likelihood statistic for the estimated number of components.}
+#'     \item{IC}{The value of the selected information criterion which was used to calculate the number of components.}}
+#'  \item{fig}{Plot of decomposition.}
 #' }
 #'
 #' @examples
@@ -31,6 +31,7 @@
 #'
 #' @export
 runGMM2D <- function(X, Y=NULL, opts, plot=FALSE){
+
   # Check part
   if (!hasArg("X")){
     stop("No data.")}
@@ -50,7 +51,7 @@ runGMM2D <- function(X, Y=NULL, opts, plot=FALSE){
   }
 
 
-  # return
+  # Return
   mix_gmm <- list(model = GModel, fig=pl)
 
 
