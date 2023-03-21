@@ -31,14 +31,14 @@
 GMM_2D_opts <- list(
   eps_change = 1e-7,
   max_iter = 50000,
-  SW = 0.01,            #regularizing coefficient for covariance
+  SW = 0.01,
   max_var_ratio = 5,
   IC = 'BIC',
   cov_type = 'full',
   init_nb = 10,
   KS = 5,
-  quick_stop=FALSE,  #sig
-  signi = 0.05,  #D_thr
+  quick_stop=FALSE,
+  signi = 0.05,
   init_con = "rand",
   fixed=FALSE
 )
