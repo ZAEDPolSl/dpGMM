@@ -18,3 +18,4 @@ ellips2D(center, covariance, cov_type, crit = 0.95)
 \description{
 Function for defining ellipses in 2D GMM plot by the confidence interval.
 }
+\keyword{internal}

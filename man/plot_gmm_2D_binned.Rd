@@ -2,25 +2,24 @@
 % Please edit documentation in R/2Dplots.R
 \name{plot_gmm_2D_binned}
 \alias{plot_gmm_2D_binned}
-\title{Plot of GMM decomposition for 2D binned data}
+\title{Plot  of GMM decomposition for 2D binned data}
 \usage{
 plot_gmm_2D_binned(X, Y, gmm, opts)
 }
 \arguments{
-\item{X}{matrix of data to decompose by GMM.}
+\item{X}{Matrix of 2D data to decompose by GMM.}
 
-\item{Y}{vector of counts, should be the same length as "X".}
+\item{Y}{Vector of counts, with the same length as "X".
+Applies only to binned data (Y = NULL, by default).}
 
-\item{gmm}{results of \code{\link{gaussian_mixture_2D}} decomposition}
+\item{gmm}{Results of \code{\link{gaussian_mixture_2D}} decomposition}
 
-\item{opts}{parameters of run saves in \code{\link{GMM_2D_opts}} variable}
+\item{opts}{Parameters of run stored in \code{\link{GMM_2D_opts}} variable.}
 }
 \description{
-Function plot the decomposed distribution together with histogram of data.
-This plot is also return as regular output of \code{\link{runGMM}}.
+Function plot the heatmap of binned data with marked GMM decomposition.
+This plot is also return as regular output of \code{\link{runGMM2D}}.
 }
-\examples{
-\dontrun{
-}
-
+\seealso{
+\code{\link{runGMM2D}}
 }

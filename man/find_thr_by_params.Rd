@@ -2,17 +2,17 @@
 % Please edit documentation in R/1Dthresholds.R
 \name{find_thr_by_params}
 \alias{find_thr_by_params}
-\title{Calculation of GMM thresholds}
+\title{Thresholds estimations for 1D from GMM parameters}
 \usage{
 find_thr_by_params(GModel, input, sigmas.dev = 2.5)
 }
 \arguments{
-\item{GModel}{\code{data.frame} of GMM parameters i.e GModel$alpha, GModel$mu, GModel$sigma (correct \code{colnames} are obligatory)}
+\item{GModel}{\code{data.frame} of GMM parameters i.e GModel$alpha, GModel$mu, GModel$sigma (correct \code{colnames} are obligatory).}
 
-\item{input}{output of \code{generate_dist} function. Its necessary only if arithmetical approach fails in threshold estimation and \code{find_thr_by_dist} function is called.
+\item{input}{output of \code{\link{generate_dist}} function. Its necessary only if arithmetical approach fails in threshold estimation and \code{\link{find_thr_by_dist}} function is called.
 It is a list with following elements:\describe{
-   \item{x}{Numeric vector with equaliy spread data of given precison}
-   \item{dist}{Matrix with PDF of each GMM component and cumulative distribution}
+   \item{x}{Numeric vector with equaliy spread data of given precison.}
+   \item{dist}{Matrix with PDF of each GMM component and cumulative distribution.}
 }}
 
 \item{sigmas.dev}{Number of sigmas to secure thresholds on the ends of distributions. Equivalent to sigma.dev in merging GMMs.}
@@ -21,7 +21,7 @@ It is a list with following elements:\describe{
 Return a vector of thresholds.
 }
 \description{
-Function to calculate cutoffs between each component of mixture normal distributions.
+Function to calculate cutoffs between each component of mixture normal distributions based on the component parameters.
 }
 \examples{
 \dontrun{
@@ -35,5 +35,5 @@ thr <- find_thr_by_params(GModel,dist.plot)
 
 }
 \seealso{
-\code{\link{find_thr_by_dist}} and \code{\link{generate_dist}}
+\code{\link{runGMM}}
 }

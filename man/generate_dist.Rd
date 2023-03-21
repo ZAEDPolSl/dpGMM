@@ -9,14 +9,14 @@ generate_dist(X, GModel, precision)
 \arguments{
 \item{X}{Vector of 1D data.}
 
-\item{GModel}{\code{data.frame} of GMM parameters i.e GModel$alpha, GModel$mu, GModel$sigma (correct \code{colnames} are obligatory)}
+\item{GModel}{\code{data.frame} of GMM parameters i.e GModel$alpha, GModel$mu, GModel$sigma (correct \code{colnames} are obligatory).}
 
-\item{precision}{Precision of point linespacing}
+\item{precision}{Precision of point linespacing.}
 }
 \value{
 List with following elements:\describe{
-   \item{x}{Numeric vector with equaliy spread data of given precison}
-   \item{dist}{Matrix with PDF of each GMM component and cumulative distribution}
+   \item{x}{Numeric vector with equaliy spread data of given precison.}
+   \item{dist}{Matrix with PDF of each GMM component and cumulative distribution.}
 }
 }
 \description{

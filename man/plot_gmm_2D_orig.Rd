@@ -2,23 +2,21 @@
 % Please edit documentation in R/2Dplots.R
 \name{plot_gmm_2D_orig}
 \alias{plot_gmm_2D_orig}
-\title{Plot of GMM decomposition for 2D data}
+\title{Plot  of GMM decomposition for 2D data}
 \usage{
 plot_gmm_2D_orig(X, gmm, opts)
 }
 \arguments{
-\item{X}{Matrix of data}
+\item{X}{Matrix of 2D data to decompose by GMM.}
 
-\item{gmm}{results of \code{\link{gaussian_mixture_2D}} decomposition}
+\item{gmm}{Results of \code{\link{gaussian_mixture_2D}} decomposition}
 
-\item{opts}{parameters of run stored in \code{\link{GMM_2D_opts}} variable}
+\item{opts}{Parameters of run stored in \code{\link{GMM_2D_opts}} variable.}
 }
 \description{
 Function plot the decomposed distribution together with histogram of data.
 This plot is also return as regular output of \code{\link{runGMM}}.
 }
-\examples{
-\dontrun{
-}
-
+\seealso{
+\code{\link{runGMM2D}}
 }

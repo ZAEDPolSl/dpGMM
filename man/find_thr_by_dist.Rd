@@ -2,19 +2,19 @@
 % Please edit documentation in R/1Dthresholds.R
 \name{find_thr_by_dist}
 \alias{find_thr_by_dist}
-\title{Calculation of GMM thresholds from distribution}
+\title{Thresholds estimations for 1D from GMM distribution}
 \usage{
 find_thr_by_dist(input, sigmas.dev = 2.5, GModel)
 }
 \arguments{
-\item{input}{output of \code{generate_dist} function. It is a list with following elements:\describe{
-   \item{x}{Numeric vector with equaliy spread data of given precison}
-   \item{dist}{Matrix with PDF of each GMM component and cumulative distribution}
+\item{input}{output of \code{\link{generate_dist}} function. It is a list with following elements:\describe{
+   \item{x}{Numeric vector with equaliy spread data of given precison.}
+   \item{dist}{Matrix with PDF of each GMM component and cumulative distribution.}
 }}
 
 \item{sigmas.dev}{Number of sigmas to secure thresholds on the ends of distributions. Equivalent to sigma.dev in merging GMMs.}
 
-\item{GModel}{\code{data.frame} of GMM parameters i.e GModel$alpha, GModel$mu, GModel$sigma (correct \code{colnames} are obligatory)}
+\item{GModel}{\code{data.frame} of GMM parameters i.e GModel$alpha, GModel$mu, GModel$sigma (correct \code{colnames} are obligatory).}
 }
 \value{
 Return a vector of thresholds.
@@ -34,5 +34,5 @@ thr <- find_thr_by_dist(dist.plot,2.5,GModel)
 
 }
 \seealso{
-\code{\link{find_thr_by_params}} and \code{\link{generate_dist}}
+\code{\link{runGMM}}
 }

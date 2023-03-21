@@ -1,12 +1,12 @@
-#' Calculation of GMM thresholds
+#' Thresholds estimations for 1D from GMM parameters
 #'
-#' Function to calculate cutoffs between each component of mixture normal distributions.
+#' Function to calculate cutoffs between each component of mixture normal distributions based on the component parameters.
 #'
-#' @param GModel \code{data.frame} of GMM parameters i.e GModel$alpha, GModel$mu, GModel$sigma (correct \code{colnames} are obligatory)
-#' @param input output of \code{generate_dist} function. Its necessary only if arithmetical approach fails in threshold estimation and \code{find_thr_by_dist} function is called.
+#' @param GModel \code{data.frame} of GMM parameters i.e GModel$alpha, GModel$mu, GModel$sigma (correct \code{colnames} are obligatory).
+#' @param input output of \code{\link{generate_dist}} function. Its necessary only if arithmetical approach fails in threshold estimation and \code{\link{find_thr_by_dist}} function is called.
 #' It is a list with following elements:\describe{
-#'    \item{x}{Numeric vector with equaliy spread data of given precison}
-#'    \item{dist}{Matrix with PDF of each GMM component and cumulative distribution}
+#'    \item{x}{Numeric vector with equaliy spread data of given precison.}
+#'    \item{dist}{Matrix with PDF of each GMM component and cumulative distribution.}
 #' }
 #' @param sigmas.dev Number of sigmas to secure thresholds on the ends of distributions. Equivalent to sigma.dev in merging GMMs.
 #'
@@ -22,7 +22,8 @@
 #' thr <- find_thr_by_params(GModel,dist.plot)
 #' }
 #'
-#' @seealso \code{\link{find_thr_by_dist}} and \code{\link{generate_dist}}
+#' @seealso \code{\link{runGMM}}
+#'
 #' @export
 find_thr_by_params <- function(GModel,input,sigmas.dev=2.5){
   GModel<-GModel[order(GModel$mu,decreasing = F),]
@@ -75,17 +76,16 @@ find_thr_by_params <- function(GModel,input,sigmas.dev=2.5){
   return(thr2)
 }
 
-#' Calculation of GMM thresholds from distribution
+#' Thresholds estimations for 1D from GMM distribution
 #'
 #' Function to calculate cutoffs between each component of mixture normal distributions using probability distribution function.
 #'
-#' @param input output of \code{generate_dist} function. It is a list with following elements:\describe{
-#'    \item{x}{Numeric vector with equaliy spread data of given precison}
-#'    \item{dist}{Matrix with PDF of each GMM component and cumulative distribution}
+#' @param input output of \code{\link{generate_dist}} function. It is a list with following elements:\describe{
+#'    \item{x}{Numeric vector with equaliy spread data of given precison.}
+#'    \item{dist}{Matrix with PDF of each GMM component and cumulative distribution.}
 #' }
 #' @param sigmas.dev Number of sigmas to secure thresholds on the ends of distributions. Equivalent to sigma.dev in merging GMMs.
-#' @param GModel \code{data.frame} of GMM parameters i.e GModel$alpha, GModel$mu, GModel$sigma (correct \code{colnames} are obligatory)
-#'
+#' @param GModel \code{data.frame} of GMM parameters i.e GModel$alpha, GModel$mu, GModel$sigma (correct \code{colnames} are obligatory).
 #'
 #' @returns Return a vector of thresholds.
 #'
@@ -99,7 +99,8 @@ find_thr_by_params <- function(GModel,input,sigmas.dev=2.5){
 #' thr <- find_thr_by_dist(dist.plot,2.5,GModel)
 #' }
 #'
-#' @seealso \code{\link{find_thr_by_params}} and \code{\link{generate_dist}}
+#' @seealso \code{\link{runGMM}}
+#'
 #' @export
 find_thr_by_dist<- function(input,sigmas.dev=2.5,GModel){
   x<-input$x

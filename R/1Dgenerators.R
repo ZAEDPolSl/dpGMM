@@ -3,16 +3,16 @@
 #' Function to generate PDF of GMM distributions and its cumulative results with high lincespacing.
 #'
 #' @param X Vector of 1D data.
-#' @param GModel \code{data.frame} of GMM parameters i.e GModel$alpha, GModel$mu, GModel$sigma (correct \code{colnames} are obligatory)
-#' @param precision Precision of point linespacing
+#' @param GModel \code{data.frame} of GMM parameters i.e GModel$alpha, GModel$mu, GModel$sigma (correct \code{colnames} are obligatory).
+#' @param precision Precision of point linespacing.
 #'
 #' @importFrom stats dnorm
 #' @importFrom pracma linspace
 #' @importFrom Matrix rowSums
 #'
 #' @returns List with following elements:\describe{
-#'    \item{x}{Numeric vector with equaliy spread data of given precison}
-#'    \item{dist}{Matrix with PDF of each GMM component and cumulative distribution}
+#'    \item{x}{Numeric vector with equaliy spread data of given precison.}
+#'    \item{dist}{Matrix with PDF of each GMM component and cumulative distribution.}
 #' }
 #'
 #'

@@ -19,3 +19,4 @@ Initial values for EM.
 \description{
 Function for generating initial conditions of 2D GMM model by dynamic programming.
 }
+\keyword{internal}

@@ -1,12 +1,13 @@
-#' Plot of GMM decomposition for 2D binned data
+#' Plot  of GMM decomposition for 2D binned data
 #'
-#' Function plot the decomposed distribution together with histogram of data.
-#' This plot is also return as regular output of \code{\link{runGMM}}.
+#' Function plot the heatmap of binned data with marked GMM decomposition.
+#' This plot is also return as regular output of \code{\link{runGMM2D}}.
 #'
-#' @param X matrix of data to decompose by GMM.
-#' @param Y vector of counts, should be the same length as "X".
-#' @param gmm results of \code{\link{gaussian_mixture_2D}} decomposition
-#' @param opts parameters of run saves in \code{\link{GMM_2D_opts}} variable
+#' @param X Matrix of 2D data to decompose by GMM.
+#' @param Y Vector of counts, with the same length as "X".
+#' Applies only to binned data (Y = NULL, by default).
+#' @param gmm Results of \code{\link{gaussian_mixture_2D}} decomposition
+#' @param opts Parameters of run stored in \code{\link{GMM_2D_opts}} variable.
 #'
 #' @import ggplot2
 #' @import RColorBrewer
@@ -14,9 +15,7 @@
 #' @importFrom pracma rot90
 #'
 #'
-#' @examples
-#' \dontrun{
-#' }
+#' @seealso \code{\link{runGMM2D}}
 #'
 #' @export
 plot_gmm_2D_binned <- function(X, Y, gmm, opts){
@@ -29,7 +28,7 @@ plot_gmm_2D_binned <- function(X, Y, gmm, opts){
     for (a in 1:gmm$KS){
       center <- gmm$center[a,]#- c(min(X[,1]) - 1, min(X[,2]) - 1)
       covariance <- pracma::rot90(gmm$covar[,,a], 2)
-      tmp <- ellips2D(center, covariance, cov_type, crits[j])
+      tmp <- rGMMtest:::ellips2D(center, covariance, cov_type, crits[j]) ## NAME OF PACKAGE
       tmp$KS <- rep(a, 100)
       coors <- rbind(coors, tmp)
     }
@@ -47,7 +46,7 @@ plot_gmm_2D_binned <- function(X, Y, gmm, opts){
     xlab("X1")+ylab('X2')+
     geom_path(aes(x = elps[[1]]$V2, y = elps[[1]]$V1, group = coors$KS),color="black",show.legend = F,size=0.75,linetype="dashed")+
     geom_path(aes(x = elps[[2]]$V2, y = elps[[2]]$V1, group = coors$KS),color="black",show.legend = F,size=0.75,linetype="dashed")+
-    ylim(min(X$Coordinates_2),max(X$Coordinates_2))+xlim(min(X$Coordinates_1),max(X$Coordinates_1))+coord_cartesian(expand = FALSE)
+    ylim(min(X$Coordinates_2)-1,max(X$Coordinates_2)+1)+xlim(min(X$Coordinates_1)-1,max(X$Coordinates_1)+1)+ coord_cartesian(expand = FALSE)
 
     return(p)
 
@@ -55,24 +54,23 @@ plot_gmm_2D_binned <- function(X, Y, gmm, opts){
 
 
 
-#' Plot of GMM decomposition for 2D data
+#' Plot  of GMM decomposition for 2D data
 #'
 #' Function plot the decomposed distribution together with histogram of data.
 #' This plot is also return as regular output of \code{\link{runGMM}}.
 #'
-#' @param X Matrix of data
-#' @param gmm results of \code{\link{gaussian_mixture_2D}} decomposition
-#' @param opts parameters of run stored in \code{\link{GMM_2D_opts}} variable
+#' @param X Matrix of 2D data to decompose by GMM.
+#' @param gmm Results of \code{\link{gaussian_mixture_2D}} decomposition
+#' @param opts Parameters of run stored in \code{\link{GMM_2D_opts}} variable.
 #'
 #' @import ggplot2
 #' @import RColorBrewer
 #' @importFrom grDevices colorRampPalette
 #' @importFrom pracma rot90
 #'
+
+#' @seealso \code{\link{runGMM2D}}
 #'
-#' @examples
-#' \dontrun{
-#' }
 #'
 #' @export
 plot_gmm_2D_orig <- function(X, gmm, opts){
@@ -88,7 +86,7 @@ plot_gmm_2D_orig <- function(X, gmm, opts){
       for (a in 1:gmm$KS){
         center <- gmm$center[a,]#- c(min(X[,1]) - 1, min(X[,2]) - 1)
         covariance <- pracma::rot90(gmm$covar[,,a], 2)
-        tmp <- ellips2D(center, covariance, cov_type, crits[j])
+        tmp <- rGMMtest:::ellips2D(center, covariance, cov_type, crits[j]) ### NAME OF PACKAGE
         tmp$KS <- rep(a, 100)
         coors <- rbind(coors, tmp)
       }
@@ -120,7 +118,8 @@ plot_gmm_2D_orig <- function(X, gmm, opts){
 #' @param cov_type Type of covariance model same as in \code{\link{GMM_2D_opts}}. Possible "sphere","diag" or "full" (default).
 #' @param crit Confidence interval level of ellipse. Default 0.95.
 #'
-#' @export
+#' @keywords internal
+#'
 ellips2D <- function(center, covariance, cov_type, crit=0.95){
   e <- eigen(covariance)
   eigenvec <- apply(e$vectors, 1, rev)
@@ -173,7 +172,7 @@ ellips2D <- function(center, covariance, cov_type, crit=0.95){
   #Define a rotation matrix
   R <- rbind(c(cos(phi), sin(phi)), c(-sin(phi), cos(phi)))
 
-  #let's rotate the ellipse to some angle phi
+  #rotate the ellipse to some angle phi
   r_ellipse <- cbind(ellipse_x_r, ellipse_y_r)%*%R
   r_ellipse[,1] <- r_ellipse[,1]+ y0;
   r_ellipse[,2] <- r_ellipse[,2]+ x0

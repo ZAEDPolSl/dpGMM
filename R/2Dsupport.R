@@ -31,7 +31,8 @@ rand_init_2D <- function(X, KS){
 #'
 #' @return Initial values for EM.
 #'
-#' @export
+#' @keywords internal
+#'
 DP_init_2D <- function(X, Y, KS){
   init <- list()
 
@@ -136,7 +137,8 @@ DP_init_2D <- function(X, Y, KS){
 #'
 #' @return Initial values for EM.
 #'
-#' @export
+#' @keywords internal
+#'
 diag_init_2D <- function(X, KS){
   init <- list()
   init$alpha <- matrix(1, 1, KS)/KS #equal mixing proportions
@@ -224,7 +226,7 @@ calc_lLik2D <- function(X,Y,gmm){
   #calculate density function
   f <- matrix(0, gmm$KS, nrow(data))
   for (a in 1:gmm$KS){
-    f[a,] <- norm_pdf_2D(data, gmm$center[a,], gmm$covar[,,a])
+    f[a,] <- rGMMtest:::norm_pdf_2D(data, gmm$center[a,], gmm$covar[,,a])
   }
   px <-  colSums(f * as.numeric(gmm$alpha))
   px[is.nan(px) | px==0] <- 1e-100

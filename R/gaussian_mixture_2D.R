@@ -69,9 +69,9 @@ gaussian_mixture_2D <- function(X, Y=NULL, opts){
       if(opts$init_con == "rand"){
         gmm_tmp[[a]] <- EM_iter_2D(X, Y, rGMMtest:::rand_init_2D(X, k), opts)  ########## PACKAGE NAME
       } else if(opts$init_con == "diag"){
-        gmm_tmp[[a]] <- EM_iter_2D(X, Y, diag_init_2D(X, k), opts)
+        gmm_tmp[[a]] <- EM_iter_2D(X, Y, rGMMtest:::diag_init_2D(X, k), opts)  ########## PACKAGE NAME
       } else if(opts$init_con == "DP"){
-        gmm_tmp[[a]] <- EM_iter_2D(X, Y, DP_init_2D(X, Y, k), opts)
+        gmm_tmp[[a]] <- EM_iter_2D(X, Y, rGMMtest:::DP_init_2D(X, Y, k), opts)  ########## PACKAGE NAME
       }
       logL_tmp[a,1] <- gmm_tmp[[a]]$logL
       IC_tmp[a,1] <- gmm_tmp[[a]]$IC
@@ -94,11 +94,11 @@ gaussian_mixture_2D <- function(X, Y=NULL, opts){
     for(a in 1:opts$init_nb){
       # perform decomposition
       if(opts$init_con == "rand"){
-        gmm_tmp[[a]] <- EM_iter_2D(X, Y, rGMMtest:::rand_init_2D(X, k), opts)
+        gmm_tmp[[a]] <- EM_iter_2D(X, Y, rGMMtest:::rand_init_2D(X, k), opts) ########## PACKAGE NAME
       } else if(opts$init_con == "diag"){
-        gmm_tmp[[a]] <- EM_iter_2D(X, Y, diag_init_2D(X, k), opts)
+        gmm_tmp[[a]] <- EM_iter_2D(X, Y, rGMMtest:::diag_init_2D(X, k), opts) ########## PACKAGE NAME
       } else if(opts$init_con == "DP"){
-        gmm_tmp[[a]] <- EM_iter_2D(X, Y, DP_init_2D(X, Y, k), opts)
+        gmm_tmp[[a]] <- EM_iter_2D(X, Y, rGMMtest:::DP_init_2D(X, Y, k), opts) ########## PACKAGE NAME
       }
       logL_tmp[a,1] <- gmm_tmp[[a]]$logL
       IC_tmp[a,1] <- gmm_tmp[[a]]$IC
