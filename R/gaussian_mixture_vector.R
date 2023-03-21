@@ -7,7 +7,7 @@
 #' @param Y Vector of counts, should be the same length as "data".
 #' Applies only to binned data therefore the default is Y = NULL.
 #' @param fixed perform GMM only for number of components given in KS.
-#' @param change Stop of EM criterion (default Inf), value compared to following formula:
+#' @param eps_change Stop of EM criterion (default Inf), value compared to following formula:
 #' \deqn{\sum{(|\alpha - \alpha_{old})|} + \frac{\sum{(\frac{|\sigma^2 - \sigma^2_{old}|}{\sigma^2})}}{length(\alpha)}}
 #' @param max_iter Maximum number of iterations of EM algorithm. By default it is \code{max_iter = 5000}
 #' @param SW Minimum standard deviation of component (default 0.1). Values from 0 to 1 are treated according to their values, for SW >1 the following formula is applied:
@@ -37,7 +37,7 @@
 #' @seealso \code{\link{runGMM}} and \code{\link{EM_iter}}
 #'
 #' @export
-gaussian_mixture_vector <- function(X, KS, Y = NULL, fixed=FALSE , change = Inf, max_iter = 5000, SW=0.1, IC = "BIC", quick_stop = TRUE, signi = 0.05){
+gaussian_mixture_vector <- function(X, KS, Y = NULL, fixed=FALSE , eps_change = 1e-7, max_iter = 50000, SW=0.01, IC = "BIC", quick_stop = TRUE, signi = 0.05){
 
   if (min(dim(as.matrix(X))) !=1){
     stop("data must be 1D signal.")
@@ -61,7 +61,7 @@ gaussian_mixture_vector <- function(X, KS, Y = NULL, fixed=FALSE , change = Inf,
   y <- h$counts
   x <- h$mids
   #decomposition for 1 component
-  rcpt <- EM_iter(X, 1, mean(X), sd(X), N, Y, change, max_iter, SW, IC)
+  rcpt <- EM_iter(X, 1, mean(X), sd(X), N, Y, eps_change, max_iter, SW, IC)
 
   alpha[[1]] <- rcpt[[1]]
   mu[[1]] <- rcpt[[2]]
@@ -92,7 +92,7 @@ gaussian_mixture_vector <- function(X, KS, Y = NULL, fixed=FALSE , change = Inf,
         sig_ini[kkps] <- 0.5*(max(invec)-min(invec))
       }
 
-      rcpt1<- EM_iter(X, pp_ini, mu_ini, sig_ini, N, Y, change, max_iter, SW, IC)
+      rcpt1<- EM_iter(X, pp_ini, mu_ini, sig_ini, N, Y, eps_change, max_iter, SW, IC)
 
       pp_est <- rcpt1[[1]]
       mu_est <- rcpt1[[2]]
@@ -126,7 +126,7 @@ gaussian_mixture_vector <- function(X, KS, Y = NULL, fixed=FALSE , change = Inf,
         }
 
         #perform decomposition
-        rcpt1<- EM_iter(X, pp_ini, mu_ini, sig_ini, N, Y, change, max_iter, SW, IC)
+        rcpt1<- EM_iter(X, pp_ini, mu_ini, sig_ini, N, Y, eps_change, max_iter, SW, IC)
         alpha[[k]] <- rcpt1[[1]]
         mu[[k]] <- rcpt1[[2]]
         sigma[[k]] <- rcpt1[[3]]

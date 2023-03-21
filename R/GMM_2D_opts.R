@@ -9,8 +9,7 @@
 #' @param max_var_ratio Maximum dissimilarity between horizontal and vertical dispersion. By default it is \code{max_var_ratio = 5}
 #' @param crit Information Criterion to select best number of components.
 #' Possible "AIC","AICc", "BIC" (default) or "ICL-BIC".
-#' @param res Parameter for modifying resolution (>1 less spots). **1** is as a default value. UŻYWAMY TEGO?!!!!!!!!!!!!!!!!!!!!!!!!
-#' @param cov_type Type of covariance model. Possible "sphere","diag" or "full" (default).
+#' @param cov_type Type of covariance defined for each model component. Possible "sphere","diag" or "full" (default).
 #' @param init_nb Number of random initial conditions. By default it is \code{init_nb = 10}.
 #' @param KS Maximum number of GMM components. By default it is \code{KS = 5}.
 #' @param sig Logical value. Determines to stop the EM algorithm when adding another component is no longer significant according to the Likelihood Ratio Test. Used to speed up the function (Default is=FALSE).
@@ -30,17 +29,16 @@
 #'
 #' @export
 GMM_2D_opts <- list(
-  eps_change = 1e-4,
-  max_iter = 5000,
-  SW = 10,            #regularizing coefficient for covariance
+  eps_change = 1e-7,
+  max_iter = 50000,
+  SW = 0.01,            #regularizing coefficient for covariance
   max_var_ratio = 5,
   crit = 'BIC',
-  res = 1,
   cov_type = 'full',
   init_nb = 10,
   KS = 5,
   sig=FALSE,
-  D_thr = 0.1,
+  D_thr = 0.05,
   init_con = "rand",
   fixed=FALSE
 )

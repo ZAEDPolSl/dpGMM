@@ -2,15 +2,15 @@
 % Please edit documentation in R/runGMM.R
 \name{runGMM}
 \alias{runGMM}
-\title{Function to perform Gaussian Mixture Model}
+\title{Function to fit Gaussian Mixture Model (GMM) to 1D data}
 \usage{
 runGMM(
   X,
   KS,
   Y = NULL,
   fixed = FALSE,
-  change = Inf,
-  max_iter = 5000,
+  eps_change = 1e-07,
+  max_iter = 50000,
   SW = 0.1,
   IC = "BIC",
   merge = TRUE,
@@ -22,19 +22,19 @@ runGMM(
 )
 }
 \arguments{
-\item{X}{Vector of data to decompose by GMM.}
+\item{X}{Vector of 1D data for GMM decomposition.}
 
-\item{KS}{Maximum number of components to test.}
+\item{KS}{Maximum number of components of the model.}
 
-\item{Y}{Vector of counts, should be the same length as "X".
-Applies only to binned data therefore the default is Y = NULL.}
+\item{Y}{Vector of counts, with the same length as "X".
+Applies only to binned data (Y = NULL, by default).}
 
-\item{fixed}{perform GMM only for number of components given in KS.}
+\item{fixed}{Fit GMM for selected number of components given by KS.}
 
-\item{change}{Stop of EM criterion (default Inf), value compared to following formula:
+\item{eps_change}{Criterion for early stopping of EM (1e-7, by default) given by the following formula:
 \deqn{\sum{(|\alpha - \alpha_{old})|} + \frac{\sum{(\frac{|\sigma^2 - \sigma^2_{old}|}{\sigma^2})}}{length(\alpha)}}}
 
-\item{max_iter}{Maximum number of iterations of EM algorithm. By default it is \code{max_iter = 5000}}
+\item{max_iter}{Maximum number of iterations of EM algorithm. By default it is \code{max_iter = 50 000}}
 
 \item{SW}{Minimum standard deviation of component (default 0.1). Values from 0 to 1 are treated according to their values, for SW >1 the following formula is applied:
 \deqn{\frac{range(x)}{(SW*no.of.components))^2}}.}
@@ -69,7 +69,9 @@ Function returns a \code{list} which contains: \describe{
 }
 }
 \description{
-Function runs GMM with stable initial points of EM algorithm and all possible control parameters within package.
+Function fits GMM with initial conditions found using dynamic programming-based approach by using expectation-maximization (EM) algorithm.
+The package works on original and binned (e.g. obtained by creating histogram on 1D data) data. Additionally, threshold values that allows to assign data to individual Gaussian components are provided.
+Function allows to estimate the number of GMM components using five different information criteria and merging of similar components.
 }
 \examples{
 \dontrun{

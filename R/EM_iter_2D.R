@@ -126,10 +126,10 @@ EM_iter_2D <- function(X, Y, init, opts){
     }
 
     switch(opts$crit,
-           "BIC" = crit_val <- abs(2*L_new) + (7*KS-1)*log(bin_edge_sum) * opts$res,
-           "AIC" = crit_val <- abs(2*L_new) + 2*(7*KS-1)  * opts$res,
-           "AICc" = crit_val <- abs(2*L_new) + 2*(7*KS-1) * (bin_edge_sum/(bin_edge_sum - (7*KS-1) -1)) * opts$res,
-           "ICL-BIC" = crit_val <- abs(2*L_new) + 2*EN + (7*KS-1)*log(bin_edge_sum) * opts$res
+           "BIC" = crit_val <- abs(2*L_new) + (7*KS-1)*log(bin_edge_sum),
+           "AIC" = crit_val <- abs(2*L_new) + 2*(7*KS-1),
+           "AICc" = crit_val <- abs(2*L_new) + 2*(7*KS-1) * (bin_edge_sum/(bin_edge_sum - (7*KS-1) -1)),
+           "ICL-BIC" = crit_val <- abs(2*L_new) + 2*EN + (7*KS-1)*log(bin_edge_sum)
     )
 
     gmm$IC <- crit_val

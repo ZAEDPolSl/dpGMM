@@ -10,7 +10,7 @@
 #' Applies only to binned data therefore the default is Y = NULL.
 #' @param Y Vector of counts, should be the same length as \code{X}.
 #' Applies only to binned data therefore the default is Y = NULL.
-#' @param change Stop of EM criterion (default Inf), value compared to following formula:
+#' @param eps_change Stop of EM criterion (default Inf), value compared to following formula:
 #' \deqn{\sum{(|\alpha - \alpha_{old})|} + \frac{\sum{(\frac{|\sigma^2 - \sigma^2_{old}|}{\sigma^2})}}{length(\alpha)}}
 #' @param max_iter Maximum number of iterations of EM algorithm. By default it is \code{max_iter = 5000}
 #' @param SW Minimum standard deviation of component (default 0.1). Values from 0 to 1 are treated according to their values, for SW >1 the following formula is applied:
@@ -31,7 +31,7 @@
 #' @seealso \code{\link{runGMM}} and \code{\link{gaussian_mixture_vector}}
 #'
 #' @export
-EM_iter <- function(X, alpha, mu, sig, N, Y = NULL, change = Inf, max_iter = 5000, SW = 0.1, IC = "BIC"){
+EM_iter <- function(X, alpha, mu, sig, N, Y = NULL, eps_change = 1e-7, max_iter = 50000, SW = 0.01, IC = "BIC"){
 
   if(is.null(Y)){Y<-matrix(1, 1, length(X))}
   bin_edge_sum <- sum(Y)
@@ -43,13 +43,11 @@ EM_iter <- function(X, alpha, mu, sig, N, Y = NULL, change = Inf, max_iter = 500
   X <- sort(X)
   sig2 <- sig^2
   count <- 1
-  eps_change <- 1e-7
+  change <- Inf
   KS <- length(alpha)
 
-  #if (is.null(SW)){
-  if (SW>1){
-    SW <- ((max(X)-min(X))/(SW*KS))^2 #minimum variance
-  }
+  SW <- (((max(X)-min(X))*SW)/KS)^2 #minimum variance
+
 
   while (change > eps_change && count < max_iter){
     old_alpha <- alpha

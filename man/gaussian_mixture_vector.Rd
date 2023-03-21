@@ -9,8 +9,8 @@ gaussian_mixture_vector(
   KS,
   Y = NULL,
   fixed = FALSE,
-  change = Inf,
-  max_iter = 5000,
+  eps_change = 1e-07,
+  max_iter = 50000,
   SW = 0.1,
   IC = "BIC",
   quick_stop = TRUE,
@@ -27,7 +27,7 @@ Applies only to binned data therefore the default is Y = NULL.}
 
 \item{fixed}{perform GMM only for number of components given in KS.}
 
-\item{change}{Stop of EM criterion (default Inf), value compared to following formula:
+\item{eps_change}{Stop of EM criterion (default Inf), value compared to following formula:
 \deqn{\sum{(|\alpha - \alpha_{old})|} + \frac{\sum{(\frac{|\sigma^2 - \sigma^2_{old}|}{\sigma^2})}}{length(\alpha)}}}
 
 \item{max_iter}{Maximum number of iterations of EM algorithm. By default it is \code{max_iter = 5000}}

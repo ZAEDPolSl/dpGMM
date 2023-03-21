@@ -2,8 +2,8 @@
 #'
 #' Main function to perform GMM on 2D data. Function choose the optimal number of components of a 2D mixture normal distributions by minimising the value of the information criterion.
 #'
-#' @param X matrix of data to decompose by GMM.
-#' @param Y vector of counts, should be the same length as "X".
+#' @param X Matrix of 2D data to decompose by GMM.
+#' @param Y Vector of counts, should be the same length as "X".
 #' Applies only to binned data therefore the default is Y = NULL.
 #' @param opts parameters of run stored in \code{\link{GMM_2D_opts}} variable
 #' @param plot logical value. If TRUE (default=FALSE), the GMM decomposition figure will be displayed.
@@ -13,9 +13,9 @@
 #'     \item{alpha}{Weights (alpha) of each component}
 #'     \item{center}{Means of decomposition}
 #'     \item{covar}{Covariances of each component}
-#'     \item{KS}{Optimal number of components}
-#'     \item{logL}{Log-likelihood value for the optimal number of components}
-#'     \item{IC}{Value of the selected information criterion which was used to calculate the optimal number of components}}}
+#'     \item{KS}{Estimated number of components}
+#'     \item{logL}{Log-likelihood value for the estimated number of components}
+#'     \item{IC}{Value of the selected information criterion which was used to calculate the number of components}}}
 #'  \item{fig}{Plot of decomposition}
 #' }
 #'

@@ -4,7 +4,7 @@
 \alias{plot_gmm_1D}
 \title{Plot of GMM decomposition}
 \usage{
-plot_gmm_1D(X, dist, Y = NULL, threshold = NA, pal = NULL)
+plot_gmm_1D(X, dist, Y = NULL, threshold = NA, pal = "Blues")
 }
 \arguments{
 \item{X}{Vector of data}
@@ -18,7 +18,7 @@ plot_gmm_1D(X, dist, Y = NULL, threshold = NA, pal = NULL)
 
 \item{threshold}{Vector with GMM cutoffs}
 
-\item{pal}{RColorBrewer palette name}
+\item{pal}{RColorBrewer palette name (default - *"Blues"*)}
 }
 \description{
 Function plot the decomposed distribution together with histogram of data. Moreover the cut-off are marked.
