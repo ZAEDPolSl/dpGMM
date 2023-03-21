@@ -22,3 +22,4 @@ Function returns a \code{list} with: \describe{
 \description{
 Function calculate log-likelihood of 2D Gaussian distribution
 }
+\keyword{internal}

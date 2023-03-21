@@ -2,21 +2,21 @@
 % Please edit documentation in R/1Dgenerators.R
 \name{generate_norm1D}
 \alias{generate_norm1D}
-\title{Generator of mixed-normal distributions}
+\title{Generator of 1D mixed-normal distributions}
 \usage{
 generate_norm1D(n, alpha, mu, sigma)
 }
 \arguments{
-\item{n}{Number of points to generate}
+\item{n}{Number of points to generate.}
 
-\item{alpha}{Vector of alphas (weights) for each distribution}
+\item{alpha}{Vector of alphas (weights) for each distribution.}
 
-\item{mu}{Vector of means for each distribution}
+\item{mu}{Vector of means for each distribution.}
 
-\item{sigma}{Vector of  sigmas for each distribution}
+\item{sigma}{Vector of  sigmas for each distribution.}
 }
 \value{
-List with following elements::\describe{
+List with following elements:\describe{
    \item{Dist}{Numeric vector with generated data}
    \item{Cls}{Numeric vector with classification of each point to particular mixed distribution}
 }

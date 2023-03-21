@@ -7,23 +7,23 @@
 EM_iter_2D(X, Y, init, opts)
 }
 \arguments{
-\item{X}{matrix of data to decompose by GMM.}
+\item{X}{Matrix of 2D data to decompose by GMM.}
 
-\item{Y}{vector of counts, should be the same length as "X".
-Applies only to binned data therefore the default is Y = NULL.}
+\item{Y}{Vector of counts, with the same length as "X".
+Applies only to binned data (Y = NULL, by default).}
 
-\item{init}{vector of initial parameters for Gaussian components. See \code{\link{rand_init_2D}}, \code{\link{DP_init_2D}} or \code{\link{diag_init_2D}}.}
+\item{init}{Vector of initial parameters for Gaussian components.}
 
-\item{opts}{parameters of run stored in \code{\link{GMM_2D_opts}} variable}
+\item{opts}{Parameters of run stored in \code{\link{GMM_2D_opts}} variable.}
 }
 \value{
 Function returns a \code{list} of GMM parameters for tested number of components: \describe{
- \item{alpha}{Weights (alpha) of each component}
- \item{center}{Means of decomposition}
- \item{covar}{Covariances of each component}
- \item{KS}{Number of components}
- \item{logL}{Log-likelihood value for the tested number of components}
- \item{IC}{Value of the selected information criterion which was used to calculate the tested number of components}
+ \item{alpha}{Weights (alpha) of each component.}
+ \item{center}{Means of decomposition.}
+ \item{covar}{Covariances of each component.}
+ \item{KS}{Estimated number of components.}
+ \item{logL}{Log-likelihood statistic for the estimated number of components.}
+ \item{IC}{The value of the selected information criterion which was used to calculate the number of components.}
 }
 }
 \description{

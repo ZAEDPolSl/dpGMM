@@ -2,30 +2,31 @@
 % Please edit documentation in R/runGMM2D.R
 \name{runGMM2D}
 \alias{runGMM2D}
-\title{Function to perform Gaussian Mixture Model on 2D data}
+\title{Function to fit Gaussian Mixture Model (GMM) to 2D data}
 \usage{
 runGMM2D(X, Y = NULL, opts, plot = FALSE)
 }
 \arguments{
-\item{X}{matrix of data to decompose by GMM.}
+\item{X}{Matrix of 2D data to decompose by GMM.}
 
-\item{Y}{vector of counts, should be the same length as "X".
-Applies only to binned data therefore the default is Y = NULL.}
+\item{Y}{Vector of counts, with the same length as "X".
+Applies only to binned data (Y = NULL, by default).}
 
-\item{opts}{parameters of run stored in \code{\link{GMM_2D_opts}} variable}
+\item{opts}{Parameters of run stored in \code{\link{GMM_2D_opts}} variable.}
 
-\item{plot}{logical value. If TRUE (default=FALSE), the GMM decomposition figure will be displayed.}
+\item{plot}{Logical value. If TRUE, the GMM decomposition figure will be displayed (FALSE, by default).}
 }
 \value{
-Function returns a \code{list} of GMM parameters for the optimal number of components: \describe{
+Function returns a \code{list} of GMM parameters for the estimated number of components: \describe{
  \item{model}{\describe{
-    \item{alpha}{Weights (alpha) of each component}
-    \item{center}{Means of decomposition}
-    \item{covar}{Covariances of each component}
-    \item{KS}{Optimal number of components}
-    \item{logL}{Log-likelihood value for the optimal number of components}
-    \item{IC}{Value of the selected information criterion which was used to calculate the optimal number of components}}}
- \item{fig}{Plot of decomposition}
+ \item{alpha}{Weights (alpha) of each component.}
+ \item{center}{Means of decomposition.}
+ \item{covar}{Covariances of each component.}
+ \item{KS}{Estimated number of components.}
+ \item{logL}{Log-likelihood statistic for the estimated number of components.}
+ \item{IC}{The value of the selected information criterion which was used to calculate the number of components.}
+ \item{cls}{Assigment of point to the clusters.}}}
+ \item{fig}{Plot of decomposition.}
 }
 }
 \description{
@@ -37,6 +38,7 @@ data(example2D)
 opts<-GMM_2D_opts
 opts$fixed<-T
 opts$KS<-3
+opts$max_iter<-5000
 res<-runGMM2D(example2D[,1:2], example2D[,3], opts, plot=T)
 }
 

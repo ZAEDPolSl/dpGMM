@@ -1,16 +1,14 @@
-#' Plot of GMM decomposition
+#' Plot  of GMM decomposition for 1D data
 #'
 #' Function plot the decomposed distribution together with histogram of data. Moreover the cut-off are marked.
 #' This plot is also return as regular output of \code{\link{runGMM}}.
 #'
-#' @param X Vector of data
-#' @param dist Output of \code{generate_dist} function. Its list of following elements\describe{
-#'    \item{x}{Vector of generated data}
-#'    \item{dist}{Matrix of pdf of for each generated mixture model. The last column is sum of all previous ones}
-#' }
-#' @param Y Vector of X counts (dedicated to binned data). Default=NULL
-#' @param threshold Vector with GMM cutoffs
-#' @param pal RColorBrewer palette name (default - *"Blues"*)
+#' @param X Vector of 1D data for GMM decomposition.
+#' @param dist Output of \code{\link{generate_dist}} function.
+#' @param Y Vector of counts, with the same length as "X".
+#' Applies only to binned data (Y = NULL, by default).
+#' @param threshold Vector with GMM cutoffs.
+#' @param pal Name of the RColorBrewer palette used in the figure. By default \code{"Blues"}.
 #'
 #' @import ggplot2
 #' @import RColorBrewer
@@ -34,7 +32,7 @@
 plot_gmm_1D <- function(X, dist, Y=NULL, threshold=NA, pal= "Blues"){
   # estimating of bin width of histogram
   binwidth <- (max(X)-min(X))/floor(sqrt(length(X)))
-  #binwidth = 2.64*IQR(data$V1)*nrow(data)^(-1/3) # alternative
+
 
   # extract data from dist
   x_temp <- dist$x
@@ -43,7 +41,7 @@ plot_gmm_1D <- function(X, dist, Y=NULL, threshold=NA, pal= "Blues"){
   # organize data for line plot
   colnames(dist) <- paste('Comp:',1:ncol(dist),sep='')
   colnames(dist)[ncol(dist)] <- "Main"
-  #dist<-dist#*binwidth*length(data) in new version not needed
+
 
   tmp <- reshape2::melt(dist,id.vars = NULL)
   tmp$xx <- rep(x_temp, ncol(dist))
@@ -81,13 +79,13 @@ plot_gmm_1D <- function(X, dist, Y=NULL, threshold=NA, pal= "Blues"){
   return(p)
 }
 
-#' QQplot for GMM decomposition
+#' QQplot of GMM decomposition for 1D data
 #'
 #' Function return ggplot object with fit diagnostic Quantile-Quantile plot for one normal distribution and fitted GMM.
 #' This plot is also return as regular output of \code{\link{runGMM}}.
 #'
-#' @param X Vector of original data
-#' @param GModel \code{data.frame} of GMM parameters i.e GModel$alpha, GModel$mu, GModel$sigma (correct \code{colnames} are obligatory)
+#' @param X Vector of 1D data for GMM decomposition.
+#' @param GModel \code{data.frame} of GMM parameters i.e GModel$alpha, GModel$mu, GModel$sigma (correct \code{colnames} are obligatory).
 #'
 #' @import ggplot2
 #' @importFrom  ggpubr ggarrange
@@ -102,7 +100,7 @@ plot_gmm_1D <- function(X, dist, Y=NULL, threshold=NA, pal= "Blues"){
 #' plot_QQplot(example$Dist,GModel)
 #' }
 #'
-#' @seealso \code{\link{runGMM}} and \code{\link{gaussian_mixture_vector}}
+#' @seealso \code{\link{runGMM}}
 #'
 #' @export
 plot_QQplot<-function(X,GModel){

@@ -4,26 +4,18 @@
 #'
 #' @param GModel A \code{data.frame} of model component parameters - the rows are, in turn:  mean values (mu), standard deviations (sigma)
 #'  and weights (alpha) and each column corresponds to one component. Output of \code{EM_iter}
-#' @param sigmas.dev Number of sigmas defining the distance to merge the overlapping components of GMM.
-#' By default it is \code{sigma.dev = 2.5}
+#' @param sigmas.dev Parameter used to define close GMM components that needs to be merged. For each component, standard deviation is multiplied by \code{sigmas.dev} to estimate the distance from component mean.
+#' All other components within this distance are merged. By default it is \code{sigmas.dev = 2.5}. When \code{sigmas.dev = 0} no components are merged.
 #'
 #' @return Function returns a \code{list} which contains: \describe{
-#'   \item{model}{\code{data.frame} of the GMM decomposition parameters after merging}
-#'   \item{KS}{number of components after merge}
+#'   \item{model}{\code{data.frame} of the GMM decomposition parameters after merging.}
+#'   \item{KS}{number of components after merging.}
 #' }
 #'
-#' @examples
-#' \dontrun{
-#' GModel<-data.frame(alpha=c(0.45,0.5,0.05),
-#'                   mu=c(-14,-2,5),
-#'                   sigma=c(2,4,1.5))
-#' gmm_merge(GModel, sigmas.dev=5)
-#' }
+#' @keywords internal
 #'
-#' @seealso \code{\link{runGMM}} and \code{\link{EM_iter}}
-#'
-#' @export
-gmm_merge <- function(GModel, sigmas.dev=1.5){
+#' @seealso \code{\link{runGMM}}
+gmm_merge <- function(GModel, sigmas.dev=2.5){
 
   KS <- length(GModel$mu) #number of components
 

@@ -1,4 +1,4 @@
-#' Generator of 2D Gaussian mixture distribution
+#' Generator of 2D mixed-normal distributions
 #'
 #' Generator of 2D mixed normal distribution with given model parameters for certain points number.
 #'
@@ -9,7 +9,7 @@
 #'
 #' @importFrom mvtnorm rmvnorm
 #'
-#' @returns List with following elements::\describe{
+#' @returns List with following elements:\describe{
 #'    \item{Dist}{Numeric marix with generated data}
 #'    \item{Cls}{Numeric vector with classification of each point to particular distribution}
 #' }
@@ -18,7 +18,6 @@
 #' \dontrun{
 #' data<-generate_norm2D(1500, alpha=c(0.2,0.4,0.4), mu=matrix(c(1,2,1,3,2,2),nrow=2),cov =c(0.01,0.02,0.03))
 #' }
-#' @seealso \code{\link{generate_dset2D}}
 #' @export
 generate_norm2D <- function(n, alpha, mu, cov){
   KS <- dim(mu)[2]
@@ -32,7 +31,7 @@ generate_norm2D <- function(n, alpha, mu, cov){
   return(res)
 }
 
-#' Create multiple random 2D Gaussian mixture datasets
+#' Generator of multiple random 2D mixed-normal distributions
 #'
 #' Generator of multiple 2D mixed normal distribution with given model parameters ranges.
 #'
@@ -45,7 +44,6 @@ generate_norm2D <- function(n, alpha, mu, cov){
 #' @importFrom stats runif
 #'
 #' @returns List with 2D GMM distributions where each list contains elements of \code{\link{generate_norm2D}}
-
 #'
 #' @seealso \code{\link{generate_norm2D}}
 #' @export

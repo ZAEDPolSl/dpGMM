@@ -1,4 +1,4 @@
-#' Function to perform Gaussian Mixture Model on 2D data
+#' Function to fit Gaussian Mixture Model (GMM) to 2D data
 #'
 #' Main function to perform GMM on 2D data. Function choose the optimal number of components of a 2D mixture normal distributions by minimising the value of the information criterion.
 #'
@@ -10,12 +10,13 @@
 #'
 #' @returns Function returns a \code{list} of GMM parameters for the estimated number of components: \describe{
 #'  \item{model}{\describe{
-#'     \item{alpha}{Weights (alpha) of each component.}
-#'     \item{center}{Means of decomposition.}
-#'     \item{covar}{Covariances of each component.}
-#'     \item{KS}{Estimaged number of model components.}
-#'     \item{logL}{Log-likelihood statistic for the estimated number of components.}
-#'     \item{IC}{The value of the selected information criterion which was used to calculate the number of components.}}
+#'  \item{alpha}{Weights (alpha) of each component.}
+#'  \item{center}{Means of decomposition.}
+#'  \item{covar}{Covariances of each component.}
+#'  \item{KS}{Estimated number of components.}
+#'  \item{logL}{Log-likelihood statistic for the estimated number of components.}
+#'  \item{IC}{The value of the selected information criterion which was used to calculate the number of components.}
+#'  \item{cls}{Assigment of point to the clusters.}}}
 #'  \item{fig}{Plot of decomposition.}
 #' }
 #'
@@ -25,6 +26,7 @@
 #' opts<-GMM_2D_opts
 #' opts$fixed<-T
 #' opts$KS<-3
+#' opts$max_iter<-5000
 #' res<-runGMM2D(example2D[,1:2], example2D[,3], opts, plot=T)
 #' }
 #'

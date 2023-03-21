@@ -6,7 +6,9 @@
 #' @param KS Number of components.
 #'
 #' @return Initial values for EM.
-#' @export
+#'
+#' @keywords internal
+#'
 rand_init_2D <- function(X, KS){
   # Random initialization of 2D Gaussian components.
   n <- dim(X)[1]
@@ -23,9 +25,9 @@ rand_init_2D <- function(X, KS){
 #'
 #' Function for generating initial conditions of 2D GMM model by dynamic programming.
 #'
-#' @param X matrix of data to decompose by GMM.
-#' @param Y y coordinates of histogram.
-#' @param K number of components.
+#' @param X Matrix of data to decompose by GMM.
+#' @param Y Vector of counts, with the same length as "X".
+#' @param K Number of components.
 #'
 #' @return Initial values for EM.
 #'
@@ -129,8 +131,8 @@ DP_init_2D <- function(X, Y, KS){
 #'
 #' Function for generating initial conditions of 2D GMM model by diagonal.
 #'
-#' @param X matrix of 2D GMM data.
-#' @param K number of components.
+#' @param X Matrix of 2D GMM data.
+#' @param K Number of components.
 #'
 #' @return Initial values for EM.
 #'
@@ -159,7 +161,8 @@ diag_init_2D <- function(X, KS){
 #' @param center centers of 2D distributions (means)
 #' @param covar matrix of covariances
 #'
-#' @export
+#' @keywords internal
+#'
 norm_pdf_2D <- function(x, center, covar){
   den <- (6.283185307179585 * sqrt(det(covar)))
   x_centr <- sweep(as.matrix(x), 2, center, FUN = "-")
@@ -171,14 +174,14 @@ norm_pdf_2D <- function(x, center, covar){
 
 #' 2D plot support
 #'
-#' Supporting function for 2D GMM ploting
+#' Supporting function for 2D GMM ploting.
 #'
 #' @param X matrix of 2D GMM data.
 #' @param Y y coordinates of histogram.
 #'
 #'
+#' @keywords internal
 #'
-#' @export
 coords_to_img <- function(X,Y){
 
   x <- unique(round(X[,1]))
@@ -209,7 +212,9 @@ coords_to_img <- function(X,Y){
 #'  \item{cum_pdf}{Cumulative probability distibution}
 #' }
 #'
-#' @export
+#'
+#' @keywords internal
+#'
 calc_lLik2D <- function(X,Y,gmm){
 
   data <- rep(apply(X,1,as.list), times=Y)

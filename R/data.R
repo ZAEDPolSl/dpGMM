@@ -1,4 +1,4 @@
-#' Exemplary normal mixture data
+#' Data of 1D mixed-normal distributions
 #'
 #' This data set was randomly drown for 6 components GMM. The parameters of distributions are as follow:\cr
 #' means = c(-14.56, -14.16, -11.80, -8.77, -2.89, 2.31);\cr
@@ -12,7 +12,7 @@
 #' @source Randomly generated data
 "example"
 
-#' Binned data of mass spectrometry
+#' Data example of binned problem in mass spectrometry
 #'
 #' This data set is part of mass spectrometry measurements. First column represent X values. Second column represent counts of X.
 #' @docType data
@@ -21,9 +21,9 @@
 #' @format A matrix of X and Y (in histogram)
 "binned"
 
-#' Data of 2D mixture
+#' Data of 2D mixed-normal distributions
 #'
-#' This data set contain translated image information into X and Y coordinates and count for each pair X nad Y.
+#' This data set contain translated image information into X and Y coordinates and count for each pair X and Y.
 
 #' @docType data
 #' @name example2D

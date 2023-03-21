@@ -2,19 +2,19 @@
 #'
 #' The function performs the EM algorithm to find the local maximum likelihood for the estimated Gaussian mixture parameters.
 #'
-#' @param X matrix of data to decompose by GMM.
-#' @param Y vector of counts, should be the same length as "X".
-#' Applies only to binned data therefore the default is Y = NULL.
-#' @param init vector of initial parameters for Gaussian components. See \code{\link{rand_init_2D}}, \code{\link{DP_init_2D}} or \code{\link{diag_init_2D}}.
-#' @param opts parameters of run stored in \code{\link{GMM_2D_opts}} variable
+#' @param X Matrix of 2D data to decompose by GMM.
+#' @param Y Vector of counts, with the same length as "X".
+#' Applies only to binned data (Y = NULL, by default).
+#' @param init Vector of initial parameters for Gaussian components.
+#' @param opts Parameters of run stored in \code{\link{GMM_2D_opts}} variable.
 #'
 #' @returns Function returns a \code{list} of GMM parameters for tested number of components: \describe{
-#'  \item{alpha}{Weights (alpha) of each component}
-#'  \item{center}{Means of decomposition}
-#'  \item{covar}{Covariances of each component}
-#'  \item{KS}{Number of components}
-#'  \item{logL}{Log-likelihood value for the tested number of components}
-#'  \item{IC}{Value of the selected information criterion which was used to calculate the tested number of components}
+#'  \item{alpha}{Weights (alpha) of each component.}
+#'  \item{center}{Means of decomposition.}
+#'  \item{covar}{Covariances of each component.}
+#'  \item{KS}{Estimated number of components.}
+#'  \item{logL}{Log-likelihood statistic for the estimated number of components.}
+#'  \item{IC}{The value of the selected information criterion which was used to calculate the number of components.}
 #' }
 #'
 #'
@@ -47,7 +47,7 @@ EM_iter_2D <- function(X, Y, init, opts){
       #calculate density function
       f <- matrix(0, KS, N)
       for (a in 1:KS){
-        f[a,] <- norm_pdf_2D(X, center[a,], covar[,,a])
+        f[a,] <- rGMMtest:::norm_pdf_2D(X, center[a,], covar[,,a]) ####### PACKAGE NAME!!!!!!!!!!!!!!!!
       }
       px <-  colSums(f * alpha)
       px[is.nan(px) | px==0] <- 1e-100
@@ -116,7 +116,7 @@ EM_iter_2D <- function(X, Y, init, opts){
     gmm$KS <- KS
     gmm$logL <- L_new
 
-    if(opts$crit == "ICL-BIC"){
+    if(opts$IC == "ICL-BIC"){
       if(exists("pk")){
         pk[is.nan(pk) | pk==0] = 5e-324
         EN <- -sum(sum(pk*log(pk)))
@@ -125,7 +125,7 @@ EM_iter_2D <- function(X, Y, init, opts){
       }
     }
 
-    switch(opts$crit,
+    switch(opts$IC,
            "BIC" = crit_val <- abs(2*L_new) + (7*KS-1)*log(bin_edge_sum),
            "AIC" = crit_val <- abs(2*L_new) + 2*(7*KS-1),
            "AICc" = crit_val <- abs(2*L_new) + 2*(7*KS-1) * (bin_edge_sum/(bin_edge_sum - (7*KS-1) -1)),

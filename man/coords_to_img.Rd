@@ -12,5 +12,6 @@ coords_to_img(X, Y)
 \item{Y}{y coordinates of histogram.}
 }
 \description{
-Supporting function for 2D GMM ploting
+Supporting function for 2D GMM ploting.
 }
+\keyword{internal}

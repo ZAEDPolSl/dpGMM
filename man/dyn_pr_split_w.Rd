@@ -21,3 +21,4 @@ List of parameters.
 \description{
 Supporting function for dynamic programming in 1D decomposition.
 }
+\keyword{internal}

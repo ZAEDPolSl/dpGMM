@@ -5,38 +5,36 @@
 \alias{GMM_2D_opts}
 \title{Default configuration for 2D Gaussian Mixture decomposition}
 \format{
-An object of class \code{gmm2_opts} of length 13.
+An object of class \code{gmm2_opts} of length 12.
 }
 \usage{
 GMM_2D_opts
 }
 \arguments{
-\item{eps_change}{Criterion for stopping the EM algorithm. By default it is \code{1e-4}}
+\item{eps_change}{Criterion for early stopping of EM (1e-7, by default).}
 
-\item{max_iter}{Maximum number of iterations of EM algorithm. By default it is \code{max_iter = 5000}}
+\item{max_iter}{Maximum number of iterations of EM algorithm. By default it is \code{max_iter = 50 000}.}
 
-\item{SW}{Regularizing coefficient for covariance (nie ja)}
+\item{SW}{Regularizing coefficient for covariance.}
 
 \item{max_var_ratio}{Maximum dissimilarity between horizontal and vertical dispersion. By default it is \code{max_var_ratio = 5}}
 
-\item{crit}{Information Criterion to select best number of components.
-Possible "AIC","AICc", "BIC" (default) or "ICL-BIC".}
+\item{IC}{Information criterion used to select the number of model components.
+Possible methods are "AIC","AICc", "BIC" (default), "ICL-BIC" or "LR".}
 
-\item{res}{Parameter for modifying resolution (>1 less spots). **1** is as a default value. UŻYWAMY TEGO?!!!!!!!!!!!!!!!!!!!!!!!!}
-
-\item{cov_type}{Type of covariance model. Possible "sphere","diag" or "full" (default).}
+\item{cov_type}{Type of covariance defined for each model component. Possible "sphere","diag" or "full" (default).}
 
 \item{init_nb}{Number of random initial conditions. By default it is \code{init_nb = 10}.}
 
-\item{KS}{Maximum number of GMM components. By default it is \code{KS = 5}.}
+\item{KS}{Maximum number of components of the model. By default it is \code{KS = 5}.}
 
-\item{sig}{Logical value. Determines to stop the EM algorithm when adding another component is no longer significant according to the Likelihood Ratio Test. Used to speed up the function (Default is=FALSE).}
+\item{quick_stop}{Logical value. Determines if stop searching of the number of components earlier based on the Likelihood Ratio Test. Used to speed up the function (TRUE, by default).}
 
-\item{D_thr}{Significance threshold for D statistic By default is 0.1 (Likelihood Ratio Test).}
+\item{signi}{Significance level set for Likelihood Ratio Test (0.05, by default).}
 
-\item{init_con}{Type of initial conditions. Could be "rand" (default),"DP" or "diag". See \code{\link{rand_init_2D}}, \code{\link{DP_init_2D}} or \code{\link{diag_init_2D}}.}
+\item{init_con}{Type of initial conditions. Could be "rand" (default),"DP" or "diag".}
 
-\item{fixed}{perform GMM only for number of components given in KS (defailt=FALSE).}
+\item{fixed}{Logical value. Fit GMM for selected number of components given by KS (FALSE, by default).}
 }
 \description{
 A list with parameters customizing a GMM_2D. Each component of the
@@ -48,7 +46,7 @@ GMM_2D_opts
 
 # create a new settings object
 custom.settings <- GMM_2D_opts
-custom.settings$crit <- "BIC"
+custom.settings$IC <- "AIC"
 custom.settings
 
 }

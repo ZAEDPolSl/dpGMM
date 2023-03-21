@@ -2,23 +2,21 @@
 % Please edit documentation in R/1Dplots.R
 \name{plot_gmm_1D}
 \alias{plot_gmm_1D}
-\title{Plot of GMM decomposition}
+\title{Plot  of GMM decomposition for 1D data}
 \usage{
 plot_gmm_1D(X, dist, Y = NULL, threshold = NA, pal = "Blues")
 }
 \arguments{
-\item{X}{Vector of data}
+\item{X}{Vector of 1D data for GMM decomposition.}
 
-\item{dist}{Output of \code{generate_dist} function. Its list of following elements\describe{
-   \item{x}{Vector of generated data}
-   \item{dist}{Matrix of pdf of for each generated mixture model. The last column is sum of all previous ones}
-}}
+\item{dist}{Output of \code{\link{generate_dist}} function.}
 
-\item{Y}{Vector of X counts (dedicated to binned data). Default=NULL}
+\item{Y}{Vector of counts, with the same length as "X".
+Applies only to binned data (Y = NULL, by default).}
 
-\item{threshold}{Vector with GMM cutoffs}
+\item{threshold}{Vector with GMM cutoffs.}
 
-\item{pal}{RColorBrewer palette name (default - *"Blues"*)}
+\item{pal}{Name of the RColorBrewer palette used in the figure. By default \code{"Blues"}.}
 }
 \description{
 Function plot the decomposed distribution together with histogram of data. Moreover the cut-off are marked.

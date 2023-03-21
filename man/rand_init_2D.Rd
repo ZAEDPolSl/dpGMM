@@ -17,3 +17,4 @@ Initial values for EM.
 \description{
 Function for generating random initial conditions of 2D GMM model.
 }
+\keyword{internal}

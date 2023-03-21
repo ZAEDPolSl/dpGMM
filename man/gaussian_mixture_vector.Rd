@@ -2,7 +2,7 @@
 % Please edit documentation in R/gaussian_mixture_vector.R
 \name{gaussian_mixture_vector}
 \alias{gaussian_mixture_vector}
-\title{Gaussian mixture decomposition for a vector of data}
+\title{Gaussian mixture decomposition for 1D data}
 \usage{
 gaussian_mixture_vector(
   X,
@@ -11,48 +11,48 @@ gaussian_mixture_vector(
   fixed = FALSE,
   eps_change = 1e-07,
   max_iter = 50000,
-  SW = 0.1,
+  SW = 0.01,
   IC = "BIC",
   quick_stop = TRUE,
   signi = 0.05
 )
 }
 \arguments{
-\item{X}{Vector of data to decompose by GMM.}
+\item{X}{Vector of 1D data for GMM decomposition.}
 
-\item{KS}{Maximum number of components to test.}
+\item{KS}{Maximum number of components of the model.}
 
-\item{Y}{Vector of counts, should be the same length as "data".
-Applies only to binned data therefore the default is Y = NULL.}
+\item{Y}{Vector of counts, with the same length as "X".
+Applies only to binned data (Y = NULL, by default).}
 
-\item{fixed}{perform GMM only for number of components given in KS.}
+\item{fixed}{Logical value. Fit GMM for selected number of components given by KS (FALSE, by default).}
 
-\item{eps_change}{Stop of EM criterion (default Inf), value compared to following formula:
+\item{eps_change}{Criterion for early stopping of EM (1e-7, by default) given by the following formula:
 \deqn{\sum{(|\alpha - \alpha_{old})|} + \frac{\sum{(\frac{|\sigma^2 - \sigma^2_{old}|}{\sigma^2})}}{length(\alpha)}}}
 
-\item{max_iter}{Maximum number of iterations of EM algorithm. By default it is \code{max_iter = 5000}}
+\item{max_iter}{Maximum number of iterations of EM algorithm. By default it is \code{max_iter = 50 000}}
 
-\item{SW}{Minimum standard deviation of component (default 0.1). Values from 0 to 1 are treated according to their values, for SW >1 the following formula is applied:
-\deqn{\frac{range(x)}{(SW*no.of.components))^2}}.}
+\item{SW}{Parameter for calculating minimum variance of each Gaussian component (0.01, by default) using the following formula:
+\deqn{(\frac{SW*range(x)}{no.of.components)})^2}. Lower value means smaller component variance allowed.}
 
-\item{IC}{Information Criterion to select best number of components.
-Possible "AIC","AICc", "BIC" (default), "ICL-BIC" or "LR".}
+\item{IC}{Information criterion used to select the number of model components.
+Possible methods are "AIC","AICc", "BIC" (default), "ICL-BIC" or "LR".}
 
-\item{quick_stop}{Logical value. Determines to stop the EM algorithm when adding another component is no longer significant according to the Likelihood Ratio Test. Used to speed up the function (Default is TRUE).}
+\item{quick_stop}{Logical value. Determines if stop searching of the number of components earlier based on the Likelihood Ratio Test. Used to speed up the function (TRUE, by default).}
 
-\item{signi}{Significance level for Likelihood Ratio Test. By default is 0.05.}
+\item{signi}{Significance level set for Likelihood Ratio Test (0.05, by default).}
 }
 \value{
-Function returns a \code{list} of GMM parameters for the optimal number of components: \describe{
- \item{model}{A \code{data.frame} of model component parameters - mean values (mu), standard deviations (sigma)
- and weights (alpha) for each component. Output of \code{EM_iter}}
- \item{IC}{Value of the selected information criterion which was used to calculate the optimal number of components}
- \item{logL}{Log-likelihood value for the optimal number of components}
- \item{KS}{Optimal number of components}
+Function returns a \code{list} of GMM parameters for the estimated number of components: \describe{
+ \item{model}{A \code{list} of model component parameters - mean values (mu), standard deviations (sigma)
+ and weights (alpha) for each component.}
+ \item{IC}{The value of the selected information criterion which was used to calculate the number of components.}
+ \item{logLik}{Log-likelihood statistic for the estimated number of components.}
+ \item{KS}{Estimaged number of model components.}
 }
 }
 \description{
-Function to choose the optimal number of components of a mixture normal distributions, minimising the value of the information criterion.
+Function to estimate number of components of a mixture normal distributions, minimizing the value of the information criterion.
 }
 \examples{
 \dontrun{
@@ -62,5 +62,5 @@ exp <- gaussian_mixture_vector(data$Dist, KS = 10, IC = "AIC", quick_stop = FALS
 
 }
 \seealso{
-\code{\link{runGMM}} and \code{\link{EM_iter}}
+\code{\link{runGMM}} and \code{\link{generate_norm1D}}
 }

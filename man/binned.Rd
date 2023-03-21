@@ -3,7 +3,7 @@
 \docType{data}
 \name{binned}
 \alias{binned}
-\title{Binned data of mass spectrometry}
+\title{Data example of binned problem in mass spectrometry}
 \format{
 A matrix of X and Y (in histogram)
 }

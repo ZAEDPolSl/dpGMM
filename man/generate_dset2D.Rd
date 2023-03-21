@@ -2,7 +2,7 @@
 % Please edit documentation in R/2Dgenerators.R
 \name{generate_dset2D}
 \alias{generate_dset2D}
-\title{Create multiple random 2D Gaussian mixture datasets}
+\title{Generator of multiple random 2D mixed-normal distributions}
 \usage{
 generate_dset2D(
   n = 1500,

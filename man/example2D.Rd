@@ -3,7 +3,7 @@
 \docType{data}
 \name{example2D}
 \alias{example2D}
-\title{Data of 2D mixture}
+\title{Data of 2D mixed-normal distributions}
 \format{
 \code{data.frame} of X and Y coordinates and counts
 }
@@ -11,6 +11,6 @@
 data(example2D)
 }
 \description{
-This data set contain translated image information into X and Y coordinates and count for each pair X nad Y.
+This data set contain translated image information into X and Y coordinates and count for each pair X and Y.
 }
 \keyword{datasets}

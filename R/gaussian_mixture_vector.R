@@ -1,4 +1,4 @@
-#' Gaussian mixture decomposition for a vector of data
+#' Gaussian mixture decomposition for 1D data
 #'
 #' Function to estimate number of components of a mixture normal distributions, minimizing the value of the information criterion.
 #'
@@ -11,7 +11,7 @@
 #' \deqn{\sum{(|\alpha - \alpha_{old})|} + \frac{\sum{(\frac{|\sigma^2 - \sigma^2_{old}|}{\sigma^2})}}{length(\alpha)}}
 #' @param max_iter Maximum number of iterations of EM algorithm. By default it is \code{max_iter = 50 000}
 #' @param SW Parameter for calculating minimum variance of each Gaussian component (0.01, by default) using the following formula:
-#' \deqn{\frac{SW*range(x)}{no.of.components)}^2}. Lower value means smaller component variance allowed.
+#' \deqn{(\frac{SW*range(x)}{no.of.components)})^2}. Lower value means smaller component variance allowed.
 #' @param IC Information criterion used to select the number of model components.
 #' Possible methods are "AIC","AICc", "BIC" (default), "ICL-BIC" or "LR".
 #' @param quick_stop Logical value. Determines if stop searching of the number of components earlier based on the Likelihood Ratio Test. Used to speed up the function (TRUE, by default).
@@ -22,7 +22,7 @@
 #'  and weights (alpha) for each component.}
 #'  \item{IC}{The value of the selected information criterion which was used to calculate the number of components.}
 #'  \item{logLik}{Log-likelihood statistic for the estimated number of components.}
-#'   \item{KS}{Estimaged number of model components.}
+#'  \item{KS}{Estimaged number of model components.}
 #' }
 #'
 #' @importFrom stats pchisq qchisq
@@ -61,7 +61,7 @@ gaussian_mixture_vector <- function(X, KS, Y = NULL, fixed=FALSE , eps_change = 
   y <- h$counts
   x <- h$mids
   #decomposition for 1 component
-  rcpt <- EM_iter(X, 1, mean(X), sd(X), N, Y, eps_change, max_iter, SW, IC)
+  rcpt <- EM_iter(X, 1, mean(X), sd(X), Y, eps_change, max_iter, SW, IC)
 
   alpha[[1]] <- rcpt[[1]]
   mu[[1]] <- rcpt[[2]]
@@ -92,7 +92,7 @@ gaussian_mixture_vector <- function(X, KS, Y = NULL, fixed=FALSE , eps_change = 
         sig_ini[kkps] <- 0.5*(max(invec)-min(invec))
       }
 
-      rcpt1<- EM_iter(X, pp_ini, mu_ini, sig_ini, N, Y, eps_change, max_iter, SW, IC)
+      rcpt1<- EM_iter(X, pp_ini, mu_ini, sig_ini, Y, eps_change, max_iter, SW, IC)
 
       pp_est <- rcpt1[[1]]
       mu_est <- rcpt1[[2]]
@@ -126,7 +126,7 @@ gaussian_mixture_vector <- function(X, KS, Y = NULL, fixed=FALSE , eps_change = 
         }
 
         #perform decomposition
-        rcpt1<- EM_iter(X, pp_ini, mu_ini, sig_ini, N, Y, eps_change, max_iter, SW, IC)
+        rcpt1<- EM_iter(X, pp_ini, mu_ini, sig_ini, Y, eps_change, max_iter, SW, IC)
         alpha[[k]] <- rcpt1[[1]]
         mu[[k]] <- rcpt1[[2]]
         sigma[[k]] <- rcpt1[[3]]

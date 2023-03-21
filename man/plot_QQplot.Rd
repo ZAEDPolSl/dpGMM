@@ -2,14 +2,14 @@
 % Please edit documentation in R/1Dplots.R
 \name{plot_QQplot}
 \alias{plot_QQplot}
-\title{QQplot for GMM decomposition}
+\title{QQplot of GMM decomposition for 1D data}
 \usage{
 plot_QQplot(X, GModel)
 }
 \arguments{
-\item{X}{Vector of original data}
+\item{X}{Vector of 1D data for GMM decomposition.}
 
-\item{GModel}{\code{data.frame} of GMM parameters i.e GModel$alpha, GModel$mu, GModel$sigma (correct \code{colnames} are obligatory)}
+\item{GModel}{\code{data.frame} of GMM parameters i.e GModel$alpha, GModel$mu, GModel$sigma (correct \code{colnames} are obligatory).}
 }
 \description{
 Function return ggplot object with fit diagnostic Quantile-Quantile plot for one normal distribution and fitted GMM.
@@ -26,5 +26,5 @@ plot_QQplot(example$Dist,GModel)
 
 }
 \seealso{
-\code{\link{runGMM}} and \code{\link{gaussian_mixture_vector}}
+\code{\link{runGMM}}
 }

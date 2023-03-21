@@ -9,10 +9,10 @@ find_class_2D(X, gmm)
 \arguments{
 \item{X}{matrix of data to decompose by GMM.}
 
-\item{gmm}{results of \code{\link{gaussian_mixture_2D}} decomposition}
+\item{gmm}{Results of \code{\link{gaussian_mixture_2D}} decomposition.}
 }
 \value{
-Return a vector of cluster assignment of each point in X matrix.
+Return a vector of cluster assignment of each point of X matrix.
 }
 \description{
 Function which assign each point of 2D matrix data to a cluster by maximum probability.

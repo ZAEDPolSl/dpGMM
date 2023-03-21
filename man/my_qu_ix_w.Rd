@@ -14,3 +14,4 @@ my_qu_ix_w(xinvec, yinvec)
 \description{
 Supporting function used in spliters \code{dyn_pr_split_w_aux} and \code{dyn_pr_split_w}.
 }
+\keyword{internal}

@@ -1,28 +1,26 @@
-#' Expectation–maximization algorithm for GMM
+#' Expectation–maximization algorithm for 1D data
 #'
 #' The function performs the EM algorithm to find the local maximum likelihood for the estimated Gaussian mixture parameters.
 #'
-#' @param X Vector of data to decompose by GMM.
+#' @param X Vector of 1D data for GMM decomposition.
 #' @param alpha Vector containing the weights (alpha) for each component in the statistical model.
 #' @param mu Vector containing the means (mu) for each component in the statistical model.
 #' @param sig Vector containing the standard deviation (sigma) for each component in the statistical model.
-#' @param N Number of observations. Should be equal to \code{length(X)}
-#' Applies only to binned data therefore the default is Y = NULL.
-#' @param Y Vector of counts, should be the same length as \code{X}.
-#' Applies only to binned data therefore the default is Y = NULL.
-#' @param eps_change Stop of EM criterion (default Inf), value compared to following formula:
+#' @param Y Vector of counts, with the same length as "X".
+#' Applies only to binned data (Y = NULL, by default).
+#' @param eps_change Criterion for early stopping of EM (1e-7, by default) given by the following formula:
 #' \deqn{\sum{(|\alpha - \alpha_{old})|} + \frac{\sum{(\frac{|\sigma^2 - \sigma^2_{old}|}{\sigma^2})}}{length(\alpha)}}
-#' @param max_iter Maximum number of iterations of EM algorithm. By default it is \code{max_iter = 5000}
-#' @param SW Minimum standard deviation of component (default 0.1). Values from 0 to 1 are treated according to their values, for SW >1 the following formula is applied:
-#' \deqn{\frac{range(x)}{(SW*no.of.components))^2}}.
-#' @param IC Information Criterion to select best number of components.
-#' Possible "AIC","AICc", "BIC" (default), "ICL-BIC" or "LR".
+#' @param max_iter Maximum number of iterations of EM algorithm. By default it is \code{max_iter = 50 000}
+#' @param SW Parameter for calculating minimum variance of each Gaussian component (0.01, by default) using the following formula:
+#' \deqn{(\frac{SW*range(x)}{no.of.components)})^2}. Lower value means smaller component variance allowed.
+#' @param IC Information criterion used to select the number of model components.
+#' Possible methods are "AIC","AICc", "BIC" (default), "ICL-BIC" or "LR".
 #'
 #' @return Returns a \code{list} of GMM parameter values that correspond to the local extremes for each component.\describe{
 #'  \item{alpha}{Vector of optimal alpha (weights) values.}
 #'  \item{mu}{Vector of optimal mu (means) values.}
 #'  \item{sigma}{Vector of optimal sigma (standard devations) values.}
-#'  \item{logL}{Log-likelihood value in local extreme.}
+#'  \item{logLik}{Log-likelihood statistic for the estimated number of components.}
 #'  \item{crit}{Value of the selected information criterion in local extreme of likelihood function.}
 #' }
 #'
@@ -31,7 +29,7 @@
 #' @seealso \code{\link{runGMM}} and \code{\link{gaussian_mixture_vector}}
 #'
 #' @export
-EM_iter <- function(X, alpha, mu, sig, N, Y = NULL, eps_change = 1e-7, max_iter = 50000, SW = 0.01, IC = "BIC"){
+EM_iter <- function(X, alpha, mu, sig, Y = NULL, eps_change = 1e-7, max_iter = 50000, SW = 0.01, IC = "BIC"){
 
   if(is.null(Y)){Y<-matrix(1, 1, length(X))}
   bin_edge_sum <- sum(Y)
@@ -40,6 +38,7 @@ EM_iter <- function(X, alpha, mu, sig, N, Y = NULL, eps_change = 1e-7, max_iter 
   mu <- c(mu)
   sig <- c(sig)
 
+  N <- length(X)
   X <- sort(X)
   sig2 <- sig^2
   count <- 1

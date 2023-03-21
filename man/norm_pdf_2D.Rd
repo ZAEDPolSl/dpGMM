@@ -16,3 +16,4 @@ norm_pdf_2D(x, center, covar)
 \description{
 Function for calculation PDF of 2D normal model.
 }
+\keyword{internal}

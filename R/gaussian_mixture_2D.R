@@ -1,20 +1,20 @@
 #' Gaussian mixture decomposition for 2D data
 #'
-#'Function to choose the optimal number of components of a 2D mixture normal distributions, minimising the value of the information criterion.
+#' Function to choose the optimal number of components of a 2D mixture normal distributions, minimizing the value of the information criterion.
 #'
-#' @param X matrix of data to decompose by GMM.
-#' @param Y vector of counts, should be the same length as "X".
-#' Applies only to binned data therefore the default is Y = NULL.
-#' @param opts parameters of run saved in \code{\link{GMM_2D_opts}} variable
+#' @param X Matrix of 2D data to decompose by GMM.
+#' @param Y Vector of counts, with the same length as "X".
+#' Applies only to binned data (Y = NULL, by default).
+#' @param opts Parameters of run saved in \code{\link{GMM_2D_opts}} variable.
 #'
 #' @returns Function returns a \code{list} of GMM parameters for the optimal number of components: \describe{
-#'  \item{alpha}{Weights (alpha) of each component}
-#'  \item{center}{Means of decomposition}
-#'  \item{covar}{Covariances of each component}
-#'  \item{KS}{Optimal number of components}
-#'  \item{logL}{Log-likelihood value for the optimal number of components}
-#'  \item{IC}{Value of the selected information criterion which was used to calculate the optimal number of components}
-#'  \item{cls}{Assigment of point to the cluster}
+#'  \item{alpha}{Weights (alpha) of each component.}
+#'  \item{center}{Means of decomposition.}
+#'  \item{covar}{Covariances of each component.}
+#'  \item{KS}{Estimated number of components.}
+#'  \item{logL}{Log-likelihood statistic for the estimated number of components.}
+#'  \item{IC}{The value of the selected information criterion which was used to calculate the number of components.}
+#'  \item{cls}{Assigment of point to the clusters.}
 #' }
 #'
 #' @importFrom stats pchisq
@@ -26,7 +26,7 @@
 #' exp <- gaussian_mixture_2D(example2D_1[,1:2], example2D_1[,3], opts)
 #' }
 #'
-#' @seealso \code{\link{runGMM2D}}
+#' @seealso \code{\link{runGMM2D}}, \code{\link{GMM_2D_opts}}
 #'
 #' @export
 gaussian_mixture_2D <- function(X, Y=NULL, opts){
@@ -50,7 +50,7 @@ gaussian_mixture_2D <- function(X, Y=NULL, opts){
   }
 
   # decomposition for 1 component
-  gmm[[1]] <- EM_iter_2D(X, Y, rand_init_2D(X, 1), opts)
+  gmm[[1]] <- EM_iter_2D(X, Y, rGMMtest:::rand_init_2D(X, 1), opts) ########## PACKAGE NAME
   logL[,1] <- matrix(gmm[[1]]$logL, opts$init_nb, 1)
   IC <- gmm[[1]]$IC
   IC <- matrix(NA, opts$init_nb, opts$KS+1)
@@ -67,7 +67,7 @@ gaussian_mixture_2D <- function(X, Y=NULL, opts){
     for(a in 1:opts$init_nb){
       # perform decomposition
       if(opts$init_con == "rand"){
-        gmm_tmp[[a]] <- EM_iter_2D(X, Y, rand_init_2D(X, k), opts)
+        gmm_tmp[[a]] <- EM_iter_2D(X, Y, rGMMtest:::rand_init_2D(X, k), opts)  ########## PACKAGE NAME
       } else if(opts$init_con == "diag"){
         gmm_tmp[[a]] <- EM_iter_2D(X, Y, diag_init_2D(X, k), opts)
       } else if(opts$init_con == "DP"){
@@ -94,7 +94,7 @@ gaussian_mixture_2D <- function(X, Y=NULL, opts){
     for(a in 1:opts$init_nb){
       # perform decomposition
       if(opts$init_con == "rand"){
-        gmm_tmp[[a]] <- EM_iter_2D(X, Y, rand_init_2D(X, k), opts)
+        gmm_tmp[[a]] <- EM_iter_2D(X, Y, rGMMtest:::rand_init_2D(X, k), opts)
       } else if(opts$init_con == "diag"){
         gmm_tmp[[a]] <- EM_iter_2D(X, Y, diag_init_2D(X, k), opts)
       } else if(opts$init_con == "DP"){
@@ -110,9 +110,9 @@ gaussian_mixture_2D <- function(X, Y=NULL, opts){
 
 
     # check convergence
-    if(opts$sig){
+    if(opts$quick_stop){
       D[k] <- -2*median(logL[,k-1]) + 2*median(logL[,k])
-      if(stats::pchisq(D[k], 7, lower.tail = F) > opts$D_thr){stop <- 0}
+      if(stats::pchisq(D[k], 7, lower.tail = F) > opts$signi){stop <- 0}
     }
 
     k <- k+1

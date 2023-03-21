@@ -2,7 +2,7 @@
 #'
 #' Function to generate PDF of GMM distributions and its cumulative results with high lincespacing.
 #'
-#' @param X Vector of original data
+#' @param X Vector of 1D data.
 #' @param GModel \code{data.frame} of GMM parameters i.e GModel$alpha, GModel$mu, GModel$sigma (correct \code{colnames} are obligatory)
 #' @param precision Precision of point linespacing
 #'
@@ -10,7 +10,7 @@
 #' @importFrom pracma linspace
 #' @importFrom Matrix rowSums
 #'
-#' @returns List with following elements::\describe{
+#' @returns List with following elements:\describe{
 #'    \item{x}{Numeric vector with equaliy spread data of given precison}
 #'    \item{dist}{Matrix with PDF of each GMM component and cumulative distribution}
 #' }
@@ -31,18 +31,18 @@ generate_dist<-function(X, GModel, precision){
   return(list(x=x_temp,dist=f_temp))
 }
 
-#' Generator of mixed-normal distributions
+#' Generator of 1D mixed-normal distributions
 #'
 #' Generator of mixed-normal distribution with given model parameters for certain points number.
 #'
-#' @param n Number of points to generate
-#' @param alpha Vector of alphas (weights) for each distribution
-#' @param mu Vector of means for each distribution
-#' @param sigma Vector of  sigmas for each distribution
+#' @param n Number of points to generate.
+#' @param alpha Vector of alphas (weights) for each distribution.
+#' @param mu Vector of means for each distribution.
+#' @param sigma Vector of  sigmas for each distribution.
 #'
 #' @importFrom stats rnorm
 #'
-#' @returns List with following elements::\describe{
+#' @returns List with following elements:\describe{
 #'    \item{Dist}{Numeric vector with generated data}
 #'    \item{Cls}{Numeric vector with classification of each point to particular mixed distribution}
 #' }

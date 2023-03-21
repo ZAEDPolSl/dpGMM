@@ -7,11 +7,11 @@
 DP_init_2D(X, Y, KS)
 }
 \arguments{
-\item{X}{matrix of data to decompose by GMM.}
+\item{X}{Matrix of data to decompose by GMM.}
 
-\item{Y}{y coordinates of histogram.}
+\item{Y}{Vector of counts, with the same length as "X".}
 
-\item{K}{number of components.}
+\item{K}{Number of components.}
 }
 \value{
 Initial values for EM.

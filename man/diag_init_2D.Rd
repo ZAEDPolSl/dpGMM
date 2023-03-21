@@ -7,9 +7,9 @@
 diag_init_2D(X, KS)
 }
 \arguments{
-\item{X}{matrix of 2D GMM data.}
+\item{X}{Matrix of 2D GMM data.}
 
-\item{K}{number of components.}
+\item{K}{Number of components.}
 }
 \value{
 Initial values for EM.

@@ -14,3 +14,4 @@ dyn_pr_split_w_aux(xhist, yhist)
 \description{
 Supporting function for dynamic programming in 1D decomposition.
 }
+\keyword{internal}

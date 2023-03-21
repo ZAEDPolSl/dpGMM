@@ -3,7 +3,7 @@
 \docType{data}
 \name{example}
 \alias{example}
-\title{Exemplary normal mixture data}
+\title{Data of 1D mixed-normal distributions}
 \format{
 A vector containing 1500 observations
 }

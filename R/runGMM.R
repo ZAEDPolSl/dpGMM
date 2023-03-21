@@ -14,7 +14,7 @@
 #' \deqn{\sum{(|\alpha - \alpha_{old})|} + \frac{\sum{(\frac{|\sigma^2 - \sigma^2_{old}|}{\sigma^2})}}{length(\alpha)}}
 #' @param max_iter Maximum number of iterations of EM algorithm. By default it is \code{max_iter = 50 000}
 #' @param SW Parameter for calculating minimum variance of each Gaussian component (0.01, by default) using the following formula:
-#' \deqn{\frac{SW*range(x)}{no.of.components)}^2}. Lower value means smaller component variance allowed.
+#' \deqn{(\frac{SW*range(x)}{no.of.components)})^2}. Lower value means smaller component variance allowed.
 #' @param IC Information criterion used to select the number of model components.
 #' Possible methods are "AIC","AICc", "BIC" (default), "ICL-BIC" or "LR".
 #' @param sigmas.dev Parameter used to define close GMM components that needs to be merged. For each component, standard deviation is multiplied by \code{sigmas.dev} to estimate the distance from component mean.
@@ -26,14 +26,14 @@
 #'
 #' @returns Function returns a \code{list} which contains: \describe{
 #'  \item{model}{A \code{list} of model component parameters - mean values (mu), standard deviations (sigma)
-#'  and weights (alpha) for each component. Output of \code{gaussian_mixture_vector}.}
+#'  and weights (alpha) for each component. Output of \code{\link{gaussian_mixture_vector}}.}
 #'  \item{KS}{Estimaged number of model components.}
 #'  \item{IC}{The value of the selected information criterion which was used to calculate the number of components.}
 #'  \item{logLik}{Log-likelihood statistic for the estimated number of components.}
 #'  \item{threshold}{Vector of thresholds between each component.}
 #'  \item{cluster}{Assignment of original \code{X} values to individual components (clusters) by thresholds.}
-#'  \item{fig}{ggplot object (output of the \code{plot_gmm_1D} function). It contains GMM decomposition together with a histogram of the data.}
-#'  \item{QQplot}{ggplot object (output of the \code{plot_QQplot} function).
+#'  \item{fig}{ggplot object (output of the \code{\link{plot_gmm_1D}} function). It contains GMM decomposition together with a histogram of the data.}
+#'  \item{QQplot}{ggplot object (output of the \code{\link{plot_QQplot}} function).
 #'  It presents diagnostic Quantile-Quantile plot for a single normal distribution and fitted GMM.}
 #' }
 #'
@@ -41,9 +41,8 @@
 #' @examples
 #' \dontrun{
 #' data(example)
-#' mix_test1 <- runGMM(example$Dist, KS = 15, IC = "AICc", quick_stop = F, sigmas.dev = 0)
-#' mix_test2 <- runGMM(example$Dist, KS = 10, IC = "BIC", sigmas.dev = 1.5)
-#' mix_test2$QQplot
+#' mix_test <- runGMM(example$Dist, KS = 10, IC = "BIC", sigmas.dev = 1.5,max_iter = 1000)
+#' mix_test$QQplot
 #'
 #' data(binned)
 #' binned_test <- runGMM(X = binned$V1, Y = binned$V2, KS = 40, col.pal = "Dark2", plot = F, quick_stop = T)
@@ -78,7 +77,7 @@ runGMM <- function(X, KS, Y = NULL, fixed=FALSE , eps_change = 1e-7, max_iter = 
   if(sigmas.dev > 0 & GModel$KS>1){
     IC_tmp <- GModel$IC
     logL_tmp <- GModel$logL
-    GModel <- gmm_merge(GModel$model, sigmas.dev)
+    GModel <- rGMMtest:::gmm_merge(GModel$model, sigmas.dev) ######################## corect to package name
     GModel$IC <- IC_tmp
     GModel$logL <- logL_tmp
   }

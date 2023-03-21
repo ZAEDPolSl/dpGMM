@@ -3,9 +3,9 @@
 #' Function which assign each point of 2D matrix data to a cluster by maximum probability.
 #'
 #' @param X matrix of data to decompose by GMM.
-#' @param gmm results of \code{\link{gaussian_mixture_2D}} decomposition
+#' @param gmm Results of \code{\link{gaussian_mixture_2D}} decomposition.
 #'
-#' @returns Return a vector of cluster assignment of each point in X matrix.
+#' @returns Return a vector of cluster assignment of each point of X matrix.
 #'
 #' @export
 find_class_2D<- function(X,gmm){
@@ -15,7 +15,7 @@ find_class_2D<- function(X,gmm){
   for (i in 1:KS){
       center<-gmm$center[i,]
       covariance<-gmm$covar[,,i]
-      dist[,i]<-norm_pdf_2D(X, center, covariance)
+      dist[,i]<-rGMMtest:::norm_pdf_2D(X, center, covariance)  ### PACKAGE NAME!!!!!!!!!!!!!!!!
   }
   dist[,KS+1]<-rowSums(dist[,1:KS])
   dist<-as.data.frame(dist)

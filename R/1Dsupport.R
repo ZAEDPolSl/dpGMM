@@ -8,6 +8,9 @@
 #' @param aux_mx Return of function \code{dyn_pr_split_w_aux}.
 #'
 #' @return List of parameters.
+#'
+#' @keywords internal
+#'
 dyn_pr_split_w <- function(xhist, yhist, K, aux_mx){
   #initialize
   Q <- matrix(0, 1, K)
@@ -55,6 +58,8 @@ dyn_pr_split_w <- function(xhist, yhist, K, aux_mx){
 #' @param xhist x coordinates of histogram.
 #' @param yhist y coordinates of histogram.
 #'
+#' @keywords internal
+#'
 dyn_pr_split_w_aux <- function(xhist, yhist){
   N <- length(xhist)
   #aux_mx
@@ -73,6 +78,8 @@ dyn_pr_split_w_aux <- function(xhist, yhist){
 #'
 #' @param xinvec x coordinates of histogram.
 #' @param yinvec y coordinates of histogram.
+#'
+#' @keywords internal
 #'
 my_qu_ix_w <- function(xinvec, yinvec){
   PAR = 1

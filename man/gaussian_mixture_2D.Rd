@@ -7,26 +7,26 @@
 gaussian_mixture_2D(X, Y = NULL, opts)
 }
 \arguments{
-\item{X}{matrix of data to decompose by GMM.}
+\item{X}{Matrix of 2D data to decompose by GMM.}
 
-\item{Y}{vector of counts, should be the same length as "X".
-Applies only to binned data therefore the default is Y = NULL.}
+\item{Y}{Vector of counts, with the same length as "X".
+Applies only to binned data (Y = NULL, by default).}
 
-\item{opts}{parameters of run saved in \code{\link{GMM_2D_opts}} variable}
+\item{opts}{Parameters of run saved in \code{\link{GMM_2D_opts}} variable.}
 }
 \value{
 Function returns a \code{list} of GMM parameters for the optimal number of components: \describe{
- \item{alpha}{Weights (alpha) of each component}
- \item{center}{Means of decomposition}
- \item{covar}{Covariances of each component}
- \item{KS}{Optimal number of components}
- \item{logL}{Log-likelihood value for the optimal number of components}
- \item{IC}{Value of the selected information criterion which was used to calculate the optimal number of components}
- \item{cls}{Assigment of point to the cluster}
+ \item{alpha}{Weights (alpha) of each component.}
+ \item{center}{Means of decomposition.}
+ \item{covar}{Covariances of each component.}
+ \item{KS}{Estimated number of components.}
+ \item{logL}{Log-likelihood statistic for the estimated number of components.}
+ \item{IC}{The value of the selected information criterion which was used to calculate the number of components.}
+ \item{cls}{Assigment of point to the clusters.}
 }
 }
 \description{
-Function to choose the optimal number of components of a 2D mixture normal distributions, minimising the value of the information criterion.
+Function to choose the optimal number of components of a 2D mixture normal distributions, minimizing the value of the information criterion.
 }
 \examples{
 \dontrun{
@@ -37,5 +37,5 @@ exp <- gaussian_mixture_2D(example2D_1[,1:2], example2D_1[,3], opts)
 
 }
 \seealso{
-\code{\link{runGMM2D}}
+\code{\link{runGMM2D}}, \code{\link{GMM_2D_opts}}
 }
