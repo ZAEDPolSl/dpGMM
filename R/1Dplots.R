@@ -33,7 +33,7 @@ plot_gmm_1D <- function(X, dist, Y=NULL, threshold=NA, pal= "Blues"){
 
   # estimating of bin width of histogram
   binwidth <- (max(X)-min(X))/floor(sqrt(length(X)))
-
+  #binwidth = 2.64*IQR(data$V1)*nrow(data)^(-1/3) # alternative
   # extract data from dist
   x_temp <- dist$x
   dist <- dist$dist
