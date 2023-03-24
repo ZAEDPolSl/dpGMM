@@ -90,7 +90,9 @@ runGMM <- function(X, KS, Y = NULL, fixed=FALSE , eps_change = 1e-7, max_iter = 
     thr <- find_thr_by_params(GModel$model,dist.plot,sigmas.dev)
   } else {thr=NULL}
   # remove thresholds out of data range
-  thr<-thr[-which(thr>max(X) | thr<min(X))]
+  rem<-which(thr>max(X) | thr<min(X))
+  if (length(rem)!=0){
+  thr<-thr[-rem]}
 
   # Clusters assignment
   clust <- matrix(1, 1, length(X))
