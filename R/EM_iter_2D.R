@@ -36,9 +36,9 @@ EM_iter_2D <- function(X, Y, init, opts){
     bin_edge_sum <- sum(Y)
     alpha <- as.vector(init$alpha)
     center <- as.matrix(init$center)
-    if (dim(center)[2]==KS) {center=t(center)}
+    if (dim(center)[2] == KS) {center <- t(center)}
     covar <- init$covar
-    opts$SW <- diag(2)*opts$SW
+    opts$SW <- diag(2) * opts$SW
 
     #MAIN LOOP
     while (change > opts$eps_change && count < opts$max_iter){
@@ -49,11 +49,11 @@ EM_iter_2D <- function(X, Y, init, opts){
       for (a in 1:KS){
         f[a,] <- rGMMtest:::norm_pdf_2D(X, center[a,], covar[,,a]) ####### PACKAGE NAME!!!!!!!!!!!!!!!!
       }
-      px <-  colSums(f * alpha)
-      px[is.nan(px) | px==0] <- 1e-100
+      px <- colSums(f * alpha)
+      px[is.nan(px) | px == 0] <- 1e-100
 
       for (a in 1:KS){
-        pk <- (alpha[a]*f[a,]*Y)/px
+        pk <- (alpha[a] * f[a,] * Y)/px
         denom <- sum(pk)
 
         #maximization step
@@ -76,7 +76,7 @@ EM_iter_2D <- function(X, Y, init, opts){
           tmp <- sweep(as.matrix(X), 2, as.numeric(center[a,]), FUN = "-")^2
           covarnum <- colSums(apply(tmp, 2, "*", pk))
           sig2_tmp <- mean(covarnum/denom)
-          covar[,,a] <- opts$SW + diag(2)*sig2_tmp
+          covar[,,a] <- opts$SW + diag(2) * sig2_tmp
         }
 
         #check if singularity appeared
@@ -87,8 +87,8 @@ EM_iter_2D <- function(X, Y, init, opts){
 
         #check if shape is proper
         eig_tmp <- rev(eigen(covar[,,a])[[1]])
-        if (max(eig_tmp/min(eig_tmp))>opts$max_var_ratio){
-          if (eig_tmp[2]>eig_tmp[1]){
+        if (max(eig_tmp/min(eig_tmp)) > opts$max_var_ratio){
+          if (eig_tmp[2] > eig_tmp[1]){
             if (opts$cov_type == "diag"){
               covar[1,1,a] <- opts$max_var_ratio * covar[2,2,a]
             }else{
@@ -118,18 +118,18 @@ EM_iter_2D <- function(X, Y, init, opts){
 
     if(opts$IC == "ICL-BIC"){
       if(exists("pk")){
-        pk[is.nan(pk) | pk==0] = 5e-324
-        EN <- -sum(sum(pk*log(pk)))
+        pk[is.nan(pk) | pk == 0] = 5e-324
+        EN <- -sum(sum(pk * log(pk)))
       }else{
         EN <- Inf
       }
     }
 
     switch(opts$IC,
-           "BIC" = crit_val <- abs(2*L_new) + (7*KS-1)*log(bin_edge_sum),
-           "AIC" = crit_val <- abs(2*L_new) + 2*(7*KS-1),
-           "AICc" = crit_val <- abs(2*L_new) + 2*(7*KS-1) * (bin_edge_sum/(bin_edge_sum - (7*KS-1) -1)),
-           "ICL-BIC" = crit_val <- abs(2*L_new) + 2*EN + (7*KS-1)*log(bin_edge_sum)
+           "BIC" = crit_val <- abs(2 * L_new) + (7 * KS-1) * log(bin_edge_sum),
+           "AIC" = crit_val <- abs(2 * L_new) + 2 * (7 * KS-1),
+           "AICc" = crit_val <- abs(2 * L_new) + 2 * (7 * KS-1) * (bin_edge_sum/(bin_edge_sum - (7 * KS-1) -1)),
+           "ICL-BIC" = crit_val <- abs(2 * L_new) + 2 * EN + (7 * KS-1) * log(bin_edge_sum)
     )
 
     gmm$IC <- crit_val

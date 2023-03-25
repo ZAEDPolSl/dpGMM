@@ -22,20 +22,20 @@
 #' @examples
 #' \dontrun{
 #' data(example2D_1)
-#' opts<-GMM_2D_opts
+#' opts <- GMM_2D_opts
 #' exp <- gaussian_mixture_2D(example2D_1[,1:2], example2D_1[,3], opts)
 #' }
 #'
 #' @seealso \code{\link{runGMM2D}}, \code{\link{GMM_2D_opts}}
 #'
 #' @export
-gaussian_mixture_2D <- function(X, Y=NULL, opts){
+gaussian_mixture_2D <- function(X, Y = NULL, opts){
 
   if (dim(X)[1] == 2){
     X <- t(X)
   }
   if (is.null(Y)){
-    Y <- rep(1,nrow(X))
+    Y <- rep(1, nrow(X))
   }
 
   # initialize variables
@@ -54,12 +54,12 @@ gaussian_mixture_2D <- function(X, Y=NULL, opts){
   logL[,1] <- matrix(gmm[[1]]$logL, opts$init_nb, 1)
   IC <- gmm[[1]]$IC
   IC <- matrix(NA, opts$init_nb, opts$KS+1)
-  IC[,1]<-gmm[[1]]$IC
+  IC[,1] <- gmm[[1]]$IC
 
 
 
   if (opts$fixed){ # decomposition for fixed KS
-    k<-opts$KS
+    k <- opts$KS
     gmm_tmp <- list()
     IC_tmp <- matrix(NaN, opts$init_nb, 1)
     logL_tmp <- IC_tmp
@@ -111,7 +111,7 @@ gaussian_mixture_2D <- function(X, Y=NULL, opts){
 
     # check convergence
     if(opts$quick_stop){
-      D[k] <- -2*median(logL[,k-1]) + 2*median(logL[,k])
+      D[k] <- -2 * median(logL[,k-1]) + 2 * median(logL[,k])
       if(stats::pchisq(D[k], 7, lower.tail = F) > opts$signi){stop <- 0}
     }
 
@@ -122,7 +122,7 @@ gaussian_mixture_2D <- function(X, Y=NULL, opts){
 
   cmp_nb <- which(apply(IC, 2, median) == min(apply(IC, 2, median), na.rm = T))
 
-  if(cmp_nb >1){
+  if(cmp_nb > 1){
     tmp <- min(abs(IC[,cmp_nb] - median(IC[,cmp_nb])))
     ind <- which(tmp == min(tmp))
 
@@ -137,11 +137,11 @@ gaussian_mixture_2D <- function(X, Y=NULL, opts){
 
 
 
-  if (gmm_out$KS>1){
-  cls<-find_class_2D(X,gmm_out)
+  if (gmm_out$KS > 1){
+  cls <- find_class_2D(X,gmm_out)
   } else {
-  cls<-rep(1,dim(X)[1])
+  cls <- rep(1, dim(X)[1])
   }
-  gmm_out$cls<-cls
+  gmm_out$cls <- cls
   return(gmm_out)
 }

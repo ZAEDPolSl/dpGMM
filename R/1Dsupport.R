@@ -20,7 +20,7 @@ dyn_pr_split_w <- function(xhist, yhist, K, aux_mx){
   opt_pals <- matrix(0, K, N)
 
   for (kk in 1:N){
-    p_opt_idx[kk] <-rGMMtest:::my_qu_ix_w(xhist[kk:N], yhist[kk:N])
+    p_opt_idx[kk] <- rGMMtest:::my_qu_ix_w(xhist[kk:N], yhist[kk:N])
   }
 
   #iterate
@@ -82,14 +82,14 @@ dyn_pr_split_w_aux <- function(xhist, yhist){
 #' @keywords internal
 #'
 my_qu_ix_w <- function(xinvec, yinvec){
-  PAR = 1
-  PAR_sig_min =.1
-  if ((xinvec[length(xinvec)]-xinvec[1]) <= PAR_sig_min || sum(yinvec) <= 1.0e-3){
-    wyn = Inf
+  PAR <- 1
+  PAR_sig_min <- .1
+  if ((xinvec[length(xinvec)] - xinvec[1]) <= PAR_sig_min || sum(yinvec) <= 1.0e-3){
+    wyn <- Inf
   }else {
-    wwec = yinvec/sum(yinvec)
-    wyn1 = (PAR + sqrt(sum(((xinvec - sum(xinvec*wwec))^2)*wwec)))/(max(xinvec) - min(xinvec))
-    wyn = wyn1
+    wwec <- yinvec/sum(yinvec)
+    wyn1 <- (PAR + sqrt(sum(((xinvec - sum(xinvec*wwec))^2) * wwec)))/(max(xinvec) - min(xinvec))
+    wyn <- wyn1
   }
 
   return(wyn)

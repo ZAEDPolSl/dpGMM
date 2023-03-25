@@ -1,6 +1,6 @@
 #' Function to fit Gaussian Mixture Model (GMM) to 2D data
 #'
-#' Main function to perform GMM on 2D data. Function choose the optimal number of components of a 2D mixture normal distributions by minimising the value of the information criterion.
+#' Main function to perform GMM on 2D data. Function choose the optimal number of components of a 2D mixture normal distributions by minimizing the value of the information criterion.
 #'
 #' @param X Matrix of 2D data to decompose by GMM.
 #' @param Y Vector of counts, with the same length as "X".
@@ -23,16 +23,16 @@
 #' @examples
 #' \dontrun{
 #' data(example2D)
-#' opts<-GMM_2D_opts
-#' opts$fixed<-T
-#' opts$KS<-3
-#' opts$max_iter<-5000
-#' res<-runGMM2D(example2D[,1:2], example2D[,3], opts, plot=T)
+#' opts <- GMM_2D_opts
+#' opts$fixed <- T
+#' opts$KS <- 3
+#' opts$max_iter <- 5000
+#' res <- runGMM2D(example2D[,1:2], example2D[,3], opts, plot=T)
 #' }
 #'
 #'
 #' @export
-runGMM2D <- function(X, Y=NULL, opts, plot=FALSE){
+runGMM2D <- function(X, Y = NULL, opts, plot = FALSE){
 
   # Check part
   if (!hasArg("X")){
@@ -43,18 +43,18 @@ runGMM2D <- function(X, Y=NULL, opts, plot=FALSE){
 
 
   # Main GMM run
-  GModel<- gaussian_mixture_2D(X, Y, opts)
+  GModel <- gaussian_mixture_2D(X, Y, opts)
 
   # Plot part
   if (!is.null(Y)){
-    pl<-plot_gmm_2D_binned(X, Y, GModel, opts)
+    pl <- plot_gmm_2D_binned(X, Y, GModel, opts)
   } else{
-    pl<-plot_gmm_2D_orig(X, GModel, opts)
+    pl <- plot_gmm_2D_orig(X, GModel, opts)
   }
 
 
   # Return
-  mix_gmm <- list(model = GModel, fig=pl)
+  mix_gmm <- list(model = GModel, fig = pl)
 
 
   # Print the plot

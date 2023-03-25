@@ -3,7 +3,7 @@
 #' Function merges distributions of overlapping components at distances defined in the argument \code{sigmas.dev}.
 #'
 #' @param GModel A \code{data.frame} of model component parameters - the rows are, in turn:  mean values (mu), standard deviations (sigma)
-#'  and weights (alpha) and each column corresponds to one component. Output of \code{EM_iter}
+#'  and weights (alpha) and each column corresponds to one component. Output of \code{EM_iter}.
 #' @param sigmas.dev Parameter used to define close GMM components that needs to be merged. For each component, standard deviation is multiplied by \code{sigmas.dev} to estimate the distance from component mean.
 #' All other components within this distance are merged. By default it is \code{sigmas.dev = 2.5}. When \code{sigmas.dev = 0} no components are merged.
 #'
@@ -15,7 +15,7 @@
 #' @keywords internal
 #'
 #' @seealso \code{\link{runGMM}}
-gmm_merge <- function(GModel, sigmas.dev=2.5){
+gmm_merge <- function(GModel, sigmas.dev = 2.5){
 
   KS <- length(GModel$mu) #number of components
 
@@ -29,20 +29,20 @@ gmm_merge <- function(GModel, sigmas.dev=2.5){
 
   for(jj in 2:KS){
     dd <- GModel$mu[jj] - merged$mu[mergedKS]
-    delta <- min(GModel$sigma[jj], merged$sigma[mergedKS])*sigmas.dev
+    delta <- min(GModel$sigma[jj], merged$sigma[mergedKS]) * sigmas.dev
 
     if(dd < delta){
       pp_est <- c(GModel$alpha[jj], merged$alpha[mergedKS])
       mu_est <- c(GModel$mu[jj], merged$mu[mergedKS])
       sig_est <- c(GModel$sigma[jj], merged$sigma[mergedKS])
       ww_temp <- GModel$alpha[jj] + merged$alpha[mergedKS]
-      merged$mu[mergedKS] <- (GModel$alpha[jj]*GModel$mu[jj] + merged$alpha[mergedKS]*merged$mu[mergedKS])/ww_temp
-      merged$sigma[mergedKS] <- sqrt(sum(pp_est*(mu_est^2 + sig_est^2))/ww_temp - merged$mu[mergedKS]^2)
+      merged$mu[mergedKS] <- (GModel$alpha[jj] * GModel$mu[jj] + merged$alpha[mergedKS] * merged$mu[mergedKS])/ww_temp
+      merged$sigma[mergedKS] <- sqrt(sum(pp_est * (mu_est^2 + sig_est^2))/ww_temp - merged$mu[mergedKS]^2)
       merged$alpha[mergedKS] <- ww_temp
     }else{
       merged$mu <- c(merged$mu, GModel$mu[jj])
       merged$sigma <- c(merged$sigma, GModel$sigma[jj])
-      merged$alpha = c(merged$alpha, GModel$alpha[jj])
+      merged$alpha <- c(merged$alpha, GModel$alpha[jj])
       mergedKS <- mergedKS + 1
     }
     indx_merged <- c(indx_merged, mergedKS)

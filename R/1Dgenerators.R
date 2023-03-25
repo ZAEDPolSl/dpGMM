@@ -18,17 +18,17 @@
 #'
 #' @seealso \code{\link{runGMM}} and \code{\link{generate_norm1D}}
 #' @export
-generate_dist<-function(X, GModel, precision){
-  x_temp = pracma::linspace(min(X),max(X),precision)
-  f_temp = matrix(0, precision, nrow(GModel))
+generate_dist <- function(X, GModel, precision){
+  x_temp <- pracma::linspace(min(X), max(X), precision)
+  f_temp <- matrix(0, precision, nrow(GModel))
   for(k in 1:nrow(GModel)){
-    f_temp[,k] = GModel$alpha[k] * stats::dnorm(x_temp, mean = GModel$mu[k], sd =GModel$sigma[k])
+    f_temp[,k] <- GModel$alpha[k] * stats::dnorm(x_temp, mean = GModel$mu[k], sd =GModel$sigma[k])
   }
 
   f_temp <- as.data.frame(f_temp)
   f_temp$main <- Matrix::rowSums(f_temp)
 
-  return(list(x=x_temp,dist=f_temp))
+  return(list(x = x_temp, dist = f_temp))
 }
 
 #' Generator of 1D mixed-normal distributions
@@ -49,22 +49,22 @@ generate_dist<-function(X, GModel, precision){
 #'
 #' @examples
 #' \dontrun{
-#' data<-generate_norm1D(1000, alpha=c(0.2,0.4,0.4), mu=c(-15,0,15), sigma=c(1,2,3))
+#' data <- generate_norm1D(1000, alpha = c(0.2, 0.4, 0.4), mu = c(-15, 0, 15), sigma = c(1, 2, 3))
 #' }
 #' @export
 generate_norm1D <- function(n, alpha, mu, sigma){
   KS <- length(mu)
   dist <- numeric(n)
-  pts.kl<-c()
+  pts.kl <- c()
   for(i in 1:n){
-    pts.kl[i] <- sample.int(KS, 1L, prob=alpha)
+    pts.kl[i] <- sample.int(KS, 1L, prob = alpha)
     dist[i] <- stats::rnorm(1, as.numeric(mu[pts.kl[i]]), as.numeric(sigma[pts.kl[i]]))
   }
 
-  idx<-order(dist,decreasing = F)
-  pts.kl<-pts.kl[idx]
-  dist<-dist[idx]
+  idx <- order(dist, decreasing = F)
+  pts.kl <- pts.kl[idx]
+  dist <- dist[idx]
 
-  res<-list(Dist=dist,Cls=pts.kl)
+  res <- list(Dist = dist, Cls = pts.kl)
   return(res)
 }

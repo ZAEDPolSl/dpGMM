@@ -10,7 +10,7 @@
 #' Applies only to binned data (Y = NULL, by default).
 #' @param eps_change Criterion for early stopping of EM (1e-7, by default) given by the following formula:
 #' \deqn{\sum{(|\alpha - \alpha_{old})|} + \frac{\sum{(\frac{|\sigma^2 - \sigma^2_{old}|}{\sigma^2})}}{length(\alpha)}}
-#' @param max_iter Maximum number of iterations of EM algorithm. By default it is \code{max_iter = 50 000}
+#' @param max_iter Maximum number of iterations of EM algorithm. By default it is \code{max_iter = 50 000}.
 #' @param SW Parameter for calculating minimum variance of each Gaussian component (0.01, by default) using the following formula:
 #' \deqn{(\frac{SW*range(x)}{no.of.components)})^2}. Lower value means smaller component variance allowed.
 #' @param IC Information criterion used to select the number of model components.
@@ -31,7 +31,7 @@
 #' @export
 EM_iter <- function(X, alpha, mu, sig, Y = NULL, eps_change = 1e-7, max_iter = 50000, SW = 0.01, IC = "BIC"){
 
-  if(is.null(Y)){Y<-matrix(1, 1, length(X))}
+  if(is.null(Y)){Y <- matrix(1, 1, length(X))}
   bin_edge_sum <- sum(Y)
 
   alpha <- c(alpha)
@@ -45,7 +45,7 @@ EM_iter <- function(X, alpha, mu, sig, Y = NULL, eps_change = 1e-7, max_iter = 5
   change <- Inf
   KS <- length(alpha)
 
-  SW <- (((max(X)-min(X))*SW)/KS)^2 #minimum variance
+  SW <- (((max(X) - min(X)) * SW)/KS)^2 #minimum variance
 
 
   while (change > eps_change && count < max_iter){
@@ -92,7 +92,7 @@ EM_iter <- function(X, alpha, mu, sig, Y = NULL, eps_change = 1e-7, max_iter = 5
   if(sum(tmp)>1){
     logL <- -Inf
   } else {
-    logL <- sum(log(px)*Y)
+    logL <- sum(log(px) * Y)
   }
   mu_est <- sort(mu)
   ind <- order(mu)
@@ -102,18 +102,18 @@ EM_iter <- function(X, alpha, mu, sig, Y = NULL, eps_change = 1e-7, max_iter = 5
   #calculating the information criterion
   if(IC == "ICL-BIC"){
     if(change != 0){
-      pk[is.nan(pk) | pk==0] = 5e-324
-      EN <- -sum(sum(pk*log(pk)))
+      pk[is.nan(pk) | pk == 0] = 5e-324
+      EN <- -sum(sum(pk * log(pk)))
     } else {
       EN <- Inf
     }
   }
 
   switch(IC,
-         "BIC" = crit_val <- -2*logL + (3*KS-1)*log(bin_edge_sum),
-         "AIC" = crit_val <- -2*logL + 2*(3*KS-1),
-         "AICc" = crit_val <- -2*logL + 2*(3*KS-1)*(bin_edge_sum/(bin_edge_sum-(3*KS-1)-1)),
-         "ICL-BIC" = crit_val <- -2*logL + 2*EN + (3*KS-1)*log(bin_edge_sum),
+         "BIC" = crit_val <- -2 * logL + (3 * KS-1) * log(bin_edge_sum),
+         "AIC" = crit_val <- -2 * logL + 2 * (3 * KS-1),
+         "AICc" = crit_val <- -2 * logL + 2 * (3 * KS-1) * (bin_edge_sum/(bin_edge_sum-(3 * KS-1)-1)),
+         "ICL-BIC" = crit_val <- -2 * logL + 2 * EN + (3 * KS-1) * log(bin_edge_sum),
          "LR" = crit_val <- NULL
   )
 

@@ -12,7 +12,7 @@
 #' @param fixed Logical value. Fit GMM for selected number of components given by KS (FALSE, by default).
 #' @param eps_change Criterion for early stopping of EM (1e-7, by default) given by the following formula:
 #' \deqn{\sum{(|\alpha - \alpha_{old})|} + \frac{\sum{(\frac{|\sigma^2 - \sigma^2_{old}|}{\sigma^2})}}{length(\alpha)}}
-#' @param max_iter Maximum number of iterations of EM algorithm. By default it is \code{max_iter = 50 000}
+#' @param max_iter Maximum number of iterations of EM algorithm. By default it is \code{max_iter = 50 000}.
 #' @param SW Parameter for calculating minimum variance of each Gaussian component (0.01, by default) using the following formula:
 #' \deqn{(\frac{SW*range(x)}{no.of.components)})^2}. Lower value means smaller component variance allowed.
 #' @param IC Information criterion used to select the number of model components.
@@ -41,7 +41,7 @@
 #' @examples
 #' \dontrun{
 #' data(example)
-#' mix_test <- runGMM(example$Dist, KS = 10, IC = "BIC", sigmas.dev = 1.5,max_iter = 1000)
+#' mix_test <- runGMM(example$Dist, KS = 10, IC = "BIC", sigmas.dev = 1.5, max_iter = 1000)
 #' mix_test$QQplot
 #'
 #' data(binned)
@@ -52,8 +52,8 @@
 #' @seealso \code{\link{gaussian_mixture_vector}}, \code{\link{EM_iter}}
 #'
 #' @export
-runGMM <- function(X, KS, Y = NULL, fixed=FALSE , eps_change = 1e-7, max_iter = 50000, SW=0.01, IC = "BIC", sigmas.dev = 2.5,
-                   plot = TRUE, col.pal="Blues", quick_stop = TRUE, signi = 0.05) {
+runGMM <- function(X, KS, Y = NULL, fixed = FALSE , eps_change = 1e-7, max_iter = 50000, SW = 0.01, IC = "BIC", sigmas.dev = 2.5,
+                   plot = TRUE, col.pal = "Blues", quick_stop = TRUE, signi = 0.05) {
   # Check part
   if (!hasArg("X")){
     stop("No data.")}
@@ -71,10 +71,10 @@ runGMM <- function(X, KS, Y = NULL, fixed=FALSE , eps_change = 1e-7, max_iter = 
 
 
   # Main GMM run
-  GModel<- gaussian_mixture_vector(X, KS, Y, fixed , eps_change, max_iter, SW, IC, quick_stop, signi)
+  GModel <- gaussian_mixture_vector(X, KS, Y, fixed , eps_change, max_iter, SW, IC, quick_stop, signi)
 
   # GMM components merging
-  if(sigmas.dev > 0 & GModel$KS>1){
+  if(sigmas.dev > 0 & GModel$KS > 1){
     IC_tmp <- GModel$IC
     logL_tmp <- GModel$logL
     GModel <- rGMMtest:::gmm_merge(GModel$model, sigmas.dev) ######################## corect to package name
@@ -83,36 +83,37 @@ runGMM <- function(X, KS, Y = NULL, fixed=FALSE , eps_change = 1e-7, max_iter = 
   }
 
   # Generating distribution from model
-  dist.plot<-generate_dist(X, GModel$model, 1e4)
+  dist.plot <- generate_dist(X, GModel$model, 1e4)
 
   # Thresholds estimation
-  if(GModel$KS>1){
-    thr <- find_thr_by_params(GModel$model,dist.plot,sigmas.dev)
-  } else {thr=NULL}
+  if(GModel$KS > 1){
+    thr <- find_thr_by_params(GModel$model, dist.plot, sigmas.dev)
+  } else {thr = NULL}
+
   # remove thresholds out of data range
-  rem<-which(thr>max(X) | thr<min(X))
-  if (length(rem)!=0){
-  thr<-thr[-rem]}
+  rem <- which(thr > max(X) | thr < min(X))
+  if (length(rem) != 0){thr <- thr[-rem]}
 
   # Clusters assignment
   clust <- matrix(1, 1, length(X))
-  for(i in 1:length(thr)){clust[X>thr[i]] <- i+1}
+  for(i in 1:length(thr)){clust[X > thr[i]] <- i+1}
 
   # Plot generating
-  pl<-plot_gmm_1D(X, dist.plot, Y, thr, pal=col.pal)
+  pl <- plot_gmm_1D(X, dist.plot, Y, thr, pal = col.pal)
 
   # QQplot
-  pl.qq<-plot_QQplot(X,GModel$model)
+  pl.qq <- plot_QQplot(X, GModel$model)
 
   # Output of function
   mix_gmm <- list(model = GModel$model, KS = nrow(GModel$model), IC = GModel$IC, logLik = GModel$logL,
-                  threshold = thr, cluster = as.vector(clust), fig=pl,QQplot=pl.qq)
+                  threshold = thr, cluster = as.vector(clust), fig = pl, QQplot = pl.qq)
   names(mix_gmm)[3] <- IC
 
   # Print the plot
   if(plot){
-    p<-mix_gmm[["fig"]]
-    print(p)}
+    p <- mix_gmm[["fig"]]
+    print(p)
+    }
 
   return(mix_gmm)
 }

@@ -9,7 +9,7 @@
 #' @param fixed Logical value. Fit GMM for selected number of components given by KS (FALSE, by default).
 #' @param eps_change Criterion for early stopping of EM (1e-7, by default) given by the following formula:
 #' \deqn{\sum{(|\alpha - \alpha_{old})|} + \frac{\sum{(\frac{|\sigma^2 - \sigma^2_{old}|}{\sigma^2})}}{length(\alpha)}}
-#' @param max_iter Maximum number of iterations of EM algorithm. By default it is \code{max_iter = 50 000}
+#' @param max_iter Maximum number of iterations of EM algorithm. By default it is \code{max_iter = 50 000}.
 #' @param SW Parameter for calculating minimum variance of each Gaussian component (0.01, by default) using the following formula:
 #' \deqn{(\frac{SW*range(x)}{no.of.components)})^2}. Lower value means smaller component variance allowed.
 #' @param IC Information criterion used to select the number of model components.
@@ -30,23 +30,23 @@
 #'
 #' @examples
 #' \dontrun{
-#' data <- generate_norm1D(1000, alpha=c(0.2,0.4,0.4), mu=c(-15,0,15), sigma=c(1,2,3))
+#' data <- generate_norm1D(1000, alpha = c(0.2,0.4,0.4), mu = c(-15,0,15), sigma = c(1,2,3))
 #' exp <- gaussian_mixture_vector(data$Dist, KS = 10, IC = "AIC", quick_stop = FALSE)
 #' }
 #'
 #' @seealso \code{\link{runGMM}} and \code{\link{generate_norm1D}}
 #'
 #' @export
-gaussian_mixture_vector <- function(X, KS, Y = NULL, fixed=FALSE , eps_change = 1e-7, max_iter = 50000, SW=0.01, IC = "BIC", quick_stop = TRUE, signi = 0.05){
+gaussian_mixture_vector <- function(X, KS, Y = NULL, fixed = FALSE , eps_change = 1e-7, max_iter = 50000, SW = 0.01, IC = "BIC", quick_stop = TRUE, signi = 0.05){
 
-  if (min(dim(as.matrix(X))) !=1){
+  if (min(dim(as.matrix(X))) != 1){
     stop("data must be 1D signal.")
   }
 
-  if(is.null(Y)){Y<-matrix(1, 1, length(X))}
+  if(is.null(Y)){Y <- matrix(1, 1, length(X))}
   bin_edge_sum <- sum(Y)
 
-  IC_list<-c("AIC","AICc","BIC", "ICL-BIC", "LR")
+  IC_list <- c("AIC", "AICc", "BIC", "ICL-BIC", "LR")
 
   N <- length(X)
   crit_vector <- matrix(NaN, KS, 1)
@@ -57,7 +57,7 @@ gaussian_mixture_vector <- function(X, KS, Y = NULL, fixed=FALSE , eps_change = 
   sigma <- list()
 
   #histogram of input data (for drawing and IC)
-  h  <- hist(X, breaks = seq(min(X), max(X), l=(min(max(20,round(sqrt(N))), 100)+1)),plot = F)
+  h  <- hist(X, breaks = seq(min(X), max(X), l = (min(max(20, round(sqrt(N))), 100)  +1)), plot = F)
   y <- h$counts
   x <- h$mids
   #decomposition for 1 component
@@ -70,7 +70,7 @@ gaussian_mixture_vector <- function(X, KS, Y = NULL, fixed=FALSE , eps_change = 
   if(IC != "LR"){crit_vector[1] <- rcpt[[5]]}
 
   Nb <- length(x)
-  aux_mx <- rGMMtest:::dyn_pr_split_w_aux(x,y) #CORRECT TO FINAL NAME OF PACKAGE !!!!!!!!!!!!!!!!!
+  aux_mx <- rGMMtest:::dyn_pr_split_w_aux(x, y) #CORRECT TO FINAL NAME OF PACKAGE !!!!!!!!!!!!!!!!!
 
   #decomposition for fixed KS number
   if (fixed){
@@ -88,8 +88,8 @@ gaussian_mixture_vector <- function(X, KS, Y = NULL, fixed=FALSE , eps_change = 
         yinwec <- y[(part_cl[kkps]):(part_cl[kkps+1]-1)]
         wwec <- yinwec/sum(yinwec)
         pp_ini[kkps] <- sum(yinwec)/sum(y)
-        mu_ini[kkps] <- sum(invec*wwec)
-        sig_ini[kkps] <- 0.5*(max(invec)-min(invec))
+        mu_ini[kkps] <- sum(invec * wwec)
+        sig_ini[kkps] <- 0.5 * (max(invec)-min(invec))
       }
 
       rcpt1<- EM_iter(X, pp_ini, mu_ini, sig_ini, Y, eps_change, max_iter, SW, IC)
@@ -134,10 +134,10 @@ gaussian_mixture_vector <- function(X, KS, Y = NULL, fixed=FALSE , eps_change = 
 
         if(IC != "LR"){crit_vector[k] <- rcpt1[[5]]}
 
-        if(quick_stop | IC == "LR"){D[k] <- -2*logL[k-1] + 2*logL[k]}
+        if(quick_stop | IC == "LR"){D[k] <- -2 * logL[k-1] + 2 * logL[k]}
 
         if(quick_stop){
-          if ((1 - pchisq(D[k],3)) > signi){stop <- 0}
+          if ((1 - pchisq(D[k], 3)) > signi){stop <- 0}
           }
 
         if(IC == "LR"){crit_vector[k] <- D[k]}
@@ -169,7 +169,7 @@ gaussian_mixture_vector <- function(X, KS, Y = NULL, fixed=FALSE , eps_change = 
 
   GModel <- data.frame(mu =  mu_est, sigma = sig_est, alpha = pp_est)
   GModel <- GModel[order(GModel$mu),]
-  res <- list(model=GModel, IC=crit_est, logL=logL_est, KS=length(pp_est))
+  res <- list(model = GModel, IC = crit_est, logL = logL_est, KS = length(pp_est))
 
 
   return(res)

@@ -6,7 +6,7 @@
 #' @param eps_change Criterion for early stopping of EM (1e-7, by default).
 #' @param max_iter Maximum number of iterations of EM algorithm. By default it is \code{max_iter = 50 000}.
 #' @param SW Regularizing coefficient for covariance.
-#' @param max_var_ratio Maximum dissimilarity between horizontal and vertical dispersion. By default it is \code{max_var_ratio = 5}
+#' @param max_var_ratio Maximum dissimilarity between horizontal and vertical dispersion. By default it is \code{max_var_ratio = 5}.
 #' @param IC Information criterion used to select the number of model components.
 #' Possible methods are "AIC","AICc", "BIC" (default), "ICL-BIC" or "LR".
 #' @param cov_type Type of covariance defined for each model component. Possible "sphere","diag" or "full" (default).
@@ -37,9 +37,9 @@ GMM_2D_opts <- list(
   cov_type = 'full',
   init_nb = 10,
   KS = 5,
-  quick_stop=FALSE,
+  quick_stop = FALSE,
   signi = 0.05,
   init_con = "rand",
-  fixed=FALSE
+  fixed = FALSE
 )
 class(GMM_2D_opts) <- "gmm2_opts"
