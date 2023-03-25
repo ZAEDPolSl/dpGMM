@@ -30,16 +30,16 @@ Function returns a \code{list} of GMM parameters for the estimated number of com
 }
 }
 \description{
-Main function to perform GMM on 2D data. Function choose the optimal number of components of a 2D mixture normal distributions by minimising the value of the information criterion.
+Main function to perform GMM on 2D data. Function choose the optimal number of components of a 2D mixture normal distributions by minimizing the value of the information criterion.
 }
 \examples{
 \dontrun{
 data(example2D)
-opts<-GMM_2D_opts
-opts$fixed<-T
-opts$KS<-3
-opts$max_iter<-5000
-res<-runGMM2D(example2D[,1:2], example2D[,3], opts, plot=T)
+opts <- GMM_2D_opts
+opts$fixed <- T
+opts$KS <- 3
+opts$max_iter <- 5000
+res <- runGMM2D(example2D[,1:2], example2D[,3], opts, plot=T)
 }
 
 

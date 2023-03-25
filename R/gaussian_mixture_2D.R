@@ -21,9 +21,9 @@
 #'
 #' @examples
 #' \dontrun{
-#' data(example2D_1)
+#' data(example2D)
 #' opts <- GMM_2D_opts
-#' exp <- gaussian_mixture_2D(example2D_1[,1:2], example2D_1[,3], opts)
+#' exp <- gaussian_mixture_2D(example2D[,1:2], example2D[,3], opts)
 #' }
 #'
 #' @seealso \code{\link{runGMM2D}}, \code{\link{GMM_2D_opts}}

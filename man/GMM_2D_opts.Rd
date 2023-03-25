@@ -17,7 +17,7 @@ GMM_2D_opts
 
 \item{SW}{Regularizing coefficient for covariance.}
 
-\item{max_var_ratio}{Maximum dissimilarity between horizontal and vertical dispersion. By default it is \code{max_var_ratio = 5}}
+\item{max_var_ratio}{Maximum dissimilarity between horizontal and vertical dispersion. By default it is \code{max_var_ratio = 5}.}
 
 \item{IC}{Information criterion used to select the number of model components.
 Possible methods are "AIC","AICc", "BIC" (default), "ICL-BIC" or "LR".}

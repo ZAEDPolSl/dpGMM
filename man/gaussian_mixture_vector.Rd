@@ -30,7 +30,7 @@ Applies only to binned data (Y = NULL, by default).}
 \item{eps_change}{Criterion for early stopping of EM (1e-7, by default) given by the following formula:
 \deqn{\sum{(|\alpha - \alpha_{old})|} + \frac{\sum{(\frac{|\sigma^2 - \sigma^2_{old}|}{\sigma^2})}}{length(\alpha)}}}
 
-\item{max_iter}{Maximum number of iterations of EM algorithm. By default it is \code{max_iter = 50 000}}
+\item{max_iter}{Maximum number of iterations of EM algorithm. By default it is \code{max_iter = 50 000}.}
 
 \item{SW}{Parameter for calculating minimum variance of each Gaussian component (0.01, by default) using the following formula:
 \deqn{(\frac{SW*range(x)}{no.of.components)})^2}. Lower value means smaller component variance allowed.}
@@ -56,7 +56,7 @@ Function to estimate number of components of a mixture normal distributions, min
 }
 \examples{
 \dontrun{
-data <- generate_norm1D(1000, alpha=c(0.2,0.4,0.4), mu=c(-15,0,15), sigma=c(1,2,3))
+data <- generate_norm1D(1000, alpha = c(0.2,0.4,0.4), mu = c(-15,0,15), sigma = c(1,2,3))
 exp <- gaussian_mixture_vector(data$Dist, KS = 10, IC = "AIC", quick_stop = FALSE)
 }
 

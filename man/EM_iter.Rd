@@ -31,7 +31,7 @@ Applies only to binned data (Y = NULL, by default).}
 \item{eps_change}{Criterion for early stopping of EM (1e-7, by default) given by the following formula:
 \deqn{\sum{(|\alpha - \alpha_{old})|} + \frac{\sum{(\frac{|\sigma^2 - \sigma^2_{old}|}{\sigma^2})}}{length(\alpha)}}}
 
-\item{max_iter}{Maximum number of iterations of EM algorithm. By default it is \code{max_iter = 50 000}}
+\item{max_iter}{Maximum number of iterations of EM algorithm. By default it is \code{max_iter = 50 000}.}
 
 \item{SW}{Parameter for calculating minimum variance of each Gaussian component (0.01, by default) using the following formula:
 \deqn{(\frac{SW*range(x)}{no.of.components)})^2}. Lower value means smaller component variance allowed.}

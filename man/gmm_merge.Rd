@@ -8,7 +8,7 @@ gmm_merge(GModel, sigmas.dev = 2.5)
 }
 \arguments{
 \item{GModel}{A \code{data.frame} of model component parameters - the rows are, in turn:  mean values (mu), standard deviations (sigma)
-and weights (alpha) and each column corresponds to one component. Output of \code{EM_iter}}
+and weights (alpha) and each column corresponds to one component. Output of \code{EM_iter}.}
 
 \item{sigmas.dev}{Parameter used to define close GMM components that needs to be merged. For each component, standard deviation is multiplied by \code{sigmas.dev} to estimate the distance from component mean.
 All other components within this distance are merged. By default it is \code{sigmas.dev = 2.5}. When \code{sigmas.dev = 0} no components are merged.}

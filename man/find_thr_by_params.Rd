@@ -26,11 +26,11 @@ Function to calculate cutoffs between each component of mixture normal distribut
 \examples{
 \dontrun{
 data(example)
-GModel<-data.frame(alpha=c(0.45,0.5,0.05),
-                  mu=c(-14,-2,5),
-                  sigma=c(2,4,1.5))
-dist.plot<-generate_dist(example$Dist, GModel, 1e4)
-thr <- find_thr_by_params(GModel,dist.plot)
+GModel <- data.frame(alpha = c(0.45, 0.5, 0.05),
+                    mu = c(-14, -2, 5),
+                    sigma = c(2, 4, 1.5))
+dist.plot <- generate_dist(example$Dist, GModel, 1e4)
+thr <- find_thr_by_params(GModel, dist.plot)
 }
 
 }

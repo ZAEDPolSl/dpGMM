@@ -7,18 +7,18 @@
 generate_norm2D(n, alpha, mu, cov)
 }
 \arguments{
-\item{n}{Number of points to generate}
+\item{n}{Number of points to generate.}
 
-\item{alpha}{Vector of alphas (weights) for each distribution}
+\item{alpha}{Vector of alphas (weights) for each distribution.}
 
-\item{mu}{Matrix of means for each distribution}
+\item{mu}{Matrix of means for each distribution.}
 
 \item{cov}{Vector of covariances for each distribution.}
 }
 \value{
 List with following elements:\describe{
-   \item{Dist}{Numeric marix with generated data}
-   \item{Cls}{Numeric vector with classification of each point to particular distribution}
+   \item{Dist}{Numeric marix with generated data.}
+   \item{Cls}{Numeric vector with classification of each point to particular distribution.}
 }
 }
 \description{
@@ -26,6 +26,6 @@ Generator of 2D mixed normal distribution with given model parameters for certai
 }
 \examples{
 \dontrun{
-data<-generate_norm2D(1500, alpha=c(0.2,0.4,0.4), mu=matrix(c(1,2,1,3,2,2),nrow=2),cov =c(0.01,0.02,0.03))
+data <- generate_norm2D(1500, alpha = c(0.2, 0.4, 0.4), mu = matrix(c(1, 2, 1, 3, 2, 2), nrow = 2), cov = c(0.01, 0.02, 0.03))
 }
 }

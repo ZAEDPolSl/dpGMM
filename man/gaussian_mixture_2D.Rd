@@ -30,9 +30,9 @@ Function to choose the optimal number of components of a 2D mixture normal distr
 }
 \examples{
 \dontrun{
-data(example2D_1)
-opts<-GMM_2D_opts
-exp <- gaussian_mixture_2D(example2D_1[,1:2], example2D_1[,3], opts)
+data(example2D)
+opts <- GMM_2D_opts
+exp <- gaussian_mixture_2D(example2D[,1:2], example2D[,3], opts)
 }
 
 }

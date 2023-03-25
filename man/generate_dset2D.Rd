@@ -24,7 +24,7 @@ generate_dset2D(
 \item{cov_range}{Range of means of components of generated distribution. Default \code{1:5}.}
 }
 \value{
-List with 2D GMM distributions where each list contains elements of \code{\link{generate_norm2D}}
+List with 2D GMM distributions where each list contains elements of \code{\link{generate_norm2D}}.
 }
 \description{
 Generator of multiple 2D mixed normal distribution with given model parameters ranges.
