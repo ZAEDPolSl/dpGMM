@@ -4,17 +4,7 @@
 \alias{EM_iter}
 \title{Expectation–maximization algorithm for 1D data}
 \usage{
-EM_iter(
-  X,
-  alpha,
-  mu,
-  sig,
-  Y = NULL,
-  eps_change = 1e-07,
-  max_iter = 50000,
-  SW = 0.01,
-  IC = "BIC"
-)
+EM_iter(X, alpha, mu, sig, Y = NULL, opts = GMM_1D_opts)
 }
 \arguments{
 \item{X}{Vector of 1D data for GMM decomposition.}
@@ -28,16 +18,7 @@ EM_iter(
 \item{Y}{Vector of counts, with the same length as "X".
 Applies only to binned data (Y = NULL, by default).}
 
-\item{eps_change}{Criterion for early stopping of EM (1e-7, by default) given by the following formula:
-\deqn{\sum{(|\alpha - \alpha_{old})|} + \frac{\sum{(\frac{|\sigma^2 - \sigma^2_{old}|}{\sigma^2})}}{length(\alpha)}}}
-
-\item{max_iter}{Maximum number of iterations of EM algorithm. By default it is \code{max_iter = 50 000}.}
-
-\item{SW}{Parameter for calculating minimum variance of each Gaussian component (0.01, by default) using the following formula:
-\deqn{(\frac{SW*range(x)}{no.of.components)})^2}. Lower value means smaller component variance allowed.}
-
-\item{IC}{Information criterion used to select the number of model components.
-Possible methods are "AIC","AICc", "BIC" (default), "ICL-BIC" or "LR".}
+\item{opts}{Parameters of run saved in \code{\link{GMM_1D_opts}} variable.}
 }
 \value{
 Returns a \code{list} of GMM parameter values that correspond to the local extremes for each component.\describe{

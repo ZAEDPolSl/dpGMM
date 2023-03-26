@@ -4,53 +4,21 @@
 \alias{runGMM}
 \title{Function to fit Gaussian Mixture Model (GMM) to 1D data}
 \usage{
-runGMM(
-  X,
-  KS,
-  Y = NULL,
-  fixed = FALSE,
-  eps_change = 1e-07,
-  max_iter = 50000,
-  SW = 0.01,
-  IC = "BIC",
-  sigmas.dev = 2.5,
-  plot = TRUE,
-  col.pal = "Blues",
-  quick_stop = TRUE,
-  signi = 0.05
-)
+runGMM(X, KS, opts = GMM_1D_opts, Y = NULL, plot = TRUE, col.pal = "Blues")
 }
 \arguments{
 \item{X}{Vector of 1D data for GMM decomposition.}
 
 \item{KS}{Maximum number of components of the model.}
 
+\item{opts}{Parameters of run saved in \code{\link{GMM_1D_opts}} variable.}
+
 \item{Y}{Vector of counts, with the same length as "X".
 Applies only to binned data (Y = NULL, by default).}
-
-\item{fixed}{Logical value. Fit GMM for selected number of components given by KS (FALSE, by default).}
-
-\item{eps_change}{Criterion for early stopping of EM (1e-7, by default) given by the following formula:
-\deqn{\sum{(|\alpha - \alpha_{old})|} + \frac{\sum{(\frac{|\sigma^2 - \sigma^2_{old}|}{\sigma^2})}}{length(\alpha)}}}
-
-\item{max_iter}{Maximum number of iterations of EM algorithm. By default it is \code{max_iter = 50 000}.}
-
-\item{SW}{Parameter for calculating minimum variance of each Gaussian component (0.01, by default) using the following formula:
-\deqn{(\frac{SW*range(x)}{no.of.components)})^2}. Lower value means smaller component variance allowed.}
-
-\item{IC}{Information criterion used to select the number of model components.
-Possible methods are "AIC","AICc", "BIC" (default), "ICL-BIC" or "LR".}
-
-\item{sigmas.dev}{Parameter used to define close GMM components that needs to be merged. For each component, standard deviation is multiplied by \code{sigmas.dev} to estimate the distance from component mean.
-All other components within this distance are merged. By default it is \code{sigmas.dev = 2.5}. When \code{sigmas.dev = 0} no components are merged.}
 
 \item{plot}{Logical value. If TRUE (default), the figure visualizing GMM decomposition will be displayed.}
 
 \item{col.pal}{Name of the RColorBrewer palette used in the figure. By default \code{"Blues"}.}
-
-\item{quick_stop}{Logical value. Determines if stop searching of the number of components earlier based on the Likelihood Ratio Test. Used to speed up the function (TRUE, by default).}
-
-\item{signi}{Significance level set for Likelihood Ratio Test (0.05, by default).}
 }
 \value{
 Function returns a \code{list} which contains: \describe{
@@ -74,11 +42,20 @@ Function allows to estimate the number of GMM components using five different in
 \examples{
 \dontrun{
 data(example)
-mix_test <- runGMM(example$Dist, KS = 10, IC = "BIC", sigmas.dev = 1.5, max_iter = 1000)
+
+custom.settings <- GMM_1D_opts
+custom.settings$sigmas.dev <- 1.5
+custom.settings$max_iter <- 1000
+
+mix_test <- runGMM(example$Dist, KS = 10, opts = custom.settings)
 mix_test$QQplot
 
+#example for binned data
 data(binned)
-binned_test <- runGMM(X = binned$V1, Y = binned$V2, KS = 40, col.pal = "Dark2", plot = F, quick_stop = T)
+custom.settings <- GMM_1D_opts
+custom.settings$quick_stop <- TRUE
+
+binned_test <- runGMM(X = binned$V1, KS = 40, opts = custom.settings, Y = binned$V2, col.pal = "Dark2", plot = F)
 binned_test$fig
 }
 

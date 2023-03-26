@@ -8,13 +8,7 @@
 #' @param sig Vector containing the standard deviation (sigma) for each component in the statistical model.
 #' @param Y Vector of counts, with the same length as "X".
 #' Applies only to binned data (Y = NULL, by default).
-#' @param eps_change Criterion for early stopping of EM (1e-7, by default) given by the following formula:
-#' \deqn{\sum{(|\alpha - \alpha_{old})|} + \frac{\sum{(\frac{|\sigma^2 - \sigma^2_{old}|}{\sigma^2})}}{length(\alpha)}}
-#' @param max_iter Maximum number of iterations of EM algorithm. By default it is \code{max_iter = 50 000}.
-#' @param SW Parameter for calculating minimum variance of each Gaussian component (0.01, by default) using the following formula:
-#' \deqn{(\frac{SW*range(x)}{no.of.components)})^2}. Lower value means smaller component variance allowed.
-#' @param IC Information criterion used to select the number of model components.
-#' Possible methods are "AIC","AICc", "BIC" (default), "ICL-BIC" or "LR".
+#' @param opts Parameters of run saved in \code{\link{GMM_1D_opts}} variable.
 #'
 #' @return Returns a \code{list} of GMM parameter values that correspond to the local extremes for each component.\describe{
 #'  \item{alpha}{Vector of optimal alpha (weights) values.}
@@ -29,7 +23,8 @@
 #' @seealso \code{\link{runGMM}} and \code{\link{gaussian_mixture_vector}}
 #'
 #' @export
-EM_iter <- function(X, alpha, mu, sig, Y = NULL, eps_change = 1e-7, max_iter = 50000, SW = 0.01, IC = "BIC"){
+# EM_iter <- function(X, alpha, mu, sig, Y = NULL, eps_change = 1e-7, max_iter = 50000, SW = 0.01, IC = "BIC"){
+EM_iter <- function(X, alpha, mu, sig, Y = NULL, opts = GMM_1D_opts){
 
   if(is.null(Y)){Y <- matrix(1, 1, length(X))}
   bin_edge_sum <- sum(Y)
@@ -45,10 +40,10 @@ EM_iter <- function(X, alpha, mu, sig, Y = NULL, eps_change = 1e-7, max_iter = 5
   change <- Inf
   KS <- length(alpha)
 
-  SW <- (((max(X) - min(X)) * SW)/KS)^2 #minimum variance
+  opts$SW <- (((max(X) - min(X)) * opts$SW)/KS)^2 #minimum variance
 
 
-  while (change > eps_change && count < max_iter){
+  while (change > opts$eps_change && count < opts$max_iter){
     old_alpha <- alpha
     old_sig2 <- sig2
     f <- matrix(0, KS, N)
@@ -60,7 +55,7 @@ EM_iter <- function(X, alpha, mu, sig, Y = NULL, eps_change = 1e-7, max_iter = 5
       change <- 0
     } else {
       if (sum(tmp)){
-        sig[tmp] <- SW
+        sig[tmp] <- opts$SW
       }
 
       for(a in 1:KS){
@@ -79,7 +74,7 @@ EM_iter <- function(X, alpha, mu, sig, Y = NULL, eps_change = 1e-7, max_iter = 5
         denom <- sum(pk)
         mu[a] <- sum((pk*X)/denom)
         sig2num <- sum(pk*((X-mu[a])^2))
-        sig2[a] <- max(SW, sig2num/denom)
+        sig2[a] <- max(opts$SW, sig2num/denom)
         alpha[a] <- denom/bin_edge_sum
       }
       change <- sum(abs(alpha-old_alpha)) + sum(((abs(sig2 - old_sig2))/sig2))/(length(alpha))
@@ -100,7 +95,7 @@ EM_iter <- function(X, alpha, mu, sig, Y = NULL, eps_change = 1e-7, max_iter = 5
   pp_est <- alpha[ind]
 
   #calculating the information criterion
-  if(IC == "ICL-BIC"){
+  if(opts$IC == "ICL-BIC"){
     if(change != 0){
       pk[is.nan(pk) | pk == 0] = 5e-324
       EN <- -sum(sum(pk * log(pk)))
@@ -109,7 +104,7 @@ EM_iter <- function(X, alpha, mu, sig, Y = NULL, eps_change = 1e-7, max_iter = 5
     }
   }
 
-  switch(IC,
+  switch(opts$IC,
          "BIC" = crit_val <- -2 * logL + (3 * KS-1) * log(bin_edge_sum),
          "AIC" = crit_val <- -2 * logL + 2 * (3 * KS-1),
          "AICc" = crit_val <- -2 * logL + 2 * (3 * KS-1) * (bin_edge_sum/(bin_edge_sum-(3 * KS-1)-1)),

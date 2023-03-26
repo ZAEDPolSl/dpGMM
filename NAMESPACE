@@ -2,6 +2,7 @@
 
 export(EM_iter)
 export(EM_iter_2D)
+export(GMM_1D_opts)
 export(GMM_2D_opts)
 export(find_class_2D)
 export(find_thr_by_dist)
