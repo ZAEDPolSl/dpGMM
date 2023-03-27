@@ -4,7 +4,7 @@
 \alias{runGMM2D}
 \title{Function to fit Gaussian Mixture Model (GMM) to 2D data}
 \usage{
-runGMM2D(X, Y = NULL, opts, plot = FALSE)
+runGMM2D(X, Y = NULL, opts = NULL)
 }
 \arguments{
 \item{X}{Matrix of 2D data to decompose by GMM.}
@@ -13,8 +13,6 @@ runGMM2D(X, Y = NULL, opts, plot = FALSE)
 Applies only to binned data (Y = NULL, by default).}
 
 \item{opts}{Parameters of run stored in \code{\link{GMM_2D_opts}} variable.}
-
-\item{plot}{Logical value. If TRUE, the GMM decomposition figure will be displayed (FALSE, by default).}
 }
 \value{
 Function returns a \code{list} of GMM parameters for the estimated number of components: \describe{
@@ -35,11 +33,13 @@ Main function to perform GMM on 2D data. Function choose the optimal number of c
 \examples{
 \dontrun{
 data(example2D)
-opts <- GMM_2D_opts
-opts$fixed <- T
-opts$KS <- 3
-opts$max_iter <- 5000
-res <- runGMM2D(example2D[,1:2], example2D[,3], opts, plot=T)
+custom.settings <- GMM_2D_opts
+custom.settings$fixed <- TRUE
+custom.settings$KS <- 3
+custom.settings$max_iter <- 5000
+custom.settings$plot <- TRUE
+
+res <- runGMM2D(example2D[,1:2], example2D[,3], opts = custom.settings)
 }
 
 

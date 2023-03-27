@@ -6,7 +6,6 @@
 #' @param Y Vector of counts, with the same length as "X".
 #' Applies only to binned data (Y = NULL, by default).
 #' @param opts Parameters of run stored in \code{\link{GMM_2D_opts}} variable.
-#' @param plot Logical value. If TRUE, the GMM decomposition figure will be displayed (FALSE, by default).
 #'
 #' @returns Function returns a \code{list} of GMM parameters for the estimated number of components: \describe{
 #'  \item{model}{\describe{
@@ -23,16 +22,20 @@
 #' @examples
 #' \dontrun{
 #' data(example2D)
-#' opts <- GMM_2D_opts
-#' opts$fixed <- T
-#' opts$KS <- 3
-#' opts$max_iter <- 5000
-#' res <- runGMM2D(example2D[,1:2], example2D[,3], opts, plot=T)
+#' custom.settings <- GMM_2D_opts
+#' custom.settings$fixed <- TRUE
+#' custom.settings$KS <- 3
+#' custom.settings$max_iter <- 5000
+#' custom.settings$plot <- TRUE
+#'
+#' res <- runGMM2D(example2D[,1:2], example2D[,3], opts = custom.settings)
 #' }
 #'
 #'
 #' @export
-runGMM2D <- function(X, Y = NULL, opts, plot = FALSE){
+runGMM2D <- function(X, Y = NULL, opts = NULL){
+
+  if(is.null(opts)){opts = rGMMtest::GMM_2D_opts}
 
   # Check part
   if (!hasArg("X")){
@@ -58,7 +61,7 @@ runGMM2D <- function(X, Y = NULL, opts, plot = FALSE){
 
 
   # Print the plot
-  if(plot){
+  if(opts$plot){
     print(pl)}
 
   return(mix_gmm)

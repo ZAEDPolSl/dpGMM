@@ -5,12 +5,14 @@
 \alias{GMM_1D_opts}
 \title{Default configuration for 1D Gaussian Mixture decomposition}
 \format{
-An object of class \code{gmm2_opts} of length 8.
+An object of class \code{gmm2_opts} of length 11.
 }
 \usage{
 GMM_1D_opts
 }
 \arguments{
+\item{KS}{Maximum number of components of the model.}
+
 \item{eps_change}{Criterion for early stopping of EM (1e-7, by default) given by the following formula:
 \deqn{\sum{(|\alpha - \alpha_{old})|} + \frac{\sum{(\frac{|\sigma^2 - \sigma^2_{old}|}{\sigma^2})}}{length(\alpha)}}}
 
@@ -30,6 +32,10 @@ All other components within this distance are merged. By default it is \code{sig
 \item{signi}{Significance level set for Likelihood Ratio Test (0.05, by default).}
 
 \item{fixed}{Logical value. Fit GMM for selected number of components given by KS (FALSE, by default).}
+
+\item{plot}{Logical value. If TRUE (default), the figure visualizing GMM decomposition will be displayed.}
+
+\item{col.pal}{Name of the RColorBrewer palette used in the figure. By default \code{"Blues"}.}
 }
 \description{
 A list with parameters customizing a GMM for 1D and binned data. Each component of the

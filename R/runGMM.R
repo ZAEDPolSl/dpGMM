@@ -6,12 +6,9 @@
 #'
 #'
 #' @param X Vector of 1D data for GMM decomposition.
-#' @param KS Maximum number of components of the model.
-#' @param opts Parameters of run saved in \code{\link{GMM_1D_opts}} variable.
 #' @param Y Vector of counts, with the same length as "X".
 #' Applies only to binned data (Y = NULL, by default).
-#' @param plot Logical value. If TRUE (default), the figure visualizing GMM decomposition will be displayed.
-#' @param col.pal Name of the RColorBrewer palette used in the figure. By default \code{"Blues"}.
+#' @param opts Parameters of run saved in \code{\link{GMM_1D_opts}} variable.
 #'
 #' @returns Function returns a \code{list} which contains: \describe{
 #'  \item{model}{A \code{list} of model component parameters - mean values (mu), standard deviations (sigma)
@@ -34,33 +31,38 @@
 #' custom.settings <- GMM_1D_opts
 #' custom.settings$sigmas.dev <- 1.5
 #' custom.settings$max_iter <- 1000
+#' custom.settings$KS <- 10
 #'
-#' mix_test <- runGMM(example$Dist, KS = 10, opts = custom.settings)
+#' mix_test <- runGMM(example$Dist, opts = custom.settings)
 #' mix_test$QQplot
 #'
 #' #example for binned data
 #' data(binned)
+#'
 #' custom.settings <- GMM_1D_opts
 #' custom.settings$quick_stop <- TRUE
+#' custom.settings$KS <- 40
+#' custom.settings$col.pal <- "Dark2"
+#' custom.settings$plot <- FALSE
 #'
-#' binned_test <- runGMM(X = binned$V1, KS = 40, opts = custom.settings, Y = binned$V2, col.pal = "Dark2", plot = F)
+#' binned_test <- runGMM(X = binned$V1, Y = binned$V2, opts = custom.settings)
 #' binned_test$fig
 #' }
 #'
 #' @seealso \code{\link{gaussian_mixture_vector}}, \code{\link{EM_iter}}
 #'
 #' @export
-# runGMM <- function(X, KS, Y = NULL, fixed = FALSE , eps_change = 1e-7, max_iter = 50000, SW = 0.01, IC = "BIC", sigmas.dev = 2.5,
-                   # plot = TRUE, col.pal = "Blues", quick_stop = TRUE, signi = 0.05) {
-runGMM <- function(X, KS, opts = GMM_1D_opts, Y = NULL, plot = TRUE, col.pal = "Blues"){
+runGMM <- function(X, Y = NULL, opts = NULL){
   # Check part
+  if (is.null(opts)){opts <- rGMMtest::GMM_1D_opts}
+
   if (!hasArg("X")){
     stop("No data.")}
 
   if (length(X) < 2){
     stop("Not enough data.")}
 
-  if (KS < 2){
+  if (opts$KS < 2){
     stop("KS (no of components) must be larger than 1.")}
 
   IC_list <- c("AIC","AICc", "BIC", "ICL-BIC", "LR")
@@ -70,24 +72,23 @@ runGMM <- function(X, KS, opts = GMM_1D_opts, Y = NULL, plot = TRUE, col.pal = "
 
 
   # Main GMM run
-  # GModel <- gaussian_mixture_vector(X, KS, Y, fixed , eps_change, max_iter, SW, IC, quick_stop, signi)
-  GModel <- gaussian_mixture_vector(X, KS, opts, Y)
+  GModel <- gaussian_mixture_vector(X, Y, opts)
 
   # GMM components merging
   if(opts$sigmas.dev > 0 & GModel$KS > 1){
     IC_tmp <- GModel$IC
     logL_tmp <- GModel$logL
-    GModel <- rGMMtest:::gmm_merge(GModel$model, opts$sigmas.dev) ######################## corect to package name
+    GModel <- rGMMtest:::gmm_merge(GModel$model$alpha, GModel$model$mu, GModel$model$sigma, opts$sigmas.dev) ######################## corect to package name
     GModel$IC <- IC_tmp
     GModel$logL <- logL_tmp
   }
 
   # Generating distribution from model
-  dist.plot <- generate_dist(X, GModel$model, 1e4)
+  dist.plot <- generate_dist(X, GModel$model$alpha, GModel$model$mu, GModel$model$sigma, 1e4)
 
   # Thresholds estimation
   if(GModel$KS > 1){
-    thr <- find_thr_by_params(GModel$model, dist.plot, opts$sigmas.dev)
+    thr <- find_thr_by_params(GModel$model$alpha, GModel$model$mu, GModel$model$sigma, dist.plot, opts$sigmas.dev)
   } else {thr = NULL}
 
   # remove thresholds out of data range
@@ -99,10 +100,10 @@ runGMM <- function(X, KS, opts = GMM_1D_opts, Y = NULL, plot = TRUE, col.pal = "
   for(i in 1:length(thr)){clust[X > thr[i]] <- i+1}
 
   # Plot generating
-  pl <- plot_gmm_1D(X, dist.plot, Y, thr, pal = col.pal)
+  pl <- plot_gmm_1D(X, dist.plot, Y, thr, pal = opts$col.pal)
 
   # QQplot
-  pl.qq <- plot_QQplot(X, GModel$model)
+  pl.qq <- plot_QQplot(X, GModel$model$alpha, GModel$model$mu, GModel$model$sigma)
 
   # Output of function
   mix_gmm <- list(model = GModel$model, KS = nrow(GModel$model), IC = GModel$IC, logLik = GModel$logL,
@@ -110,7 +111,7 @@ runGMM <- function(X, KS, opts = GMM_1D_opts, Y = NULL, plot = TRUE, col.pal = "
   names(mix_gmm)[3] <- opts$IC
 
   # Print the plot
-  if(plot){
+  if(opts$plot){
     p <- mix_gmm[["fig"]]
     print(p)
     }

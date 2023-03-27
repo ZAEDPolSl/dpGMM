@@ -5,7 +5,7 @@
 \alias{GMM_2D_opts}
 \title{Default configuration for 2D Gaussian Mixture decomposition}
 \format{
-An object of class \code{gmm2_opts} of length 12.
+An object of class \code{gmm2_opts} of length 13.
 }
 \usage{
 GMM_2D_opts
@@ -35,6 +35,8 @@ Possible methods are "AIC","AICc", "BIC" (default), "ICL-BIC" or "LR".}
 \item{init_con}{Type of initial conditions. Could be "rand" (default),"DP" or "diag".}
 
 \item{fixed}{Logical value. Fit GMM for selected number of components given by KS (FALSE, by default).}
+
+\item{plot}{Logical value. If TRUE, the GMM decomposition figure will be displayed (FALSE, by default).}
 }
 \description{
 A list with parameters customizing a GMM_2D. Each component of the

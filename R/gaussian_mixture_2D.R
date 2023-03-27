@@ -22,14 +22,16 @@
 #' @examples
 #' \dontrun{
 #' data(example2D)
-#' opts <- GMM_2D_opts
-#' exp <- gaussian_mixture_2D(example2D[,1:2], example2D[,3], opts)
+#' custom.settings <- GMM_2D_opts
+#' exp <- gaussian_mixture_2D(example2D[,1:2], example2D[,3], opts = custom.settings)
 #' }
 #'
 #' @seealso \code{\link{runGMM2D}}, \code{\link{GMM_2D_opts}}
 #'
 #' @export
-gaussian_mixture_2D <- function(X, Y = NULL, opts){
+gaussian_mixture_2D <- function(X, Y = NULL, opts = NULL){
+
+  if(is.null(opts)){opts <- rGMMtest::GMM_2D_opts}
 
   if (dim(X)[1] == 2){
     X <- t(X)

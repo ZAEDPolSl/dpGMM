@@ -4,7 +4,7 @@
 \alias{gaussian_mixture_2D}
 \title{Gaussian mixture decomposition for 2D data}
 \usage{
-gaussian_mixture_2D(X, Y = NULL, opts)
+gaussian_mixture_2D(X, Y = NULL, opts = NULL)
 }
 \arguments{
 \item{X}{Matrix of 2D data to decompose by GMM.}
@@ -31,8 +31,8 @@ Function to choose the optimal number of components of a 2D mixture normal distr
 \examples{
 \dontrun{
 data(example2D)
-opts <- GMM_2D_opts
-exp <- gaussian_mixture_2D(example2D[,1:2], example2D[,3], opts)
+custom.settings <- GMM_2D_opts
+exp <- gaussian_mixture_2D(example2D[,1:2], example2D[,3], opts = custom.settings)
 }
 
 }

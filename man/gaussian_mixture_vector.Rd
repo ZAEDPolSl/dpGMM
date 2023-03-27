@@ -4,17 +4,15 @@
 \alias{gaussian_mixture_vector}
 \title{Gaussian mixture decomposition for 1D data}
 \usage{
-gaussian_mixture_vector(X, KS, opts = GMM_1D_opts, Y = NULL)
+gaussian_mixture_vector(X, Y = NULL, opts = NULL)
 }
 \arguments{
 \item{X}{Vector of 1D data for GMM decomposition.}
 
-\item{KS}{Maximum number of components of the model.}
-
-\item{opts}{Parameters of run saved in \code{\link{GMM_1D_opts}} variable.}
-
 \item{Y}{Vector of counts, with the same length as "X".
 Applies only to binned data (Y = NULL, by default).}
+
+\item{opts}{Parameters of run saved in \code{\link{GMM_1D_opts}} variable.}
 }
 \value{
 Function returns a \code{list} of GMM parameters for the estimated number of components: \describe{
@@ -34,8 +32,9 @@ data <- generate_norm1D(1000, alpha = c(0.2,0.4,0.4), mu = c(-15,0,15), sigma = 
 
 custom.settings <- GMM_1D_opts
 custom.settings$IC <- "AIC"
+custom.settings$KS <- 10
 
-exp <- gaussian_mixture_vector(data$Dist, KS = 10, opts = custom.settings)
+exp <- gaussian_mixture_vector(data$Dist, opts = custom.settings)
 }
 
 }

@@ -4,7 +4,7 @@
 \alias{EM_iter}
 \title{Expectation–maximization algorithm for 1D data}
 \usage{
-EM_iter(X, alpha, mu, sig, Y = NULL, opts = GMM_1D_opts)
+EM_iter(X, alpha, mu, sig, Y = NULL, opts = NULL)
 }
 \arguments{
 \item{X}{Vector of 1D data for GMM decomposition.}

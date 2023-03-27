@@ -2,8 +2,9 @@
 #'
 #' Function merges distributions of overlapping components at distances defined in the argument \code{sigmas.dev}.
 #'
-#' @param GModel A \code{data.frame} of model component parameters - the rows are, in turn:  mean values (mu), standard deviations (sigma)
-#'  and weights (alpha) and each column corresponds to one component. Output of \code{EM_iter}.
+#' @param alpha Vector of alphas (weights) for each distribution.
+#' @param mu Vector of means for each distribution.
+#' @param sigma Vector of  sigmas for each distribution.
 #' @param sigmas.dev Parameter used to define close GMM components that needs to be merged. For each component, standard deviation is multiplied by \code{sigmas.dev} to estimate the distance from component mean.
 #' All other components within this distance are merged. By default it is \code{sigmas.dev = 2.5}. When \code{sigmas.dev = 0} no components are merged.
 #'
@@ -15,7 +16,11 @@
 #' @keywords internal
 #'
 #' @seealso \code{\link{runGMM}}
-gmm_merge <- function(GModel, sigmas.dev = 2.5){
+gmm_merge <- function(alpha, mu, sigma, sigmas.dev = 2.5){
+
+  GModel <- data.frame(alpha = alpha,
+                       mu = mu,
+                       sigma = sigma)
 
   KS <- length(GModel$mu) #number of components
 

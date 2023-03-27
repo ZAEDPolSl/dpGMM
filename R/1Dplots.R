@@ -20,11 +20,13 @@
 #' @examples
 #' \dontrun{
 #' data(example)
-#' GModel <- data.frame(alpha = c(0.45, 0.5, 0.05),
-#'                      mu = c(-14, -2, 5),
-#'                      sigma = c(2, 4, 1.5))
-#' dist.plot <- generate_dist(example$Dist, GModel, 1e4)
-#' thr <- find_thr_by_params(GModel, dist.plot)
+#'
+#' alpha <- c(0.45, 0.5, 0.05)
+#' mu <- c(-14, -2, 5)
+#' sigma <- c(2, 4, 1.5)
+#'
+#' dist.plot <- generate_dist(example$Dist, alpha, mu, sigma, 1e4)
+#' thr <- find_thr_by_params(alpha, mu, sigma, dist.plot)
 #' plot_gmm_1D(example$Dist, dist.plot, Y = NULL, threshold = thr, pal="Dark2")
 #' }
 #'
@@ -94,16 +96,23 @@ plot_gmm_1D <- function(X, dist, Y = NULL, threshold = NA, pal = "Blues"){
 #' @examples
 #' \dontrun{
 #' data(example)
-#' GModel <- data.frame(alpha = c(0.45, 0.5, 0.05),
-#'                      mu = c(-14, -2, 5),
-#'                      sigma = c(2, 4, 1.5))
-#' plot_QQplot(example$Dist, GModel)
+#'
+#' alpha <- c(0.45, 0.5, 0.05)
+#' mu <- c(-14, -2, 5)
+#' sigma <- c(2, 4, 1.5)
+#'
+#' plot_QQplot(example$Dist, alpha, mu, sigma)
 #' }
 #'
 #' @seealso \code{\link{runGMM}}
 #'
 #' @export
-plot_QQplot <- function(X,GModel){
+plot_QQplot <- function(X, alpha, mu, sigma){
+
+  GModel <- data.frame(alpha = alpha,
+                       mu = mu,
+                       sigma = sigma)
+
   tor <- generate_norm1D(length(X), GModel$alpha, GModel$mu, GModel$sigma)
   quants <- stats::qqplot(X, tor$Dist, plot.it = F)
   tmp <- data.frame(data = quants$x, theor = quants$y)

@@ -4,7 +4,7 @@
 \alias{plot_QQplot}
 \title{QQplot of GMM decomposition for 1D data}
 \usage{
-plot_QQplot(X, GModel)
+plot_QQplot(X, alpha, mu, sigma)
 }
 \arguments{
 \item{X}{Vector of 1D data for GMM decomposition.}
@@ -18,10 +18,12 @@ This plot is also return as regular output of \code{\link{runGMM}}.
 \examples{
 \dontrun{
 data(example)
-GModel <- data.frame(alpha = c(0.45, 0.5, 0.05),
-                     mu = c(-14, -2, 5),
-                     sigma = c(2, 4, 1.5))
-plot_QQplot(example$Dist, GModel)
+
+alpha <- c(0.45, 0.5, 0.05)
+mu <- c(-14, -2, 5)
+sigma <- c(2, 4, 1.5)
+
+plot_QQplot(example$Dist, alpha, mu, sigma)
 }
 
 }

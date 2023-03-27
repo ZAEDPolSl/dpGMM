@@ -3,7 +3,9 @@
 #' Function to generate PDF of GMM distributions and its cumulative results with high lincespacing.
 #'
 #' @param X Vector of 1D data.
-#' @param GModel \code{data.frame} of GMM parameters i.e GModel$alpha, GModel$mu, GModel$sigma (correct \code{colnames} are obligatory).
+#' @param alpha Vector of alphas (weights) for each distribution.
+#' @param mu Vector of means for each distribution.
+#' @param sigma Vector of  sigmas for each distribution.
 #' @param precision Precision of point linespacing.
 #'
 #' @importFrom stats dnorm
@@ -18,9 +20,15 @@
 #'
 #' @seealso \code{\link{runGMM}} and \code{\link{generate_norm1D}}
 #' @export
-generate_dist <- function(X, GModel, precision){
+generate_dist <- function(X, alpha, mu, sigma, precision){
+
+  GModel <- data.frame(alpha = alpha,
+                       mu = mu,
+                       sigma = sigma)
+
   x_temp <- pracma::linspace(min(X), max(X), precision)
   f_temp <- matrix(0, precision, nrow(GModel))
+
   for(k in 1:nrow(GModel)){
     f_temp[,k] <- GModel$alpha[k] * stats::dnorm(x_temp, mean = GModel$mu[k], sd =GModel$sigma[k])
   }

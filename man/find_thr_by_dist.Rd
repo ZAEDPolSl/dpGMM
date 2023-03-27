@@ -4,7 +4,7 @@
 \alias{find_thr_by_dist}
 \title{Thresholds estimations for 1D from GMM distribution}
 \usage{
-find_thr_by_dist(input, sigmas.dev = 2.5, GModel)
+find_thr_by_dist(input, sigmas.dev = 2.5, alpha, mu, sigma)
 }
 \arguments{
 \item{input}{output of \code{\link{generate_dist}} function. It is a list with following elements:\describe{
@@ -14,7 +14,11 @@ find_thr_by_dist(input, sigmas.dev = 2.5, GModel)
 
 \item{sigmas.dev}{Number of sigmas to secure thresholds on the ends of distributions. Equivalent to sigma.dev in merging GMMs.}
 
-\item{GModel}{\code{data.frame} of GMM parameters i.e GModel$alpha, GModel$mu, GModel$sigma (correct \code{colnames} are obligatory).}
+\item{alpha}{Vector containing the weights (alpha) for each component in the statistical model.}
+
+\item{mu}{Vector containing the means (mu) for each component in the statistical model.}
+
+\item{sig}{Vector containing the standard deviation (sigma) for each component in the statistical model.}
 }
 \value{
 Return a vector of thresholds.
@@ -25,11 +29,13 @@ Function to calculate cutoffs between each component of mixture normal distribut
 \examples{
 \dontrun{
 data(example)
-GModel <- data.frame(alpha=c(0.45, 0.5, 0.05),
-                    mu=c(-14, -2, 5),
-                    sigma=c(2, 4, 1.5))
-dist.plot <- generate_dist(example$Dist, GModel, 1e4)
-thr <- find_thr_by_dist(dist.plot, 2.5, GModel)
+
+alpha <- c(0.45, 0.5, 0.05)
+mu <- c(-14, -2, 5)
+sigma <- c(2, 4, 1.5)
+
+dist.plot <- generate_dist(example$Dist, alpha = alpha, mu = mu, sigma = sigma, 1e4)
+thr <- find_thr_by_dist(dist.plot, 2.5, alpha = alpha, mu = mu, sigma = sigma)
 }
 
 }

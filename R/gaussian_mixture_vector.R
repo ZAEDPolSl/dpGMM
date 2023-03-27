@@ -3,10 +3,9 @@
 #' Function to estimate number of components of a mixture normal distributions, minimizing the value of the information criterion.
 #'
 #' @param X Vector of 1D data for GMM decomposition.
-#' @param KS Maximum number of components of the model.
-#' @param opts Parameters of run saved in \code{\link{GMM_1D_opts}} variable.
 #' @param Y Vector of counts, with the same length as "X".
 #' Applies only to binned data (Y = NULL, by default).
+#' @param opts Parameters of run saved in \code{\link{GMM_1D_opts}} variable.
 #'
 #'
 #' @returns Function returns a \code{list} of GMM parameters for the estimated number of components: \describe{
@@ -26,15 +25,17 @@
 #'
 #' custom.settings <- GMM_1D_opts
 #' custom.settings$IC <- "AIC"
+#' custom.settings$KS <- 10
 #'
-#' exp <- gaussian_mixture_vector(data$Dist, KS = 10, opts = custom.settings)
+#' exp <- gaussian_mixture_vector(data$Dist, opts = custom.settings)
 #' }
 #'
 #' @seealso \code{\link{runGMM}} and \code{\link{generate_norm1D}}
 #'
 #' @export
-# gaussian_mixture_vector <- function(X, KS, Y = NULL, fixed = FALSE , eps_change = 1e-7, max_iter = 50000, SW = 0.01, IC = "BIC", quick_stop = TRUE, signi = 0.05){
-gaussian_mixture_vector <- function(X, KS, opts = GMM_1D_opts, Y = NULL){
+gaussian_mixture_vector <- function(X, Y = NULL, opts = NULL){
+
+  if (is.null(opts)){opts <- rGMMtest::GMM_1D_opts}
 
   if (min(dim(as.matrix(X))) != 1){
     stop("data must be 1D signal.")
@@ -46,9 +47,9 @@ gaussian_mixture_vector <- function(X, KS, opts = GMM_1D_opts, Y = NULL){
   IC_list <- c("AIC", "AICc", "BIC", "ICL-BIC", "LR")
 
   N <- length(X)
-  crit_vector <- matrix(NaN, KS, 1)
+  crit_vector <- matrix(NaN, opts$KS, 1)
   logL <- crit_vector
-  D <- matrix(NaN, 1, KS)
+  D <- matrix(NaN, 1, opts$KS)
   alpha <- list()
   mu <- list()
   sigma <- list()
@@ -58,7 +59,6 @@ gaussian_mixture_vector <- function(X, KS, opts = GMM_1D_opts, Y = NULL){
   y <- h$counts
   x <- h$mids
   #decomposition for 1 component
-  # rcpt <- EM_iter(X, 1, mean(X), sd(X), Y, eps_change, max_iter, SW, IC)
   rcpt <- EM_iter(X, 1, mean(X), sd(X), Y, opts)
 
   alpha[[1]] <- rcpt[[1]]
@@ -72,7 +72,7 @@ gaussian_mixture_vector <- function(X, KS, opts = GMM_1D_opts, Y = NULL){
 
   #decomposition for fixed KS number
   if (opts$fixed){
-      k <- KS
+      k <- opts$KS
       tmp <- rGMMtest:::dyn_pr_split_w(x, y, k-1, aux_mx) #CORRECT TO FINAL NAME OF PACKAGE!!!!!!
       opt_part <- tmp[[2]]
 
@@ -90,7 +90,6 @@ gaussian_mixture_vector <- function(X, KS, opts = GMM_1D_opts, Y = NULL){
         sig_ini[kkps] <- 0.5 * (max(invec)-min(invec))
       }
 
-      # rcpt1<- EM_iter(X, pp_ini, mu_ini, sig_ini, Y, eps_change, max_iter, SW, IC)
       rcpt1<- EM_iter(X, pp_ini, mu_ini, sig_ini, Y, opts)
 
       pp_est <- rcpt1[[1]]
@@ -106,7 +105,7 @@ gaussian_mixture_vector <- function(X, KS, opts = GMM_1D_opts, Y = NULL){
       stop <- 1
       k <- 2
 
-      while (stop && k < KS){
+      while (stop && k < opts$KS){
         tmp <- rGMMtest:::dyn_pr_split_w(x, y, k-1, aux_mx) #CORRECT TO FINAL NAME OF PACKAGE!!!!!!
         opt_part <- tmp[[2]]
 
@@ -125,7 +124,6 @@ gaussian_mixture_vector <- function(X, KS, opts = GMM_1D_opts, Y = NULL){
         }
 
         #perform decomposition
-        # rcpt1<- EM_iter(X, pp_ini, mu_ini, sig_ini, Y, eps_change, max_iter, SW, IC)
         rcpt1<- EM_iter(X, pp_ini, mu_ini, sig_ini, Y, opts)
         alpha[[k]] <- rcpt1[[1]]
         mu[[k]] <- rcpt1[[2]]

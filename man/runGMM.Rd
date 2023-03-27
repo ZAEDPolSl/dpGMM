@@ -4,21 +4,15 @@
 \alias{runGMM}
 \title{Function to fit Gaussian Mixture Model (GMM) to 1D data}
 \usage{
-runGMM(X, KS, opts = GMM_1D_opts, Y = NULL, plot = TRUE, col.pal = "Blues")
+runGMM(X, Y = NULL, opts = NULL)
 }
 \arguments{
 \item{X}{Vector of 1D data for GMM decomposition.}
 
-\item{KS}{Maximum number of components of the model.}
-
-\item{opts}{Parameters of run saved in \code{\link{GMM_1D_opts}} variable.}
-
 \item{Y}{Vector of counts, with the same length as "X".
 Applies only to binned data (Y = NULL, by default).}
 
-\item{plot}{Logical value. If TRUE (default), the figure visualizing GMM decomposition will be displayed.}
-
-\item{col.pal}{Name of the RColorBrewer palette used in the figure. By default \code{"Blues"}.}
+\item{opts}{Parameters of run saved in \code{\link{GMM_1D_opts}} variable.}
 }
 \value{
 Function returns a \code{list} which contains: \describe{
@@ -46,16 +40,21 @@ data(example)
 custom.settings <- GMM_1D_opts
 custom.settings$sigmas.dev <- 1.5
 custom.settings$max_iter <- 1000
+custom.settings$KS <- 10
 
-mix_test <- runGMM(example$Dist, KS = 10, opts = custom.settings)
+mix_test <- runGMM(example$Dist, opts = custom.settings)
 mix_test$QQplot
 
 #example for binned data
 data(binned)
+
 custom.settings <- GMM_1D_opts
 custom.settings$quick_stop <- TRUE
+custom.settings$KS <- 40
+custom.settings$col.pal <- "Dark2"
+custom.settings$plot <- FALSE
 
-binned_test <- runGMM(X = binned$V1, KS = 40, opts = custom.settings, Y = binned$V2, col.pal = "Dark2", plot = F)
+binned_test <- runGMM(X = binned$V1, Y = binned$V2, opts = custom.settings)
 binned_test$fig
 }
 

@@ -4,12 +4,16 @@
 \alias{generate_dist}
 \title{Generation of GMM data with high precision}
 \usage{
-generate_dist(X, GModel, precision)
+generate_dist(X, alpha, mu, sigma, precision)
 }
 \arguments{
 \item{X}{Vector of 1D data.}
 
-\item{GModel}{\code{data.frame} of GMM parameters i.e GModel$alpha, GModel$mu, GModel$sigma (correct \code{colnames} are obligatory).}
+\item{alpha}{Vector of alphas (weights) for each distribution.}
+
+\item{mu}{Vector of means for each distribution.}
+
+\item{sigma}{Vector of  sigmas for each distribution.}
 
 \item{precision}{Precision of point linespacing.}
 }

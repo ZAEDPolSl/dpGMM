@@ -4,7 +4,7 @@
 \alias{EM_iter_2D}
 \title{Expectation–maximization algorithm for 2D data}
 \usage{
-EM_iter_2D(X, Y, init, opts)
+EM_iter_2D(X, Y, init, opts = NULL)
 }
 \arguments{
 \item{X}{Matrix of 2D data to decompose by GMM.}

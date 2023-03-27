@@ -16,7 +16,7 @@
 #' @param signi Significance level set for Likelihood Ratio Test (0.05, by default).
 #' @param init_con Type of initial conditions. Could be "rand" (default),"DP" or "diag".
 #' @param fixed Logical value. Fit GMM for selected number of components given by KS (FALSE, by default).
-
+#' @param plot Logical value. If TRUE, the GMM decomposition figure will be displayed (FALSE, by default).
 #'
 #' @examples
 #' # display all default settings
@@ -40,6 +40,7 @@ GMM_2D_opts <- list(
   quick_stop = FALSE,
   signi = 0.05,
   init_con = "rand",
-  fixed = FALSE
+  fixed = FALSE,
+  plot = FALSE
 )
 class(GMM_2D_opts) <- "gmm2_opts"
