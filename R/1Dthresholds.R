@@ -59,7 +59,7 @@ find_thr_by_params <- function(alpha, mu, sigma, input, sigmas.dev = 2.5){
       delta <- (B^2) - (4*A*C)
 
       if (delta < 0){
-        thr2 <- c(thr2, find_thr_by_dist(input, sigmas.dev = 2.5, GModel)[i])
+        thr2 <- c(thr2, find_thr_by_dist(input, sigmas.dev = 2.5, GModel$alpha, GModel$mu, GModel$sigma)[i])
       } else{
 
         x1 <- (-B - sqrt(delta))/(2*A)
