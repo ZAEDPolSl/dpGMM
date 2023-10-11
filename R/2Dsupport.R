@@ -201,6 +201,36 @@ coords_to_img <- function(X,Y){
   return(img)
 }
 
+#' 2D plot support
+#'
+#' Transform image into coordinates data
+#'
+#' @param img image in 2D array.
+#'
+#'
+#'
+img_to_coords <- function(img){
+
+  dim1 <- 1:nrow(img)
+  dim2 <- 1:ncol(img)
+  N = length(dim1)*length(dim2);
+
+  data <- matrix(nrow=N, ncol=3);
+  count <- 1
+  for (a in 1:length(dim1)){
+    for (b in 1:length(dim2)){
+      data[count,1] <- dim1[a];
+      data[count,2] <- dim2[b];
+      data[count,3] <- img[a,b];
+      count <- count + 1;
+    }
+  }
+
+  data <- data.frame(data)
+  colnames(data) <- c("Coordinates_1","Coordinates_2","Y")
+  return(data)
+}
+
 #' Log-Likelihood for 2D Gaussian Mixture Model.
 #'
 #' Function calculate log-likelihood of 2D Gaussian distribution
