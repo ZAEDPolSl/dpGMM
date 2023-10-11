@@ -27,7 +27,7 @@
 #' @export
 EM_iter_2D <- function(X, Y, init, opts = NULL){
 
-  if(is.null(opts)){opts <- rGMMtest::GMM_1D_opts}
+  if(is.null(opts)){opts <- rGMMtest::GMM_2D_opts}
 
   Y <- as.vector(Y)
   N <- length(Y)
@@ -39,10 +39,14 @@ EM_iter_2D <- function(X, Y, init, opts = NULL){
   alpha <- as.vector(init$alpha)
   center <- as.matrix(init$center)
 
+  # modify SW based on the size of the analyzed image
+  SW <- c((((max(X[,1]) - min(X[,1])) * opts$SW)/KS)^2,
+               (((max(X[,2]) - min(X[,2])) * opts$SW)/KS)^2) #minimum variance
+  # cat("SW: ", SW, "\n")
+
   if (dim(center)[2] == KS) {center <- t(center)}
 
   covar <- init$covar
-  opts$SW <- diag(2) * opts$SW
 
     #MAIN LOOP
   while (change > opts$eps_change && count < opts$max_iter){
@@ -69,23 +73,28 @@ EM_iter_2D <- function(X, Y, init, opts = NULL){
         tmp <- sweep(as.matrix(X), 2, as.numeric(center[a,]), FUN = "-")^2
         covarnum <- colSums(apply(tmp, 2, "*", pk))
         sig2_min <- covarnum/denom
-        covar[,,a] <- opts$SW + diag(sig2_min)
+        covar[,,a] <- diag(sig2_min)
       }else if(opts$cov_type == "full"){
         #full covariance
         x_centr <- sweep(as.matrix(X), 2, as.numeric(center[a,]), FUN = "-")
         x_centr <- apply(x_centr, 2, "*", (sqrt(pk/denom)))
-        covar[,,a] <- opts$SW + apply(x_centr, 2, "%*%", x_centr)
+        covar[,,a] <- apply(x_centr, 2, "%*%", x_centr)
       }else if(opts$cov_type == "sphere"){
         #sphere covariance
         tmp <- sweep(as.matrix(X), 2, as.numeric(center[a,]), FUN = "-")^2
         covarnum <- colSums(apply(tmp, 2, "*", pk))
         sig2_tmp <- mean(covarnum/denom)
-        covar[,,a] <- opts$SW + diag(2) * sig2_tmp
+        covar[,,a] <- diag(2) * sig2_tmp
       }
+
+      # check if not smaller than minimum variance
+      covar[1,1,a] <- max(covar[1,1,a], SW[1])
+      covar[2,2,a] <- max(covar[2,2,a], SW[2])
 
       #check if singularity appeared
       if (det(covar[,,a]) <= 0.1){
         covar[,,a] <- covar[,,a]*diag(2)
+        cat("Covariance singularity\n")
         # alpha[a] <- 0
       }
 
@@ -94,18 +103,32 @@ EM_iter_2D <- function(X, Y, init, opts = NULL){
       if (max(eig_tmp/min(eig_tmp)) > opts$max_var_ratio){
         if (eig_tmp[2] > eig_tmp[1]){
           if (opts$cov_type == "diag"){
-            covar[1,1,a] <- opts$max_var_ratio * covar[2,2,a]
+            covar[1,1,a] <- covar[2,2,a]/opts$max_var_ratio
           }else{
             e <- eigen(covar[,,a])
-            V <- apply(e$vectors, 1, rev); D <- diag(rev(e$values))
-            D[1,1] <- opts$max_var_ratio * D[2,2]
+            V <- apply(e$vectors, 1, rev)
+            D <- diag(rev(e$values))
+            D[1,1] <-  D[2,2]/opts$max_var_ratio
+            covar[,,a] <- V %*% D %*% t(V)
+          }
+        } else{
+          if (opts$cov_type == "diag"){
+            covar[2,2,a] <- covar[1,1,a]/opts$max_var_ratio
+          }else{
+            e <- eigen(covar[,,a])
+            V <- apply(e$vectors, 1, rev)
+            D <- diag(rev(e$values))
+            D[2,2] <-  D[1,1]/opts$max_var_ratio
             covar[,,a] <- V %*% D %*% t(V)
           }
         }
+        # cat("Shape is not proper")
       }
     }
     L_new <- sum(log(px)*Y)
     change <- 100 * abs((L_new - L_old)/L_old)
+
+    # cat("Iter no. ", count, ". Change = ", change,"\n")
 
     count <- count + 1
   }
