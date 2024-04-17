@@ -51,11 +51,11 @@ DP_init_2D <- function(X, Y, KS){
   n2 <- nrow(B_dist2)
 
   # use DP to find IC on boundary distributions
-  aux_mx1 <- rGMMtest:::dyn_pr_split_w_aux(B_dist1[,1],B_dist1[,2]) #CORRECT TO FINAL NAME OF PACKAGE !!!!!!!!!!!!!!!!!
-  aux_mx2 <- rGMMtest:::dyn_pr_split_w_aux(B_dist2[,1],B_dist2[,2]) #CORRECT TO FINAL NAME OF PACKAGE !!!!!!!!!!!!!!!!!
+  aux_mx1 <- dpGMM:::dyn_pr_split_w_aux(B_dist1[,1],B_dist1[,2]) #CORRECT TO FINAL NAME OF PACKAGE !!!!!!!!!!!!!!!!!
+  aux_mx2 <- dpGMM:::dyn_pr_split_w_aux(B_dist2[,1],B_dist2[,2]) #CORRECT TO FINAL NAME OF PACKAGE !!!!!!!!!!!!!!!!!
 
-  tmp1 <- rGMMtest:::dyn_pr_split_w(B_dist1[,1],B_dist1[,2], KS-1, aux_mx1) #CORRECT TO FINAL NAME OF PACKAGE!!!!!!
-  tmp2 <- rGMMtest:::dyn_pr_split_w(B_dist2[,1],B_dist2[,2], KS-1, aux_mx2) #CORRECT TO FINAL NAME OF PACKAGE!!!!!!
+  tmp1 <- dpGMM:::dyn_pr_split_w(B_dist1[,1],B_dist1[,2], KS-1, aux_mx1) #CORRECT TO FINAL NAME OF PACKAGE!!!!!!
+  tmp2 <- dpGMM:::dyn_pr_split_w(B_dist2[,1],B_dist2[,2], KS-1, aux_mx2) #CORRECT TO FINAL NAME OF PACKAGE!!!!!!
 
   opt_part1 <- tmp1[[2]]
   opt_part2 <- tmp2[[2]]
@@ -256,7 +256,7 @@ calc_lLik2D <- function(X,Y,gmm){
   #calculate density function
   f <- matrix(0, gmm$KS, nrow(data))
   for (a in 1:gmm$KS){
-    f[a,] <- rGMMtest:::norm_pdf_2D(data, gmm$center[a,], gmm$covar[,,a])
+    f[a,] <- dpGMM:::norm_pdf_2D(data, gmm$center[a,], gmm$covar[,,a])
   }
   px <-  colSums(f * as.numeric(gmm$alpha))
   px[is.nan(px) | px==0] <- 1e-100

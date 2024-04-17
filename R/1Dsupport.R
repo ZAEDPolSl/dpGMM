@@ -20,7 +20,7 @@ dyn_pr_split_w <- function(xhist, yhist, K, aux_mx){
   opt_pals <- matrix(0, K, N)
 
   for (kk in 1:N){
-    p_opt_idx[kk] <- rGMMtest:::my_qu_ix_w(xhist[kk:N], yhist[kk:N])
+    p_opt_idx[kk] <- dpGMM:::my_qu_ix_w(xhist[kk:N], yhist[kk:N])
   }
 
   #iterate
@@ -66,7 +66,7 @@ dyn_pr_split_w_aux <- function(xhist, yhist){
   aux_mx <- matrix(0, N, N)
   for (kk in 1:(N-1)){
     for (jj in (kk+1):N){
-      aux_mx[kk,jj] <- rGMMtest:::my_qu_ix_w(xhist[kk:(jj-1)], yhist[kk:(jj-1)])
+      aux_mx[kk,jj] <- dpGMM:::my_qu_ix_w(xhist[kk:(jj-1)], yhist[kk:(jj-1)])
     }
   }
   return(aux_mx)

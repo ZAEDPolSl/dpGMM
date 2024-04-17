@@ -78,7 +78,7 @@ runGMM <- function(X, Y = NULL, opts = NULL){
   if(opts$sigmas.dev > 0 & GModel$KS > 1){
     IC_tmp <- GModel$IC
     logL_tmp <- GModel$logL
-    GModel <- rGMMtest:::gmm_merge(GModel$model$alpha, GModel$model$mu, GModel$model$sigma, opts$sigmas.dev) ######################## corect to package name
+    GModel <- dpGMM:::gmm_merge(GModel$model$alpha, GModel$model$mu, GModel$model$sigma, opts$sigmas.dev)
     GModel$IC <- IC_tmp
     GModel$logL <- logL_tmp
   }

@@ -15,7 +15,7 @@ find_class_2D <- function(X, gmm){
   for (i in 1:KS){
       center <- gmm$center[i,]
       covariance <- gmm$covar[,,i]
-      dist[,i] <- rGMMtest:::norm_pdf_2D(X, center, covariance)  ### PACKAGE NAME!!!!!!!!!!!!!!!!
+      dist[,i] <- dpGMM:::norm_pdf_2D(X, center, covariance)  ### PACKAGE NAME!!!!!!!!!!!!!!!!
   }
   dist[, KS+1] <- rowSums(dist[,1:KS])
   dist <- as.data.frame(dist)

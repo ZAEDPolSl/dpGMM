@@ -27,7 +27,7 @@
 #' @export
 EM_iter_2D <- function(X, Y, init, opts = NULL){
 
-  if(is.null(opts)){opts <- rGMMtest::GMM_2D_opts}
+  if(is.null(opts)){opts <- dpGMM::GMM_2D_opts}
 
   Y <- as.vector(Y)
   N <- length(Y)
@@ -55,7 +55,7 @@ EM_iter_2D <- function(X, Y, init, opts = NULL){
     #calculate density function
     f <- matrix(0, KS, N)
     for (a in 1:KS){
-      f[a,] <- rGMMtest:::norm_pdf_2D(X, center[a,], covar[,,a]) ####### PACKAGE NAME!!!!!!!!!!!!!!!!
+      f[a,] <- dpGMM:::norm_pdf_2D(X, center[a,], covar[,,a]) ####### PACKAGE NAME!!!!!!!!!!!!!!!!
     }
     px <- colSums(f * alpha)
     px[is.nan(px) | px == 0] <- 1e-100

@@ -28,7 +28,7 @@ plot_gmm_2D_binned <- function(X, Y, gmm, opts){
     for (a in 1:gmm$KS){
       center <- gmm$center[a,]#- c(min(X[,1]) - 1, min(X[,2]) - 1)
       covariance <- pracma::rot90(gmm$covar[,,a], 2)
-      tmp <- rGMMtest:::ellips2D(center, covariance, cov_type, crits[j]) ## NAME OF PACKAGE
+      tmp <- dpGMM:::ellips2D(center, covariance, cov_type, crits[j]) ## NAME OF PACKAGE
       tmp$KS <- rep(a, 100)
       coors <- rbind(coors, tmp)
     }
@@ -86,7 +86,7 @@ plot_gmm_2D_orig <- function(X, gmm, opts){
       for (a in 1:gmm$KS){
         center <- gmm$center[a,]#- c(min(X[,1]) - 1, min(X[,2]) - 1)
         covariance <- pracma::rot90(gmm$covar[,,a], 2)
-        tmp <- rGMMtest:::ellips2D(center, covariance, cov_type, crits[j]) ### NAME OF PACKAGE
+        tmp <- dpGMM:::ellips2D(center, covariance, cov_type, crits[j]) ### NAME OF PACKAGE
         tmp$KS <- rep(a, 100)
         coors <- rbind(coors, tmp)
       }

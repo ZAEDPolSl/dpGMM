@@ -35,7 +35,7 @@
 #' @export
 gaussian_mixture_vector <- function(X, Y = NULL, opts = NULL){
 
-  if (is.null(opts)){opts <- rGMMtest::GMM_1D_opts}
+  if (is.null(opts)){opts <- dpGMM::GMM_1D_opts}
 
   if (min(dim(as.matrix(X))) != 1){
     stop("data must be 1D signal.")
@@ -68,12 +68,12 @@ gaussian_mixture_vector <- function(X, Y = NULL, opts = NULL){
   if(opts$IC != "LR"){crit_vector[1] <- rcpt[[5]]}
 
   Nb <- length(x)
-  aux_mx <- rGMMtest:::dyn_pr_split_w_aux(x, y) #CORRECT TO FINAL NAME OF PACKAGE !!!!!!!!!!!!!!!!!
+  aux_mx <- dpGMM:::dyn_pr_split_w_aux(x, y) #CORRECT TO FINAL NAME OF PACKAGE !!!!!!!!!!!!!!!!!
 
   #decomposition for fixed KS number
   if (opts$fixed){
       k <- opts$KS
-      tmp <- rGMMtest:::dyn_pr_split_w(x, y, k-1, aux_mx) #CORRECT TO FINAL NAME OF PACKAGE!!!!!!
+      tmp <- dpGMM:::dyn_pr_split_w(x, y, k-1, aux_mx) #CORRECT TO FINAL NAME OF PACKAGE!!!!!!
       opt_part <- tmp[[2]]
 
       part_cl <- c(1, opt_part, Nb+1)
@@ -106,7 +106,7 @@ gaussian_mixture_vector <- function(X, Y = NULL, opts = NULL){
       k <- 2
 
       while (stop && k < opts$KS){
-        tmp <- rGMMtest:::dyn_pr_split_w(x, y, k-1, aux_mx) #CORRECT TO FINAL NAME OF PACKAGE!!!!!!
+        tmp <- dpGMM:::dyn_pr_split_w(x, y, k-1, aux_mx) #CORRECT TO FINAL NAME OF PACKAGE!!!!!!
         opt_part <- tmp[[2]]
 
         part_cl <- c(1, opt_part, Nb+1)
