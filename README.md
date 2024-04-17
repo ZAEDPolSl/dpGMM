@@ -4,9 +4,9 @@ R package dpGMM for dynamic programming based Gaussian mixture modelling cluster
 ## Description
 Package functionality:
 1) Variety of criteria for selection component number (AIC, AICc, BIC, ICL-BIC and LR),
-2) Posibility of merging the components with a small satndard deviation within each other,
+2) Posibility of merging the components with a small standard deviation within each other,
 3) Control of minimum allow variance of component to avoid picks,
-4) Quick stop if LR test does not show improvement (off/on) accompanien by possibility to control significance level,
+4) Quick stop if LR test does not show improvement (off/on) accompanied by possibility to control significance level,
 5) Analysis of single measurements/vector as well as binned data,
 6) Distribution plot with selected components in ggplot,
 7) QQ-plot of fitted distribution and standard normal distribution,
