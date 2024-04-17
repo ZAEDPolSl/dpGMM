@@ -1,4 +1,4 @@
-Package: rGMMtest
+Package: dpGMM
 Type: Package
 Title: dpGMM: dynamic programming based Gaussian mixture modelling tool for 1D and 2D data
 Version: 0.1.9
