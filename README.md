@@ -16,7 +16,7 @@ Package functionality:
 You can install the package from [GitHub](https://github.com/) with:
 ``` r
 # install.packages("devtools")
-devtools::install_github("ZAEDPolSl/rGMM")
+devtools::install_github("ZAEDPolSl/dpGMM")
 ```
 
 ## Run of simple data
