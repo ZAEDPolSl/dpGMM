@@ -1,5 +1,5 @@
-# dpGMM
-![log](man/logo/logo.jpg)
+
+# dpGMM <img src='man/logo/logo.jpg' align="right" height="140" />
 R package dpGMM for dynamic programming based Gaussian mixture modelling clustering for 1D and 2D data.
 
 ## Description
