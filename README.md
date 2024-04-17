@@ -19,14 +19,21 @@ You can install the package from [GitHub](https://github.com/) with:
 devtools::install_github("ZAEDPolSl/rGMM")
 ```
 
-## Manual
-Tu damy tutorial jak używać
+## Run of simple data
+At first after isnatlation load library into R and load examplary data.
 ``` r
 library(rGMM)
-
 data(example)
-mix_test <- runGMM(example$Dist)
+```
+Next, let's load GMM control parameters for 1D and change maximum number of iteration to 1000 (just to speed up).
 
+``` r
+custom.settings <- GMM_1D_opts
+custom.settings$max_iter <- 1000
+```
+To run GMM for 1D vector data the following code will work.
+``` r
+mix_test <- runGMM(example$Dist, opts = custom.settings)
 ```
 
 ## References
