@@ -51,11 +51,11 @@ DP_init_2D <- function(X, Y, KS){
   n2 <- nrow(B_dist2)
 
   # use DP to find IC on boundary distributions
-  aux_mx1 <- dpGMM:::dyn_pr_split_w_aux(B_dist1[,1],B_dist1[,2]) #CORRECT TO FINAL NAME OF PACKAGE !!!!!!!!!!!!!!!!!
-  aux_mx2 <- dpGMM:::dyn_pr_split_w_aux(B_dist2[,1],B_dist2[,2]) #CORRECT TO FINAL NAME OF PACKAGE !!!!!!!!!!!!!!!!!
+  aux_mx1 <- dpGMM:::dyn_pr_split_w_aux(B_dist1[,1],B_dist1[,2]) 
+  aux_mx2 <- dpGMM:::dyn_pr_split_w_aux(B_dist2[,1],B_dist2[,2]) 
 
-  tmp1 <- dpGMM:::dyn_pr_split_w(B_dist1[,1],B_dist1[,2], KS-1, aux_mx1) #CORRECT TO FINAL NAME OF PACKAGE!!!!!!
-  tmp2 <- dpGMM:::dyn_pr_split_w(B_dist2[,1],B_dist2[,2], KS-1, aux_mx2) #CORRECT TO FINAL NAME OF PACKAGE!!!!!!
+  tmp1 <- dpGMM:::dyn_pr_split_w(B_dist1[,1],B_dist1[,2], KS-1, aux_mx1)
+  tmp2 <- dpGMM:::dyn_pr_split_w(B_dist2[,1],B_dist2[,2], KS-1, aux_mx2)
 
   opt_part1 <- tmp1[[2]]
   opt_part2 <- tmp2[[2]]
