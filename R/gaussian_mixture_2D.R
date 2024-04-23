@@ -52,7 +52,7 @@ gaussian_mixture_2D <- function(X, Y = NULL, opts = NULL){
   }
 
   # decomposition for 1 component
-  gmm[[1]] <- EM_iter_2D(X, Y, dpGMM:::rand_init_2D(X, 1), opts) ########## PACKAGE NAME
+  gmm[[1]] <- EM_iter_2D(X, Y, dpGMM:::rand_init_2D(X, 1), opts) 
   logL[,1] <- matrix(gmm[[1]]$logL, opts$init_nb, 1)
   IC <- gmm[[1]]$IC
   IC <- matrix(NA, opts$init_nb, opts$KS+1)
@@ -69,11 +69,11 @@ gaussian_mixture_2D <- function(X, Y = NULL, opts = NULL){
     for(a in 1:opts$init_nb){
       # perform decomposition
       if(opts$init_con == "rand"){
-        gmm_tmp[[a]] <- EM_iter_2D(X, Y, dpGMM:::rand_init_2D(X, k), opts)  ########## PACKAGE NAME
+        gmm_tmp[[a]] <- EM_iter_2D(X, Y, dpGMM:::rand_init_2D(X, k), opts)  
       } else if(opts$init_con == "diag"){
-        gmm_tmp[[a]] <- EM_iter_2D(X, Y, dpGMM:::diag_init_2D(X, k), opts)  ########## PACKAGE NAME
+        gmm_tmp[[a]] <- EM_iter_2D(X, Y, dpGMM:::diag_init_2D(X, k), opts)  
       } else if(opts$init_con == "DP"){
-        gmm_tmp[[a]] <- EM_iter_2D(X, Y, dpGMM:::DP_init_2D(X, Y, k), opts)  ########## PACKAGE NAME
+        gmm_tmp[[a]] <- EM_iter_2D(X, Y, dpGMM:::DP_init_2D(X, Y, k), opts)  
       }
       logL_tmp[a,1] <- gmm_tmp[[a]]$logL
       IC_tmp[a,1] <- gmm_tmp[[a]]$IC
@@ -96,11 +96,11 @@ gaussian_mixture_2D <- function(X, Y = NULL, opts = NULL){
     for(a in 1:opts$init_nb){
       # perform decomposition
       if(opts$init_con == "rand"){
-        gmm_tmp[[a]] <- EM_iter_2D(X, Y, dpGMM:::rand_init_2D(X, k), opts) ########## PACKAGE NAME
+        gmm_tmp[[a]] <- EM_iter_2D(X, Y, dpGMM:::rand_init_2D(X, k), opts) 
       } else if(opts$init_con == "diag"){
-        gmm_tmp[[a]] <- EM_iter_2D(X, Y, dpGMM:::diag_init_2D(X, k), opts) ########## PACKAGE NAME
+        gmm_tmp[[a]] <- EM_iter_2D(X, Y, dpGMM:::diag_init_2D(X, k), opts) 
       } else if(opts$init_con == "DP"){
-        gmm_tmp[[a]] <- EM_iter_2D(X, Y, dpGMM:::DP_init_2D(X, Y, k), opts) ########## PACKAGE NAME
+        gmm_tmp[[a]] <- EM_iter_2D(X, Y, dpGMM:::DP_init_2D(X, Y, k), opts) 
       }
       logL_tmp[a,1] <- gmm_tmp[[a]]$logL
       IC_tmp[a,1] <- gmm_tmp[[a]]$IC
