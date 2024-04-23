@@ -23,7 +23,7 @@ devtools::install_github("ZAEDPolSl/dpGMM")
 ## Run of simple data
 At first after isnatlation load library into R and load examplary data.
 ``` r
-library(rGMM)
+library(dpGMM)
 data(example)
 ```
 Next, let's load GMM control parameters for 1D and change maximum number of iteration to 1000 (just to speed up).
