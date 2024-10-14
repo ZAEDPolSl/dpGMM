@@ -76,8 +76,8 @@ EM_iter <- function(X, alpha, mu, sig, Y = NULL, opts = NULL){
         denom <- sum(pk)
         mu[a] <- sum((pk*X)/denom)
         sig2num <- sum(pk*((X-mu[a])^2))
-        #sig2[a] <- max(opts$SW, sig2num/denom)
-        if (is.na(sig2[a]) || is.infinite(sig2[a]) || sig2[a] < opts$SW){sig2[a] <- opts$SW}
+        sig2[a] <- max(opts$SW, sig2num/denom)
+        #if (is.na(sig2[a]) || is.infinite(sig2[a]) || sig2[a] < opts$SW){sig2[a] <- opts$SW}
         alpha[a] <- denom/bin_edge_sum
       }
       change <- sum(abs(alpha-old_alpha)) + sum(((abs(sig2 - old_sig2))/sig2))/(length(alpha))
