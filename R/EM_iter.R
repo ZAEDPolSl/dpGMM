@@ -42,7 +42,7 @@ EM_iter <- function(X, alpha, mu, sig, Y = NULL, opts = NULL){
   change <- Inf
   KS <- length(alpha)
 
-  opts$SW <- (((max(X) - min(X)) * opts$SW)/KS)^2 #minimum variance
+  SW <- (((max(X) - min(X)) * opts$SW)/KS)^2 #minimum variance
 
 
   while (change > opts$eps_change && count < opts$max_iter){
@@ -57,12 +57,13 @@ EM_iter <- function(X, alpha, mu, sig, Y = NULL, opts = NULL){
       change <- 0
     } else {
       if (sum(tmp)){
-        sig[tmp] <- opts$SW
+        sig[tmp] <- SW
       }
 
       for(a in 1:KS){
         f[a,] <- dnorm(X, mu[a], sig[a])
       }
+      f[is.nan(f) | f==0] = 1e-45
 
       px <- matrix(0, KS, N)
       for(i in 1:KS){
@@ -74,10 +75,13 @@ EM_iter <- function(X, alpha, mu, sig, Y = NULL, opts = NULL){
       for (a in 1:KS){
         pk <- ((alpha[a]*f[a,])*Y)/px
         denom <- sum(pk)
+ #       if (denom==0){denom=5e-324}
         mu[a] <- sum((pk*X)/denom)
         sig2num <- sum(pk*((X-mu[a])^2))
-        sig2[a] <- max(opts$SW, sig2num/denom)
-        #if (is.na(sig2[a]) || is.infinite(sig2[a]) || sig2[a] < opts$SW){sig2[a] <- opts$SW}
+        sig2[a] <- max(SW, sig2num/denom)
+        if (is.na(sig2[a]) || is.infinite(sig2[a]) || sig2[a] < SW){
+          sig2[a] <- SW
+          }
         alpha[a] <- denom/bin_edge_sum
       }
       change <- sum(abs(alpha-old_alpha)) + sum(((abs(sig2 - old_sig2))/sig2))/(length(alpha))

@@ -11,16 +11,22 @@
 #'
 #' @keywords internal
 #'
-dyn_pr_split_w <- function(xhist, yhist, K, aux_mx){
+dyn_pr_split_w <- function(xhist, yhist, K, aux_mx,s_corr){
   #initialize
   Q <- matrix(0, 1, K)
   N <- length(xhist)
   p_opt_idx <- matrix(0, 1, N)
   p_aux <- matrix(0, 1, N)
   opt_pals <- matrix(0, K, N)
+  PAR_min_seg<- 5
 
   for (kk in 1:N){
-    p_opt_idx[kk] <- dpGMM:::my_qu_ix_w(xhist[kk:N], yhist[kk:N])
+    if (sum(yhist[kk:N])<PAR_min_seg){
+      p_opt_idx[kk]<-Inf
+    } else{
+      p_opt_idx[kk] <- my_qu_ix_w(xhist[kk:N], yhist[kk:N],s_corr)
+    }
+
   }
 
   #iterate
@@ -60,13 +66,13 @@ dyn_pr_split_w <- function(xhist, yhist, K, aux_mx){
 #'
 #' @keywords internal
 #'
-dyn_pr_split_w_aux <- function(xhist, yhist){
+dyn_pr_split_w_aux <- function(xhist, yhist,s_corr){
   N <- length(xhist)
   #aux_mx
   aux_mx <- matrix(0, N, N)
   for (kk in 1:(N-1)){
     for (jj in (kk+1):N){
-      aux_mx[kk,jj] <- dpGMM:::my_qu_ix_w(xhist[kk:(jj-1)], yhist[kk:(jj-1)])
+      aux_mx[kk,jj] <- dpGMM:::my_qu_ix_w(xhist[kk:(jj-1)], yhist[kk:(jj-1)],s_corr)
     }
   }
   return(aux_mx)
@@ -81,15 +87,19 @@ dyn_pr_split_w_aux <- function(xhist, yhist){
 #'
 #' @keywords internal
 #'
-my_qu_ix_w <- function(xinvec, yinvec){
+my_qu_ix_w <- function(xinvec, yinvec, s_corr){
   PAR <- 1
   PAR_sig_min <- .1
   if ((xinvec[length(xinvec)] - xinvec[1]) <= PAR_sig_min || sum(yinvec) <= 1.0e-3){
     wyn <- Inf
   }else {
     wwec <- yinvec/sum(yinvec)
-    wyn1 <- (PAR + sqrt(sum(((xinvec - sum(xinvec*wwec))^2) * wwec)))/(max(xinvec) - min(xinvec))
-    wyn <- wyn1
+    var_bin = sum(((xinvec - sum(xinvec*wwec))^2) * wwec);
+    if (var_bin>s_corr){
+      wyn <- (PAR + sqrt(var_bin-s_corr))/(max(xinvec) - min(xinvec))
+    } else{
+      wyn<-Inf
+    }
   }
 
   return(wyn)

@@ -55,7 +55,12 @@ gaussian_mixture_vector <- function(X, Y = NULL, opts = NULL){
   sigma <- list()
 
   #histogram of input data (for drawing and IC)
-  h  <- hist(X, breaks = seq(min(X), max(X), l = (min(max(20, round(sqrt(N))), 100)  +1)), plot = F)
+ # h  <- hist(X, breaks = seq(min(X), max(X), l = (min(max(20, round(sqrt(N))), 100)  +1)), plot = F)
+  n_bins<-(min(max(20, round(sqrt(N))), 100))
+  bin_width =(max(X)-min(X))/n_bins
+  edges<-seq(min(X)-bin_width/2, max(X)+bin_width/2, l = n_bins+1)
+
+  h  <- hist(X, breaks =edges , plot = F)
   y <- h$counts
   x <- h$mids
   #decomposition for 1 component
@@ -68,12 +73,13 @@ gaussian_mixture_vector <- function(X, Y = NULL, opts = NULL){
   if(opts$IC != "LR"){crit_vector[1] <- rcpt[[5]]}
 
   Nb <- length(x)
-  aux_mx <- dpGMM:::dyn_pr_split_w_aux(x, y) 
+  s_corr = ((x[2] - x[1])^2)/12;
+  aux_mx <- dpGMM:::dyn_pr_split_w_aux(x, y,s_corr)
 
   #decomposition for fixed KS number
   if (opts$fixed){
       k <- opts$KS
-      tmp <- dpGMM:::dyn_pr_split_w(x, y, k-1, aux_mx)
+      tmp <- dpGMM:::dyn_pr_split_w(x, y, k-1, aux_mx,s_corr)
       opt_part <- tmp[[2]]
 
       part_cl <- c(1, opt_part, Nb+1)
@@ -87,8 +93,13 @@ gaussian_mixture_vector <- function(X, Y = NULL, opts = NULL){
         wwec <- yinwec/sum(yinwec)
         pp_ini[kkps] <- sum(yinwec)/sum(y)
         mu_ini[kkps] <- sum(invec * wwec)
-        sig_ini[kkps] <- 0.5 * (max(invec)-min(invec))
-      }
+        var_bin<-sum(((invec-sum(invec*wwec))^2)*wwec)
+        if (var_bin>s_corr){
+          sig_ini[kkps] <- sqrt(var_bin-s_corr)#0.5*(max(invec)-min(invec))
+        } else{
+          sig_ini[kkps]<-sqrt(var_bin)
+        }
+       }
 
       rcpt1<- EM_iter(X, pp_ini, mu_ini, sig_ini, Y, opts)
 
@@ -99,14 +110,15 @@ gaussian_mixture_vector <- function(X, Y = NULL, opts = NULL){
       crit_est <- rcpt1[[5]]
 
 
-  } else{ #decomposition for range 1:KS
+  }
+  else{ #decomposition for range 1:KS
 
       #decomposition for >2 components
       stop <- 1
       k <- 2
 
       while (stop && k < opts$KS){
-        tmp <- dpGMM:::dyn_pr_split_w(x, y, k-1, aux_mx) 
+        tmp <- dpGMM:::dyn_pr_split_w(x, y, k-1, aux_mx,s_corr)
         opt_part <- tmp[[2]]
 
         part_cl <- c(1, opt_part, Nb+1)
@@ -120,7 +132,12 @@ gaussian_mixture_vector <- function(X, Y = NULL, opts = NULL){
           wwec <- yinwec/sum(yinwec)
           pp_ini[kkps] <- sum(yinwec)/sum(y)
           mu_ini[kkps] <- sum(invec*wwec)
-          sig_ini[kkps] <- 0.5*(max(invec)-min(invec))
+          var_bin<-sum(((invec-sum(invec*wwec))^2)*wwec)
+          if (var_bin>s_corr){
+            sig_ini[kkps] <- sqrt(var_bin-s_corr)#0.5*(max(invec)-min(invec))
+          } else{
+            sig_ini[kkps]<-sqrt(var_bin)
+          }
         }
 
         #perform decomposition
