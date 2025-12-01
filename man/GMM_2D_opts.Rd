@@ -5,38 +5,26 @@
 \alias{GMM_2D_opts}
 \title{Default configuration for 2D Gaussian Mixture decomposition}
 \format{
-An object of class \code{gmm2_opts} of length 13.
+A list with the following components:
+\describe{
+ \item{eps_change}{Criterion for early stopping of EM (1e-7, by default).}
+ \item{max_iter}{Maximum number of iterations of EM algorithm. By default it is \code{max_iter = 50 000}.}
+ \item{SW}{Regularizing coefficient for covariance.}
+ \item{max_var_ratio}{Maximum dissimilarity between horizontal and vertical dispersion. By default it is \code{max_var_ratio = 5}.}
+ \item{IC}{Information criterion used to select the number of model components.
+   Possible methods are "AIC","AICc", "BIC" (default), "ICL-BIC" or "LR".}
+ \item{cov_type}{Type of covariance defined for each model component. Possible "sphere","diag" or "full" (default).}
+ \item{init_nb}{Number of random initial conditions. By default it is \code{init_nb = 10}.}
+ \item{KS}{Maximum number of components of the model. By default it is \code{KS = 5}.}
+ \item{quick_stop}{Logical value. Determines if stop searching of the number of components earlier based on the Likelihood Ratio Test. Used to speed up the function (TRUE, by default).}
+ \item{signi}{Significance level set for Likelihood Ratio Test (0.05, by default).}
+ \item{init_con}{Type of initial conditions. Could be "rand" (default),"DP" or "diag".}
+ \item{fixed}{Logical value. Fit GMM for selected number of components given by KS (FALSE, by default).}
+ \item{plot}{Logical value. If TRUE, the GMM decomposition figure will be displayed (FALSE, by default).}
+}
 }
 \usage{
 GMM_2D_opts
-}
-\arguments{
-\item{eps_change}{Criterion for early stopping of EM (1e-7, by default).}
-
-\item{max_iter}{Maximum number of iterations of EM algorithm. By default it is \code{max_iter = 50 000}.}
-
-\item{SW}{Regularizing coefficient for covariance.}
-
-\item{max_var_ratio}{Maximum dissimilarity between horizontal and vertical dispersion. By default it is \code{max_var_ratio = 5}.}
-
-\item{IC}{Information criterion used to select the number of model components.
-Possible methods are "AIC","AICc", "BIC" (default), "ICL-BIC" or "LR".}
-
-\item{cov_type}{Type of covariance defined for each model component. Possible "sphere","diag" or "full" (default).}
-
-\item{init_nb}{Number of random initial conditions. By default it is \code{init_nb = 10}.}
-
-\item{KS}{Maximum number of components of the model. By default it is \code{KS = 5}.}
-
-\item{quick_stop}{Logical value. Determines if stop searching of the number of components earlier based on the Likelihood Ratio Test. Used to speed up the function (TRUE, by default).}
-
-\item{signi}{Significance level set for Likelihood Ratio Test (0.05, by default).}
-
-\item{init_con}{Type of initial conditions. Could be "rand" (default),"DP" or "diag".}
-
-\item{fixed}{Logical value. Fit GMM for selected number of components given by KS (FALSE, by default).}
-
-\item{plot}{Logical value. If TRUE, the GMM decomposition figure will be displayed (FALSE, by default).}
 }
 \description{
 A list with parameters customizing a GMM_2D. Each component of the
