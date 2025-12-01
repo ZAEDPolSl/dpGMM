@@ -25,7 +25,7 @@ generate_norm2D <- function(n, alpha, mu, cov){
   pts.kl <- numeric(n)
   for(i in 1:n){
     pts.kl[i] <- sample.int(KS, 1L, prob = alpha)
-    dist[i,] <- mvtnorm::rmvnorm(1, mu[,pts.kl[i]], diag(2) * (cov[pts.kl[i]]), method="svd")
+    dist[i,] <- rmvnorm(1, mu[,pts.kl[i]], diag(2) * (cov[pts.kl[i]]), method="svd")
   }
   res <- list(Dist = dist, Cls = pts.kl)
   return(res)
@@ -57,10 +57,10 @@ generate_dset2D <- function(n = 1500, m = 1500, KS_range = 2:8, mu_range = c(-15
     res_tmp[["KS"]] <- sample(KS_range, 1)
 
     # randomly generate components' parameters
-    res_tmp[["mu"]] <- rbind(stats::runif(res_tmp[["KS"]], mu_range[1], mu_range[2]),
-                             stats::runif(res_tmp[["KS"]], mu_range[1], mu_range[2]))
-    res_tmp[["sigma"]] <- stats::runif(res_tmp[["KS"]], cov_range[1], cov_range[2])
-    res_tmp[["alpha"]] <- stats::runif(res_tmp[["KS"]], 0, 1)
+    res_tmp[["mu"]] <- rbind(runif(res_tmp[["KS"]], mu_range[1], mu_range[2]),
+                             runif(res_tmp[["KS"]], mu_range[1], mu_range[2]))
+    res_tmp[["sigma"]] <- runif(res_tmp[["KS"]], cov_range[1], cov_range[2])
+    res_tmp[["alpha"]] <- runif(res_tmp[["KS"]], 0, 1)
     res_tmp[["alpha"]] <- res_tmp[["alpha"]]/sum(res_tmp[["alpha"]])
 
     # generate data based on parameters

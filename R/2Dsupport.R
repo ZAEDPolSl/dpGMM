@@ -7,6 +7,8 @@
 #'
 #' @return Initial values for EM.
 #'
+#' @importFrom stats sd
+#'
 #' @keywords internal
 #'
 rand_init_2D <- function(X, KS){
@@ -30,6 +32,8 @@ rand_init_2D <- function(X, KS){
 #' @param KS Number of components.
 #'
 #' @return Initial values for EM.
+#'
+#' @importFrom stats aggregate
 #'
 #' @keywords internal
 #'
@@ -136,6 +140,8 @@ DP_init_2D <- function(X, Y, KS){
 #' @param KS Number of components.
 #'
 #' @return Initial values for EM.
+#'
+#' @importFrom stats sd
 #'
 #' @keywords internal
 #'

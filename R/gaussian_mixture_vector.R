@@ -16,7 +16,7 @@
 #'  \item{KS}{Estimaged number of model components.}
 #' }
 #'
-#' @importFrom stats pchisq qchisq
+#' @importFrom stats pchisq qchisq sd
 #' @importFrom graphics hist
 #'
 #' @examples

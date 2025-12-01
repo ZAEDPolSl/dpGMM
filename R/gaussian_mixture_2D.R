@@ -17,7 +17,7 @@
 #'  \item{cls}{Assigment of point to the clusters.}
 #' }
 #'
-#' @importFrom stats pchisq
+#' @importFrom stats pchisq median
 #'
 #' @examples
 #' \dontrun{
@@ -114,7 +114,7 @@ gaussian_mixture_2D <- function(X, Y = NULL, opts = NULL){
     # check convergence
     if(opts$quick_stop){
       D[k] <- -2 * median(logL[,k-1]) + 2 * median(logL[,k])
-      if(stats::pchisq(D[k], 7, lower.tail = F) > opts$signi){stop <- 0}
+      if(pchisq(D[k], 7, lower.tail = F) > opts$signi){stop <- 0}
     }
 
     k <- k+1

@@ -45,7 +45,7 @@ plot_gmm_1D <- function(X, dist, Y = NULL, threshold = NA, pal = "Blues"){
   colnames(dist)[ncol(dist)] <- "Main"
 
 
-  tmp <- reshape2::melt(dist, id.vars = NULL)
+  tmp <- melt(dist, id.vars = NULL)
   tmp$xx <- rep(x_temp, ncol(dist))
   tmp$lin <- 1
   tmp$lin[which(tmp$variable == "Main")] <- 0
@@ -53,7 +53,7 @@ plot_gmm_1D <- function(X, dist, Y = NULL, threshold = NA, pal = "Blues"){
   if (ncol(dist) == 2){
     col <- c("darkgreen", "grey25")
   } else{
-    col <- grDevices::colorRampPalette(brewer.pal(8, pal))(ncol(dist))
+    col <- colorRampPalette(brewer.pal(8, pal))(ncol(dist))
     col <- c(col[2:ncol(dist)], "grey25")}
 
 
@@ -116,7 +116,7 @@ plot_QQplot <- function(X, alpha, mu, sigma){
                        sigma = sigma)
 
   tor <- generate_norm1D(length(X), GModel$alpha, GModel$mu, GModel$sigma)
-  quants <- stats::qqplot(X, tor$Dist, plot.it = F)
+  quants <- qqplot(X, tor$Dist, plot.it = F)
   tmp <- data.frame(data = quants$x, theor = quants$y)
 
   p2 <- ggplot(tmp, aes(theor, data)) + theme_bw() +
@@ -129,5 +129,5 @@ plot_QQplot <- function(X, alpha, mu, sigma){
     ylab("Data") + xlab("Normal distribution") + theme_bw()+
     ggtitle("QQ plot: one dist.") + theme(plot.title = element_text(hjust = 0.5))
 
-  return(ggpubr::ggarrange(p1, p2, align="hv"))
+  return(ggarrange(p1, p2, align="hv"))
 }
