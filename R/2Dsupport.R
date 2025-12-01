@@ -27,7 +27,7 @@ rand_init_2D <- function(X, KS){
 #'
 #' @param X Matrix of data to decompose by GMM.
 #' @param Y Vector of counts, with the same length as "X".
-#' @param K Number of components.
+#' @param KS Number of components.
 #'
 #' @return Initial values for EM.
 #'
@@ -51,8 +51,8 @@ DP_init_2D <- function(X, Y, KS){
   n2 <- nrow(B_dist2)
 
   # use DP to find IC on boundary distributions
-  aux_mx1 <- dpGMM:::dyn_pr_split_w_aux(B_dist1[,1],B_dist1[,2]) 
-  aux_mx2 <- dpGMM:::dyn_pr_split_w_aux(B_dist2[,1],B_dist2[,2]) 
+  aux_mx1 <- dpGMM:::dyn_pr_split_w_aux(B_dist1[,1],B_dist1[,2])
+  aux_mx2 <- dpGMM:::dyn_pr_split_w_aux(B_dist2[,1],B_dist2[,2])
 
   tmp1 <- dpGMM:::dyn_pr_split_w(B_dist1[,1],B_dist1[,2], KS-1, aux_mx1)
   tmp2 <- dpGMM:::dyn_pr_split_w(B_dist2[,1],B_dist2[,2], KS-1, aux_mx2)
