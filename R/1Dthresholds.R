@@ -43,8 +43,8 @@ find_thr_by_params <- function(alpha, mu, sigma, input, sigmas.dev = 2.5){
     B <- GModel$mu[i+1]/(GModel$sigma[i+1]^2) - GModel$mu[i]/(GModel$sigma[i]^2)
     C <- (GModel$mu[i]^2)/(2*GModel$sigma[i]^2) - (GModel$mu[i+1]^2)/(2*(GModel$sigma[i+1]^2)) - log((GModel$alpha[i]*GModel$sigma[i+1])/(GModel$alpha[i+1]*GModel$sigma[i]))
 
-    if (abs(A) < tol){
-      if(abs(B) < tol){
+    if (abs(A) < tol| is.na(A) | is.infinite(B)){
+      if(abs(B) < tol | is.na(B) | is.infinite(B)){
         print("Gaussians are the same!")
         x1 <- NaN
         x2 <- NaN

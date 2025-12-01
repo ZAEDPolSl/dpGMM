@@ -4,7 +4,7 @@
 \alias{my_qu_ix_w}
 \title{Supporting function for spliters.}
 \usage{
-my_qu_ix_w(xinvec, yinvec)
+my_qu_ix_w(xinvec, yinvec, s_corr)
 }
 \arguments{
 \item{xinvec}{x coordinates of histogram.}

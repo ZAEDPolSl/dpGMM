@@ -4,7 +4,7 @@
 \alias{dyn_pr_split_w_aux}
 \title{Dynamic programming split of aux.}
 \usage{
-dyn_pr_split_w_aux(xhist, yhist)
+dyn_pr_split_w_aux(xhist, yhist, s_corr)
 }
 \arguments{
 \item{xhist}{x coordinates of histogram.}
