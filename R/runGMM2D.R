@@ -35,7 +35,7 @@
 #' @export
 runGMM2D <- function(X, Y = NULL, opts = NULL){
 
-  if(is.null(opts)){opts = rGMMtest::GMM_2D_opts}
+  if(is.null(opts)){opts = GMM_2D_opts}
 
   # Check part
   if (!hasArg("X")){

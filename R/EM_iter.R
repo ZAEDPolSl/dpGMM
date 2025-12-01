@@ -25,7 +25,7 @@
 #' @export
 EM_iter <- function(X, alpha, mu, sig, Y = NULL, opts = NULL){
 
-  if(is.null(opts)){opts <- dpGMM::GMM_1D_opts}
+  if(is.null(opts)){opts <- GMM_1D_opts}
 
   if(is.null(Y)){Y <- matrix(1, 1, length(X))}
   bin_edge_sum <- sum(Y)
