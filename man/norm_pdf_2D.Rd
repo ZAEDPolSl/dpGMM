@@ -7,11 +7,11 @@
 norm_pdf_2D(x, center, covar)
 }
 \arguments{
+\item{x}{matrix of 2D GMM data.}
+
 \item{center}{centers of 2D distributions (means)}
 
 \item{covar}{matrix of covariances}
-
-\item{X}{matrix of 2D GMM data.}
 }
 \description{
 Function for calculation PDF of 2D normal model.

@@ -18,7 +18,7 @@ find_thr_by_dist(input, sigmas.dev = 2.5, alpha, mu, sigma)
 
 \item{mu}{Vector containing the means (mu) for each component in the statistical model.}
 
-\item{sig}{Vector containing the standard deviation (sigma) for each component in the statistical model.}
+\item{sigma}{Vector containing the standard deviation (sigma) for each component in the statistical model.}
 }
 \value{
 Return a vector of thresholds.

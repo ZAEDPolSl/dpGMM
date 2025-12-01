@@ -133,7 +133,7 @@ DP_init_2D <- function(X, Y, KS){
 #' Function for generating initial conditions of 2D GMM model by diagonal.
 #'
 #' @param X Matrix of 2D GMM data.
-#' @param K Number of components.
+#' @param KS Number of components.
 #'
 #' @return Initial values for EM.
 #'
@@ -159,7 +159,7 @@ diag_init_2D <- function(X, KS){
 #'
 #' Function for calculation PDF of 2D normal model.
 #'
-#' @param X matrix of 2D GMM data.
+#' @param x matrix of 2D GMM data.
 #' @param center centers of 2D distributions (means)
 #' @param covar matrix of covariances
 #'

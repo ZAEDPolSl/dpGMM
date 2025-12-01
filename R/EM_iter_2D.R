@@ -17,11 +17,6 @@
 #'  \item{IC}{The value of the selected information criterion which was used to calculate the number of components.}
 #' }
 #'
-#'
-#' @examples
-#' \dontrun{
-#' }
-#'
 #' @seealso \code{\link{runGMM2D}}
 #'
 #' @export
@@ -55,7 +50,7 @@ EM_iter_2D <- function(X, Y, init, opts = NULL){
     #calculate density function
     f <- matrix(0, KS, N)
     for (a in 1:KS){
-      f[a,] <- dpGMM:::norm_pdf_2D(X, center[a,], covar[,,a]) 
+      f[a,] <- dpGMM:::norm_pdf_2D(X, center[a,], covar[,,a])
     }
     px <- colSums(f * alpha)
     px[is.nan(px) | px == 0] <- 1e-100

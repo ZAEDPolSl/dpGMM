@@ -87,7 +87,9 @@ plot_gmm_1D <- function(X, dist, Y = NULL, threshold = NA, pal = "Blues"){
 #' This plot is also return as regular output of \code{\link{runGMM}}.
 #'
 #' @param X Vector of 1D data for GMM decomposition.
-#' @param GModel \code{data.frame} of GMM parameters i.e GModel$alpha, GModel$mu, GModel$sigma (correct \code{colnames} are obligatory).
+#' @param alpha Vector containing the weights (alpha) for each component in the statistical model.
+#' @param mu Vector containing the means (mu) for each component in the statistical model
+#' @param sigma Vector containing the standard deviation (sigma) for each component in the statistical model.
 #'
 #' @import ggplot2
 #' @importFrom  ggpubr ggarrange

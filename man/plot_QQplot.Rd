@@ -9,7 +9,11 @@ plot_QQplot(X, alpha, mu, sigma)
 \arguments{
 \item{X}{Vector of 1D data for GMM decomposition.}
 
-\item{GModel}{\code{data.frame} of GMM parameters i.e GModel$alpha, GModel$mu, GModel$sigma (correct \code{colnames} are obligatory).}
+\item{alpha}{Vector containing the weights (alpha) for each component in the statistical model.}
+
+\item{mu}{Vector containing the means (mu) for each component in the statistical model}
+
+\item{sigma}{Vector containing the standard deviation (sigma) for each component in the statistical model.}
 }
 \description{
 Function return ggplot object with fit diagnostic Quantile-Quantile plot for one normal distribution and fitted GMM.

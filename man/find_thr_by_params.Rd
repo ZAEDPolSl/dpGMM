@@ -11,6 +11,8 @@ find_thr_by_params(alpha, mu, sigma, input, sigmas.dev = 2.5)
 
 \item{mu}{Vector containing the means (mu) for each component in the statistical model.}
 
+\item{sigma}{Vector containing the standard deviation (sigma) for each component in the statistical model.}
+
 \item{input}{output of \code{\link{generate_dist}} function. Its necessary only if arithmetical approach fails in threshold estimation and \code{\link{find_thr_by_dist}} function is called.
 It is a list with following elements:\describe{
    \item{x}{Numeric vector with equaliy spread data of given precison.}
@@ -18,8 +20,6 @@ It is a list with following elements:\describe{
 }}
 
 \item{sigmas.dev}{Number of sigmas to secure thresholds on the ends of distributions. Equivalent to sigma.dev in merging GMMs.}
-
-\item{sig}{Vector containing the standard deviation (sigma) for each component in the statistical model.}
 }
 \value{
 Return a vector of thresholds.

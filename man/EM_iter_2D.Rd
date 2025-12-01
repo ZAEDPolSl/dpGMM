@@ -29,11 +29,6 @@ Function returns a \code{list} of GMM parameters for tested number of components
 \description{
 The function performs the EM algorithm to find the local maximum likelihood for the estimated Gaussian mixture parameters.
 }
-\examples{
-\dontrun{
-}
-
-}
 \seealso{
 \code{\link{runGMM2D}}
 }
