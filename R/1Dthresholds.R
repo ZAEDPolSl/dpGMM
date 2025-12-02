@@ -4,7 +4,7 @@
 #'
 #' @param alpha Vector containing the weights (alpha) for each component in the statistical model.
 #' @param mu Vector containing the means (mu) for each component in the statistical model.
-#' @param sig Vector containing the standard deviation (sigma) for each component in the statistical model.
+#' @param sigma Vector containing the standard deviation (sigma) for each component in the statistical model.
 #' @param input output of \code{\link{generate_dist}} function. Its necessary only if arithmetical approach fails in threshold estimation and \code{\link{find_thr_by_dist}} function is called.
 #' It is a list with following elements:\describe{
 #'    \item{x}{Numeric vector with equaliy spread data of given precison.}
@@ -96,7 +96,7 @@ find_thr_by_params <- function(alpha, mu, sigma, input, sigmas.dev = 2.5){
 #' @param sigmas.dev Number of sigmas to secure thresholds on the ends of distributions. Equivalent to sigma.dev in merging GMMs.
 #' @param alpha Vector containing the weights (alpha) for each component in the statistical model.
 #' @param mu Vector containing the means (mu) for each component in the statistical model.
-#' @param sig Vector containing the standard deviation (sigma) for each component in the statistical model.
+#' @param sigma Vector containing the standard deviation (sigma) for each component in the statistical model.
 #'
 #' @returns Return a vector of thresholds.
 #'

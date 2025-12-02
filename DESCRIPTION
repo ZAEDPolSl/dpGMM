@@ -2,17 +2,17 @@ Package: dpGMM
 Type: Package
 Title: dpGMM: dynamic programming based Gaussian mixture modelling tool for 1D and 2D data
 Version: 0.1.9
-Author: c(
-    person("Michal", "Marczyk",email = "michal.marczyk@polsl.pl", role = c("aut","cre")),
-    person("Kamila", "Szumala", role = c("aut","cre")),
-    person("Joanna", "Zyla",  email = "joanna.zyla@polsl.pl",role = c("aut","cre")))
+Authors@R: c(
+    person("Michal", "Marczyk", email = "michal.marczyk@polsl.pl", role = c("aut","ctb")),
+    person("Kamila", "Szumala", email = "kamila.szumala@polsl.pl", role = c("aut","cre")),
+    person("Joanna", "Zyla",  email = "joanna.zyla@polsl.pl",role = c("aut","ctb")))
 Maintainer: The package maintainer <joanna.zyla@polsl.pl>
 Description: Package for Gaussian mixture modeling of 1D and 2D data (original or binned) with the option to estimate the number of model components. The unique method for finding the initial parameters of GMM is based on a dynamic programming algorithm.
 Depends:
     R (>= 3.5), ggplot2, RColorBrewer, stats, pracma
 Imports: 
     grDevices, ggpubr, Matrix, reshape2, graphics, methods, mvtnorm
-License: GPL-3
+License: GPL-3 | file LICENSE
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.3.2

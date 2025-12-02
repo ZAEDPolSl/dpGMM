@@ -16,7 +16,7 @@
 #'  \item{KS}{Estimaged number of model components.}
 #' }
 #'
-#' @importFrom stats pchisq qchisq
+#' @importFrom stats pchisq qchisq sd
 #' @importFrom graphics hist
 #'
 #' @examples
@@ -35,7 +35,7 @@
 #' @export
 gaussian_mixture_vector <- function(X, Y = NULL, opts = NULL){
 
-  if (is.null(opts)){opts <- dpGMM::GMM_1D_opts}
+  if (is.null(opts)){opts <- GMM_1D_opts}
 
   if (min(dim(as.matrix(X))) != 1){
     stop("data must be 1D signal.")
@@ -74,12 +74,12 @@ gaussian_mixture_vector <- function(X, Y = NULL, opts = NULL){
 
   Nb <- length(x)
   s_corr = ((x[2] - x[1])^2)/12;
-  aux_mx <- dpGMM:::dyn_pr_split_w_aux(x, y,s_corr)
+  aux_mx <- dyn_pr_split_w_aux(x, y,s_corr)
 
   #decomposition for fixed KS number
   if (opts$fixed){
       k <- opts$KS
-      tmp <- dpGMM:::dyn_pr_split_w(x, y, k-1, aux_mx,s_corr)
+      tmp <- dyn_pr_split_w(x, y, k-1, aux_mx,s_corr)
       opt_part <- tmp[[2]]
 
       part_cl <- c(1, opt_part, Nb+1)
@@ -118,7 +118,7 @@ gaussian_mixture_vector <- function(X, Y = NULL, opts = NULL){
       k <- 2
 
       while (stop && k < opts$KS){
-        tmp <- dpGMM:::dyn_pr_split_w(x, y, k-1, aux_mx,s_corr)
+        tmp <- dyn_pr_split_w(x, y, k-1, aux_mx,s_corr)
         opt_part <- tmp[[2]]
 
         part_cl <- c(1, opt_part, Nb+1)

@@ -72,7 +72,7 @@ dyn_pr_split_w_aux <- function(xhist, yhist,s_corr){
   aux_mx <- matrix(0, N, N)
   for (kk in 1:(N-1)){
     for (jj in (kk+1):N){
-      aux_mx[kk,jj] <- dpGMM:::my_qu_ix_w(xhist[kk:(jj-1)], yhist[kk:(jj-1)],s_corr)
+      aux_mx[kk,jj] <- my_qu_ix_w(xhist[kk:(jj-1)], yhist[kk:(jj-1)],s_corr)
     }
   }
   return(aux_mx)

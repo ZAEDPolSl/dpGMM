@@ -11,7 +11,7 @@ DP_init_2D(X, Y, KS)
 
 \item{Y}{Vector of counts, with the same length as "X".}
 
-\item{K}{Number of components.}
+\item{KS}{Number of components.}
 }
 \value{
 Initial values for EM.

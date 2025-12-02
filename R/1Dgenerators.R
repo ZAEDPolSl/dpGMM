@@ -26,15 +26,15 @@ generate_dist <- function(X, alpha, mu, sigma, precision){
                        mu = mu,
                        sigma = sigma)
 
-  x_temp <- pracma::linspace(min(X), max(X), precision)
+  x_temp <- linspace(min(X), max(X), precision)
   f_temp <- matrix(0, precision, nrow(GModel))
 
   for(k in 1:nrow(GModel)){
-    f_temp[,k] <- GModel$alpha[k] * stats::dnorm(x_temp, mean = GModel$mu[k], sd =GModel$sigma[k])
+    f_temp[,k] <- GModel$alpha[k] * dnorm(x_temp, mean = GModel$mu[k], sd =GModel$sigma[k])
   }
 
   f_temp <- as.data.frame(f_temp)
-  f_temp$main <- Matrix::rowSums(f_temp)
+  f_temp$main <- rowSums(f_temp)
 
   return(list(x = x_temp, dist = f_temp))
 }
@@ -66,7 +66,7 @@ generate_norm1D <- function(n, alpha, mu, sigma){
   pts.kl <- c()
   for(i in 1:n){
     pts.kl[i] <- sample.int(KS, 1L, prob = alpha)
-    dist[i] <- stats::rnorm(1, as.numeric(mu[pts.kl[i]]), as.numeric(sigma[pts.kl[i]]))
+    dist[i] <- rnorm(1, as.numeric(mu[pts.kl[i]]), as.numeric(sigma[pts.kl[i]]))
   }
 
   idx <- order(dist, decreasing = F)

@@ -7,6 +7,8 @@
 #'
 #' @return Initial values for EM.
 #'
+#' @importFrom stats sd
+#'
 #' @keywords internal
 #'
 rand_init_2D <- function(X, KS){
@@ -27,9 +29,11 @@ rand_init_2D <- function(X, KS){
 #'
 #' @param X Matrix of data to decompose by GMM.
 #' @param Y Vector of counts, with the same length as "X".
-#' @param K Number of components.
+#' @param KS Number of components.
 #'
 #' @return Initial values for EM.
+#'
+#' @importFrom stats aggregate
 #'
 #' @keywords internal
 #'
@@ -51,11 +55,11 @@ DP_init_2D <- function(X, Y, KS){
   n2 <- nrow(B_dist2)
 
   # use DP to find IC on boundary distributions
-  aux_mx1 <- dpGMM:::dyn_pr_split_w_aux(B_dist1[,1],B_dist1[,2]) 
-  aux_mx2 <- dpGMM:::dyn_pr_split_w_aux(B_dist2[,1],B_dist2[,2]) 
+  aux_mx1 <- dyn_pr_split_w_aux(B_dist1[,1],B_dist1[,2])
+  aux_mx2 <- dyn_pr_split_w_aux(B_dist2[,1],B_dist2[,2])
 
-  tmp1 <- dpGMM:::dyn_pr_split_w(B_dist1[,1],B_dist1[,2], KS-1, aux_mx1)
-  tmp2 <- dpGMM:::dyn_pr_split_w(B_dist2[,1],B_dist2[,2], KS-1, aux_mx2)
+  tmp1 <- dyn_pr_split_w(B_dist1[,1],B_dist1[,2], KS-1, aux_mx1)
+  tmp2 <- dyn_pr_split_w(B_dist2[,1],B_dist2[,2], KS-1, aux_mx2)
 
   opt_part1 <- tmp1[[2]]
   opt_part2 <- tmp2[[2]]
@@ -133,9 +137,11 @@ DP_init_2D <- function(X, Y, KS){
 #' Function for generating initial conditions of 2D GMM model by diagonal.
 #'
 #' @param X Matrix of 2D GMM data.
-#' @param K Number of components.
+#' @param KS Number of components.
 #'
 #' @return Initial values for EM.
+#'
+#' @importFrom stats sd
 #'
 #' @keywords internal
 #'
@@ -159,7 +165,7 @@ diag_init_2D <- function(X, KS){
 #'
 #' Function for calculation PDF of 2D normal model.
 #'
-#' @param X matrix of 2D GMM data.
+#' @param x matrix of 2D GMM data.
 #' @param center centers of 2D distributions (means)
 #' @param covar matrix of covariances
 #'
@@ -256,7 +262,7 @@ calc_lLik2D <- function(X,Y,gmm){
   #calculate density function
   f <- matrix(0, gmm$KS, nrow(data))
   for (a in 1:gmm$KS){
-    f[a,] <- dpGMM:::norm_pdf_2D(data, gmm$center[a,], gmm$covar[,,a])
+    f[a,] <- norm_pdf_2D(data, gmm$center[a,], gmm$covar[,,a])
   }
   px <-  colSums(f * as.numeric(gmm$alpha))
   px[is.nan(px) | px==0] <- 1e-100

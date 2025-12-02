@@ -27,8 +27,8 @@ plot_gmm_2D_binned <- function(X, Y, gmm, opts){
     coors <- data.frame()
     for (a in 1:gmm$KS){
       center <- gmm$center[a,]#- c(min(X[,1]) - 1, min(X[,2]) - 1)
-      covariance <- pracma::rot90(gmm$covar[,,a], 2)
-      tmp <- dpGMM:::ellips2D(center, covariance, cov_type, crits[j]) 
+      covariance <- rot90(gmm$covar[,,a], 2)
+      tmp <- ellips2D(center, covariance, cov_type, crits[j])
       tmp$KS <- rep(a, 100)
       coors <- rbind(coors, tmp)
     }
@@ -36,7 +36,7 @@ plot_gmm_2D_binned <- function(X, Y, gmm, opts){
   }
 
 
-  col <- grDevices::colorRampPalette(brewer.pal(9,"Blues"))(150)
+  col <- colorRampPalette(brewer.pal(9,"Blues"))(150)
 
 
   p<-ggplot() +theme_bw()+theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank())+
@@ -85,8 +85,8 @@ plot_gmm_2D_orig <- function(X, gmm, opts){
       coors <- data.frame()
       for (a in 1:gmm$KS){
         center <- gmm$center[a,]#- c(min(X[,1]) - 1, min(X[,2]) - 1)
-        covariance <- pracma::rot90(gmm$covar[,,a], 2)
-        tmp <- dpGMM:::ellips2D(center, covariance, cov_type, crits[j]) 
+        covariance <- rot90(gmm$covar[,,a], 2)
+        tmp <- ellips2D(center, covariance, cov_type, crits[j])
         tmp$KS <- rep(a, 100)
         coors <- rbind(coors, tmp)
       }
@@ -94,7 +94,7 @@ plot_gmm_2D_orig <- function(X, gmm, opts){
     }
 
 
-  col <- grDevices::colorRampPalette(brewer.pal(8,"Dark2"))(gmm$KS)
+  col <- colorRampPalette(brewer.pal(8,"Dark2"))(gmm$KS)
 
   p<-ggplot()
   p<-p+geom_point(aes(x = X$X1, y = X$X2,alpha=0.75,color=factor(X$cls)),show.legend = F)+
