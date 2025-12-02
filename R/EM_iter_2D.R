@@ -1,4 +1,4 @@
-#' Expectation–maximization algorithm for 2D data
+#' Expectation-maximization algorithm for 2D data
 #'
 #' The function performs the EM algorithm to find the local maximum likelihood for the estimated Gaussian mixture parameters.
 #'

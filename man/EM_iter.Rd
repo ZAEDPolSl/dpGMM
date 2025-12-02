@@ -2,7 +2,7 @@
 % Please edit documentation in R/EM_iter.R
 \name{EM_iter}
 \alias{EM_iter}
-\title{Expectation–maximization algorithm for 1D data}
+\title{Expectation-maximization algorithm for 1D data}
 \usage{
 EM_iter(X, alpha, mu, sig, Y = NULL, opts = NULL)
 }

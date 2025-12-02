@@ -1,4 +1,4 @@
-#' Dynamic programming split.
+#' Dynamic programming split
 #'
 #' Supporting function for dynamic programming in 1D decomposition.
 #'
@@ -57,7 +57,7 @@ dyn_pr_split_w <- function(xhist, yhist, K, aux_mx,s_corr){
 
 
 
-#' Dynamic programming split of aux.
+#' Dynamic programming split of aux
 #'
 #' Supporting function for dynamic programming in 1D decomposition.
 #'
@@ -78,7 +78,7 @@ dyn_pr_split_w_aux <- function(xhist, yhist,s_corr){
   return(aux_mx)
 }
 
-#' Supporting function for spliters.
+#' Supporting function for spliters
 #'
 #' Supporting function used in spliters \code{dyn_pr_split_w_aux} and \code{dyn_pr_split_w}.
 #'

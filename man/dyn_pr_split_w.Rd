@@ -2,7 +2,7 @@
 % Please edit documentation in R/1Dsupport.R
 \name{dyn_pr_split_w}
 \alias{dyn_pr_split_w}
-\title{Dynamic programming split.}
+\title{Dynamic programming split}
 \usage{
 dyn_pr_split_w(xhist, yhist, K, aux_mx, s_corr)
 }
