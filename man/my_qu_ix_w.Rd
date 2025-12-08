@@ -2,7 +2,7 @@
 % Please edit documentation in R/1Dsupport.R
 \name{my_qu_ix_w}
 \alias{my_qu_ix_w}
-\title{Supporting function for spliters.}
+\title{Supporting function for spliters}
 \usage{
 my_qu_ix_w(xinvec, yinvec, s_corr)
 }

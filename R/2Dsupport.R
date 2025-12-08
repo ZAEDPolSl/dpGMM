@@ -237,7 +237,7 @@ img_to_coords <- function(img){
   return(data)
 }
 
-#' Log-Likelihood for 2D Gaussian Mixture Model.
+#' Log-Likelihood for 2D Gaussian Mixture Model
 #'
 #' Function calculate log-likelihood of 2D Gaussian distribution
 #'

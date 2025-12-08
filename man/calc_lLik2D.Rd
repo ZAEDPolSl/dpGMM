@@ -2,7 +2,7 @@
 % Please edit documentation in R/2Dsupport.R
 \name{calc_lLik2D}
 \alias{calc_lLik2D}
-\title{Log-Likelihood for 2D Gaussian Mixture Model.}
+\title{Log-Likelihood for 2D Gaussian Mixture Model}
 \usage{
 calc_lLik2D(X, Y, gmm)
 }
