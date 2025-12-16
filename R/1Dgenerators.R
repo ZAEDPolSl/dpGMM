@@ -17,6 +17,9 @@
 #'    \item{dist}{Matrix with PDF of each GMM component and cumulative distribution.}
 #' }
 #'
+#' @examples
+#' data <- generate_norm1D(1000, alpha = c(0.2, 0.4, 0.4), mu = c(-15, 0, 15), sigma = c(1, 2, 3))
+#' dist <- generate_dist(data$Dist, alpha = c(0.2, 0.4, 0.4), mu = c(-15, 0, 15), sigma = c(1, 2, 3), precision = 1000)
 #'
 #' @seealso \code{\link{runGMM}} and \code{\link{generate_norm1D}}
 #' @export
@@ -56,9 +59,8 @@ generate_dist <- function(X, alpha, mu, sigma, precision){
 #' }
 #'
 #' @examples
-#' \dontrun{
 #' data <- generate_norm1D(1000, alpha = c(0.2, 0.4, 0.4), mu = c(-15, 0, 15), sigma = c(1, 2, 3))
-#' }
+#'
 #' @export
 generate_norm1D <- function(n, alpha, mu, sigma){
   KS <- length(mu)

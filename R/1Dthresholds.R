@@ -15,7 +15,6 @@
 #' @returns Return a vector of thresholds.
 #'
 #' @examples
-#' \dontrun{
 #' data(example)
 #'
 #' alpha <- c(0.45, 0.5, 0.05)
@@ -24,7 +23,6 @@
 #'
 #' dist.plot <- generate_dist(example$Dist, alpha = alpha, mu = mu, sigma = sigma, 1e4)
 #' thr <- find_thr_by_params(alpha = alpha, mu = mu, sigma = sigma, dist.plot)
-#' }
 #'
 #' @seealso \code{\link{runGMM}}
 #'
@@ -101,7 +99,6 @@ find_thr_by_params <- function(alpha, mu, sigma, input, sigmas.dev = 2.5){
 #' @returns Return a vector of thresholds.
 #'
 #' @examples
-#' \dontrun{
 #' data(example)
 #'
 #' alpha <- c(0.45, 0.5, 0.05)
@@ -110,7 +107,6 @@ find_thr_by_params <- function(alpha, mu, sigma, input, sigmas.dev = 2.5){
 #'
 #' dist.plot <- generate_dist(example$Dist, alpha = alpha, mu = mu, sigma = sigma, 1e4)
 #' thr <- find_thr_by_dist(dist.plot, 2.5, alpha = alpha, mu = mu, sigma = sigma)
-#' }
 #'
 #' @seealso \code{\link{runGMM}}
 #'

@@ -24,7 +24,6 @@
 #' @seealso \code{\link{runGMM}}
 #'
 #' @examples
-#' \dontrun{
 #' data(example)
 #'
 #' alpha <- c(0.45, 0.5, 0.05)
@@ -34,7 +33,6 @@
 #' dist.plot <- generate_dist(example$Dist, alpha, mu, sigma, 1e4)
 #' thr <- find_thr_by_params(alpha, mu, sigma, dist.plot)
 #' plot_gmm_1D(example$Dist, dist.plot, Y = NULL, threshold = thr, pal="Dark2")
-#' }
 #'
 #' @export
 plot_gmm_1D <- function(X, dist, Y = NULL, threshold = NA, pal = "Blues"){
@@ -107,7 +105,6 @@ plot_gmm_1D <- function(X, dist, Y = NULL, threshold = NA, pal = "Blues"){
 #' against data simulated from the fitted Gaussian mixture model.
 #'
 #' @examples
-#' \dontrun{
 #' data(example)
 #'
 #' alpha <- c(0.45, 0.5, 0.05)
@@ -115,7 +112,6 @@ plot_gmm_1D <- function(X, dist, Y = NULL, threshold = NA, pal = "Blues"){
 #' sigma <- c(2, 4, 1.5)
 #'
 #' plot_QQplot(example$Dist, alpha, mu, sigma)
-#' }
 #'
 #' @seealso \code{\link{runGMM}}
 #'

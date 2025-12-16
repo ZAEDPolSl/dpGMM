@@ -79,7 +79,6 @@ plot_gmm_2D_binned <- function(X, Y, gmm, opts){
 #'
 #' @seealso \code{\link{runGMM2D}}
 #'
-#'
 #' @export
 plot_gmm_2D_orig <- function(X, gmm, opts){
   X<-as.data.frame(X)

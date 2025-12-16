@@ -15,11 +15,10 @@
 #' }
 #'
 #' @examples
-#' \dontrun{
 #' data <- generate_norm2D(1500, alpha = c(0.2, 0.4, 0.4),
 #'                               mu = matrix(c(1, 2, 1, 3, 2, 2), nrow = 2),
 #'                               cov = c(0.01, 0.02, 0.03))
-#' }
+#'
 #' @export
 generate_norm2D <- function(n, alpha, mu, cov){
   KS <- dim(mu)[2]
@@ -46,6 +45,13 @@ generate_norm2D <- function(n, alpha, mu, cov){
 #' @importFrom stats runif
 #'
 #' @returns List with 2D GMM distributions where each list contains elements of \code{\link{generate_norm2D}}.
+#'
+#' @examples
+#' dset <- generate_dset2D(n = 1500, m = 10,
+#'                        KS_range = 2:5,
+#'                        mu_range = c(-10, 10),
+#'                        cov_range = c(1, 3))
+#'
 #'
 #' @seealso \code{\link{generate_norm2D}}
 #' @export
