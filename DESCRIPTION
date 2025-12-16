@@ -7,7 +7,7 @@ Authors@R: c(
     person("Kamila", "Szumala", email = "kamila.szumala@polsl.pl", role = c("aut","cre")),
     person("Joanna", "Zyla",  email = "joanna.zyla@polsl.pl",role = c("aut","ctb")))
 Maintainer: Kamila Szumala <kamila.szumala@polsl.pl>
-Description: Package for Gaussian mixture modeling of 1D and 2D data (original or binned) with the option to estimate the number of model components. The unique method for finding the initial parameters of GMM is based on a dynamic programming algorithm.
+Description: Gaussian mixture modeling of one- and two-dimensional data, provided in original or binned form, with an option to estimate the number of model components. The method uses Gaussian Mixture Models (GMM) with initial parameters determined by a dynamic programming algorithm, leading to stable and reproducible model fitting.
 Depends:
     R (>= 3.5), ggplot2, RColorBrewer, stats, pracma
 Imports: 
