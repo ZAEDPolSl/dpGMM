@@ -14,6 +14,10 @@
 #' @importFrom grDevices colorRampPalette
 #' @importFrom pracma rot90
 #'
+#' @return A \code{ggplot} object showing the heatmap of binned two-dimensional
+#' data with an overlay of the Gaussian mixture model decomposition. Mixture
+#' component centers are indicated by points and covariance ellipses corresponding
+#' to selected probability contours are drawn around each component.
 #'
 #' @seealso \code{\link{runGMM2D}}
 #'
@@ -68,7 +72,11 @@ plot_gmm_2D_binned <- function(X, Y, gmm, opts){
 #' @importFrom grDevices colorRampPalette
 #' @importFrom pracma rot90
 #'
-
+#' @return A \code{ggplot} object showing the scatter plot of two-dimensional
+#' data with an overlay of the Gaussian mixture model decomposition. Mixture
+#' component centers are indicated by points and covariance ellipses corresponding
+#' to selected probability contours are drawn around each component.
+#'
 #' @seealso \code{\link{runGMM2D}}
 #'
 #'

@@ -15,6 +15,12 @@
 #' @importFrom grDevices colorRampPalette
 #' @importFrom reshape2 melt
 #'
+#' @return A \code{ggplot} object showing the histogram or density of the input
+#' data together with the Gaussian mixture model decomposition.
+#' Individual mixture components and the overall fitted density are
+#' displayed as line plots, and optional cut-off thresholds are marked
+#' as vertical dashed lines.
+#'
 #' @seealso \code{\link{runGMM}}
 #'
 #' @examples
@@ -94,6 +100,11 @@ plot_gmm_1D <- function(X, dist, Y = NULL, threshold = NA, pal = "Blues"){
 #' @import ggplot2
 #' @importFrom  ggpubr ggarrange
 #' @importFrom stats qqplot
+#'
+#' @return An object extending \code{ggplot} that arranges two quantile-quantile
+#' plots into a single figure. One panel shows a QQ plot of the input
+#' data against a normal distribution, and the other shows a QQ plot
+#' against data simulated from the fitted Gaussian mixture model.
 #'
 #' @examples
 #' \dontrun{
