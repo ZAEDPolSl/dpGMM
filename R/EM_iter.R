@@ -18,6 +18,12 @@
 #'  \item{crit}{Value of the selected information criterion in local extreme of likelihood function.}
 #' }
 #'
+#' @examples
+#' data("example")
+#' opts <- GMM_1D_opts
+#' Y <- matrix(1, 1, length(data$Dist))
+#' rcpt <- EM_iter(data$Dist, 1, mean(data$Dist), sd(data$Dist), Y, opts)
+#'
 #' @importFrom stats dnorm
 #'
 #' @seealso \code{\link{runGMM}} and \code{\link{gaussian_mixture_vector}}

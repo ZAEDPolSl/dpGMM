@@ -17,6 +17,14 @@
 #'  \item{IC}{The value of the selected information criterion which was used to calculate the number of components.}
 #' }
 #'
+#' @examples
+#' data("example2D")
+#' X <- example2D[,1:2]
+#' Y <- matrix(1, 1, nrow(X))
+#'
+#' opts <- GMM_2D_opts
+#' gmm <- EM_iter_2D(X, Y, rand_init_2D(X, 1), opts)
+#'
 #' @seealso \code{\link{runGMM2D}}
 #'
 #' @export
@@ -89,7 +97,6 @@ EM_iter_2D <- function(X, Y, init, opts = NULL){
       #check if singularity appeared
       if (det(covar[,,a]) <= 0.1){
         covar[,,a] <- covar[,,a]*diag(2)
-        cat("Covariance singularity\n")
         # alpha[a] <- 0
       }
 

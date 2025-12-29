@@ -26,6 +26,14 @@ to selected probability contours are drawn around each component.
 Function plot the heatmap of binned data with marked GMM decomposition.
 This plot is also return as regular output of \code{\link{runGMM2D}}.
 }
+\examples{
+data(example2D)
+custom.settings <- GMM_2D_opts
+res <- runGMM2D(example2D[,1:2], example2D[,3], opts = custom.settings)
+
+plot_gmm_2D_binned(example2D[,1:2], example2D[,3], res$model, custom.settings)
+
+}
 \seealso{
 \code{\link{runGMM2D}}
 }

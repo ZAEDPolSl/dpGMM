@@ -29,6 +29,15 @@ Function returns a \code{list} of GMM parameters for tested number of components
 \description{
 The function performs the EM algorithm to find the local maximum likelihood for the estimated Gaussian mixture parameters.
 }
+\examples{
+data("example2D")
+X <- example2D[,1:2]
+Y <- matrix(1, 1, nrow(X))
+
+opts <- GMM_2D_opts
+gmm <- EM_iter_2D(X, Y, rand_init_2D(X, 1), opts)
+
+}
 \seealso{
 \code{\link{runGMM2D}}
 }
