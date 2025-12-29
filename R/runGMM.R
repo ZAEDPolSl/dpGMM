@@ -25,6 +25,7 @@
 #'
 #' @importFrom methods hasArg
 #' @examples
+#' \donttest{
 #' data(example)
 #'
 #' custom.settings <- GMM_1D_opts
@@ -46,6 +47,7 @@
 #'
 #' binned_test <- runGMM(X = binned$V1, Y = binned$V2, opts = custom.settings)
 #' binned_test$fig
+#' }
 #'
 #' @seealso \code{\link{gaussian_mixture_vector}}, \code{\link{EM_iter}}
 #'

@@ -27,8 +27,11 @@ List with following elements:\describe{
 Function to generate PDF of GMM distributions and its cumulative results with high lincespacing.
 }
 \examples{
-data <- generate_norm1D(1000, alpha = c(0.2, 0.4, 0.4), mu = c(-15, 0, 15), sigma = c(1, 2, 3))
-dist <- generate_dist(data$Dist, alpha = c(0.2, 0.4, 0.4), mu = c(-15, 0, 15), sigma = c(1, 2, 3), precision = 1000)
+data <- generate_norm1D(1000, alpha = c(0.2, 0.4, 0.4),
+                               mu = c(-15, 0, 15), sigma = c(1, 2, 3))
+dist <- generate_dist(data$Dist, alpha = c(0.2, 0.4, 0.4),
+                                 mu = c(-15, 0, 15),
+                                 sigma = c(1, 2, 3), precision = 1000)
 
 }
 \seealso{

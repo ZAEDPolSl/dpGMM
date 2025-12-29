@@ -23,7 +23,8 @@
 #' Y <- matrix(1, 1, nrow(X))
 #'
 #' opts <- GMM_2D_opts
-#' gmm <- EM_iter_2D(X, Y, rand_init_2D(X, 1), opts)
+#' init <- dpGMM:::rand_init_2D(X, 3)
+#' gmm <- EM_iter_2D(X, Y, init, opts)
 #'
 #' @seealso \code{\link{runGMM2D}}
 #'

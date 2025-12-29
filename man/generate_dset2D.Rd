@@ -30,11 +30,12 @@ List with 2D GMM distributions where each list contains elements of \code{\link{
 Generator of multiple 2D mixed normal distribution with given model parameters ranges.
 }
 \examples{
+\donttest{
 dset <- generate_dset2D(n = 1500, m = 10,
                        KS_range = 2:5,
                        mu_range = c(-10, 10),
                        cov_range = c(1, 3))
-
+}
 
 }
 \seealso{

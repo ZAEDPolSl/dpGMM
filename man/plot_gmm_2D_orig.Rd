@@ -24,13 +24,15 @@ Function plot the decomposed distribution together with histogram of data.
 This plot is also return as regular output of \code{\link{runGMM}}.
 }
 \examples{
+\donttest{
+custom.settings <- GMM_2D_opts
 data <- generate_norm2D(1500, alpha = c(0.2, 0.4, 0.4),
                               mu = matrix(c(1, 2, 1, 3, 2, 2), nrow = 2),
                               cov = c(0.01, 0.02, 0.03))
 
 res <- runGMM2D(data$Dist, opts = custom.settings)
 plot_gmm_2D_orig(data$Dist, res$model, custom.settings)
-
+}
 }
 \seealso{
 \code{\link{runGMM2D}}

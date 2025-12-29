@@ -35,8 +35,8 @@ The function performs the EM algorithm to find the local maximum likelihood for 
 \examples{
 data("example")
 opts <- GMM_1D_opts
-Y <- matrix(1, 1, length(data$Dist))
-rcpt <- EM_iter(data$Dist, 1, mean(data$Dist), sd(data$Dist), Y, opts)
+Y <- matrix(1, 1, length(example$Dist))
+rcpt <- EM_iter(example$Dist, 1, mean(example$Dist), sd(example$Dist), Y, opts)
 
 }
 \seealso{

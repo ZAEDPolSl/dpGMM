@@ -20,11 +20,13 @@
 #' to selected probability contours are drawn around each component.
 #'
 #' @examples
+#' \donttest{
 #' data(example2D)
 #' custom.settings <- GMM_2D_opts
 #' res <- runGMM2D(example2D[,1:2], example2D[,3], opts = custom.settings)
 #'
 #' plot_gmm_2D_binned(example2D[,1:2], example2D[,3], res$model, custom.settings)
+#' }
 #'
 #' @seealso \code{\link{runGMM2D}}
 #'
@@ -85,13 +87,15 @@ plot_gmm_2D_binned <- function(X, Y, gmm, opts){
 #' to selected probability contours are drawn around each component.
 #'
 #' @examples
+#' \donttest{
+#' custom.settings <- GMM_2D_opts
 #' data <- generate_norm2D(1500, alpha = c(0.2, 0.4, 0.4),
 #'                               mu = matrix(c(1, 2, 1, 3, 2, 2), nrow = 2),
 #'                               cov = c(0.01, 0.02, 0.03))
 #'
 #' res <- runGMM2D(data$Dist, opts = custom.settings)
 #' plot_gmm_2D_orig(data$Dist, res$model, custom.settings)
-#'
+#' }
 #' @seealso \code{\link{runGMM2D}}
 #'
 #' @export
