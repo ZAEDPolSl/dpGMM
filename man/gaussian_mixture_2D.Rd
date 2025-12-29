@@ -29,7 +29,7 @@ Function returns a \code{list} of GMM parameters for the optimal number of compo
 Function to choose the optimal number of components of a 2D mixture normal distributions, minimizing the value of the information criterion.
 }
 \examples{
-\dontrun{
+\donttest{
 data(example2D)
 custom.settings <- GMM_2D_opts
 exp <- gaussian_mixture_2D(example2D[,1:2], example2D[,3], opts = custom.settings)

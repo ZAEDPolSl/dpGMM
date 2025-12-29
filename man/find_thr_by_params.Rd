@@ -28,7 +28,6 @@ Return a vector of thresholds.
 Function to calculate cutoffs between each component of mixture normal distributions based on the component parameters.
 }
 \examples{
-\dontrun{
 data(example)
 
 alpha <- c(0.45, 0.5, 0.05)
@@ -37,7 +36,6 @@ sigma <- c(2, 4, 1.5)
 
 dist.plot <- generate_dist(example$Dist, alpha = alpha, mu = mu, sigma = sigma, 1e4)
 thr <- find_thr_by_params(alpha = alpha, mu = mu, sigma = sigma, dist.plot)
-}
 
 }
 \seealso{

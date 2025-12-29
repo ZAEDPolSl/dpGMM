@@ -27,7 +27,6 @@ Function returns a \code{list} of GMM parameters for the estimated number of com
 Function to estimate number of components of a mixture normal distributions, minimizing the value of the information criterion.
 }
 \examples{
-\dontrun{
 data <- generate_norm1D(1000, alpha = c(0.2,0.4,0.4), mu = c(-15,0,15), sigma = c(1,2,3))
 
 custom.settings <- GMM_1D_opts
@@ -35,7 +34,6 @@ custom.settings$IC <- "AIC"
 custom.settings$KS <- 10
 
 exp <- gaussian_mixture_vector(data$Dist, opts = custom.settings)
-}
 
 }
 \seealso{

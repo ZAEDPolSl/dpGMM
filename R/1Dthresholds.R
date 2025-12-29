@@ -43,7 +43,7 @@ find_thr_by_params <- function(alpha, mu, sigma, input, sigmas.dev = 2.5){
 
     if (abs(A) < tol| is.na(A) | is.infinite(B)){
       if(abs(B) < tol | is.na(B) | is.infinite(B)){
-        print("Gaussians are the same!")
+        warning("Gaussians are the same!")
         x1 <- NaN
         x2 <- NaN
       }else{

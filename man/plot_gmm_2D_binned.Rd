@@ -16,6 +16,12 @@ Applies only to binned data (Y = NULL, by default).}
 
 \item{opts}{Parameters of run stored in \code{\link{GMM_2D_opts}} variable.}
 }
+\value{
+A \code{ggplot} object showing the heatmap of binned two-dimensional
+data with an overlay of the Gaussian mixture model decomposition. Mixture
+component centers are indicated by points and covariance ellipses corresponding
+to selected probability contours are drawn around each component.
+}
 \description{
 Function plot the heatmap of binned data with marked GMM decomposition.
 This plot is also return as regular output of \code{\link{runGMM2D}}.

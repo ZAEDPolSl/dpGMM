@@ -25,9 +25,8 @@ List with following elements:\describe{
 Generator of 2D mixed normal distribution with given model parameters for certain points number.
 }
 \examples{
-\dontrun{
 data <- generate_norm2D(1500, alpha = c(0.2, 0.4, 0.4),
                               mu = matrix(c(1, 2, 1, 3, 2, 2), nrow = 2),
                               cov = c(0.01, 0.02, 0.03))
-}
+
 }

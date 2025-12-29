@@ -18,12 +18,18 @@ Applies only to binned data (Y = NULL, by default).}
 
 \item{pal}{Name of the RColorBrewer palette used in the figure. By default \code{"Blues"}.}
 }
+\value{
+A \code{ggplot} object showing the histogram or density of the input
+data together with the Gaussian mixture model decomposition.
+Individual mixture components and the overall fitted density are
+displayed as line plots, and optional cut-off thresholds are marked
+as vertical dashed lines.
+}
 \description{
 Function plot the decomposed distribution together with histogram of data. Moreover the cut-off are marked.
 This plot is also return as regular output of \code{\link{runGMM}}.
 }
 \examples{
-\dontrun{
 data(example)
 
 alpha <- c(0.45, 0.5, 0.05)
@@ -33,7 +39,6 @@ sigma <- c(2, 4, 1.5)
 dist.plot <- generate_dist(example$Dist, alpha, mu, sigma, 1e4)
 thr <- find_thr_by_params(alpha, mu, sigma, dist.plot)
 plot_gmm_1D(example$Dist, dist.plot, Y = NULL, threshold = thr, pal="Dark2")
-}
 
 }
 \seealso{

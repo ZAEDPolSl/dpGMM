@@ -15,12 +15,17 @@ plot_QQplot(X, alpha, mu, sigma)
 
 \item{sigma}{Vector containing the standard deviation (sigma) for each component in the statistical model.}
 }
+\value{
+An object extending \code{ggplot} that arranges two quantile-quantile
+plots into a single figure. One panel shows a QQ plot of the input
+data against a normal distribution, and the other shows a QQ plot
+against data simulated from the fitted Gaussian mixture model.
+}
 \description{
 Function return ggplot object with fit diagnostic Quantile-Quantile plot for one normal distribution and fitted GMM.
 This plot is also return as regular output of \code{\link{runGMM}}.
 }
 \examples{
-\dontrun{
 data(example)
 
 alpha <- c(0.45, 0.5, 0.05)
@@ -28,7 +33,6 @@ mu <- c(-14, -2, 5)
 sigma <- c(2, 4, 1.5)
 
 plot_QQplot(example$Dist, alpha, mu, sigma)
-}
 
 }
 \seealso{

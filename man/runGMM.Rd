@@ -34,7 +34,6 @@ The function works on original and binned (e.g. obtained by creating histogram o
 Function allows to estimate the number of GMM components using five different information criteria and merging of similar components.
 }
 \examples{
-\dontrun{
 data(example)
 
 custom.settings <- GMM_1D_opts
@@ -56,7 +55,6 @@ custom.settings$plot <- FALSE
 
 binned_test <- runGMM(X = binned$V1, Y = binned$V2, opts = custom.settings)
 binned_test$fig
-}
 
 }
 \seealso{
