@@ -38,6 +38,6 @@ mix_test <- runGMM(example$Dist, opts = custom.settings)
 ```
 
 ## References
-[1] Polanski, Andrzej, et al." "Initializing the EM algorithm for univariate Gaussian, multi-component, heteroscedastic mixture models by dynamic programming partitions." International Journal of Computational Methods 15.03 (2018): 1850012.
-
-[2] Zyla, J., Szymala, K., Polanski, A., Polanska, J., Marczyk,. M: "dpGMM: R package for dynamic programming-based Gaussian mixture modeling of 1D and 2D data" in preparation
+If you use this package in your research, please cite the following paper:
+[1] Zyla, J., Szumala, K., Polanski, A., Polanska, J., & Marczyk, M. (2026). dpGMM: A new R package for efficient and robust Gaussian mixture modeling of 1D and 2D data. Journal of Computational Science, 95, 102811.
+[2] Polanski, A., Marczyk, M., Pietrowska, M., Widlak, P., & Polanska, J. (2018). Initializing the EM algorithm for univariate Gaussian, multi-component, heteroscedastic mixture models by dynamic programming partitions. International Journal of Computational Methods, 15(03), 1850012.
