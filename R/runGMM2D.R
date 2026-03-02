@@ -20,7 +20,7 @@
 #' }
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' data(example2D)
 #' custom.settings <- GMM_2D_opts
 #' custom.settings$fixed <- TRUE

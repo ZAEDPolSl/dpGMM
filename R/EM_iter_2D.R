@@ -18,13 +18,26 @@
 #' }
 #'
 #' @examples
+#' \donttest{
 #' data("example2D")
 #' X <- example2D[,1:2]
 #' Y <- matrix(1, 1, nrow(X))
 #'
 #' opts <- GMM_2D_opts
-#' init <- dpGMM:::rand_init_2D(X, 3)
+#'
+#' # It is necessary to define the initial conditions. Here we use random initialization.
+#' alpha <- matrix(1, 1, opts$KS)/opts$KS
+#' center <- as.matrix(X[sample(nrow(X), opts$KS),])
+#' rownames(center) <- NULL
+#' covar <- replicate(opts$KS, diag(apply(as.matrix(X), 2, sd)/opts$KS), simplify = "array")
+#'
+#' init <- list(alpha = alpha,
+#'              center = center,
+#'              covar = covar,
+#'              KS = opts$KS)
+#'
 #' gmm <- EM_iter_2D(X, Y, init, opts)
+#' }
 #'
 #' @seealso \code{\link{runGMM2D}}
 #'

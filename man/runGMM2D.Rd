@@ -31,7 +31,7 @@ Function returns a \code{list} of GMM parameters for the estimated number of com
 Main function to perform GMM on 2D data. Function choose the optimal number of components of a 2D mixture normal distributions by minimizing the value of the information criterion.
 }
 \examples{
-\dontrun{
+\donttest{
 data(example2D)
 custom.settings <- GMM_2D_opts
 custom.settings$fixed <- TRUE
